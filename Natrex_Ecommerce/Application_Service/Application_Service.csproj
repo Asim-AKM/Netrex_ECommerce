@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Mappers\" />
+    <Folder Include="Common\Filters\" />
+    <Folder Include="Common\APIResponses\" />
+    <Folder Include="DI\" />
+    <Folder Include="DTO%27s\" />
+    <Folder Include="Security\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
