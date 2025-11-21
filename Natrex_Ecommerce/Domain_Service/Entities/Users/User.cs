@@ -14,11 +14,6 @@ namespace Domain_Service.Entities.Users
         public Guid U_Id { get; set; }
 
         /// <summary>
-        /// Foreign key referencing the User Role.
-        /// </summary>
-        public Guid UR_Id { get; set; }
-
-        /// <summary>
         /// The user's full legal or display name.
         /// </summary>
         public string FullName { get; set; } = string.Empty;
@@ -57,5 +52,6 @@ namespace Domain_Service.Entities.Users
         /// The most recent date and time the record was updated.
         /// </summary>
         public DateTime UpdatedAt { get; set; }
+
     }
 }

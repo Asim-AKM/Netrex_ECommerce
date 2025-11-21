@@ -12,9 +12,9 @@
         Admin = 1,
 
         /// <summary>
-        /// Standard user role with limited access to general application features.
+        /// Standard Manager role with limited access to general application features.
         /// </summary>
-        User = 2,
+        Manager = 2,
 
         /// <summary>
         /// Customer role typically used for clients or end-users interacting with the system.

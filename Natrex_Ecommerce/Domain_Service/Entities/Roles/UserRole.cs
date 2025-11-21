@@ -1,4 +1,5 @@
 ﻿using Domain_Service.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain_Service.Entities.Roles
 {
@@ -9,15 +10,16 @@ namespace Domain_Service.Entities.Roles
     /// </summary>
     public class UserRole
     {
+        [Key]
         /// <summary>
         /// Unique identifier for the user role.
         /// </summary>
+        /// 
         public Guid UR_Id { get; set; }
+       
+        public  RoleType RoleName { get; set; }
 
-        /// <summary>
-        /// The specific role assigned (e.g., Admin, User, Manager), 
-        /// represented by the <see cref="RoleType"/> enumeration.
-        /// </summary>
-        public RoleType Role { get; set; }
+        public Guid UserId { get; set; }
+
     }
 }

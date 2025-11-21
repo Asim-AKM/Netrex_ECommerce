@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain_Service", "Domain_Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure_Service", "Infrastructure_Service\Infrastructure_Service.csproj", "{846FC9DD-8AAB-4FF7-863D-B6A6260F1174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation_Service", "Presentation_Service\Presentation_Service.csproj", "{53DC55F3-E165-4918-8AE7-EB4666780DEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway_Service", "APIGateway_Service\APIGateway_Service.csproj", "{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{846FC9DD-8AAB-4FF7-863D-B6A6260F1174}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{846FC9DD-8AAB-4FF7-863D-B6A6260F1174}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{846FC9DD-8AAB-4FF7-863D-B6A6260F1174}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53DC55F3-E165-4918-8AE7-EB4666780DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53DC55F3-E165-4918-8AE7-EB4666780DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53DC55F3-E165-4918-8AE7-EB4666780DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53DC55F3-E165-4918-8AE7-EB4666780DEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,7 +49,7 @@ Global
 		{50821DD6-DD13-450A-9CAA-370B000350A3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FAE3C69C-17ED-4D7F-B6BB-EB5E0854F026} = {D6AE4116-D4B6-4F9F-B7B6-BE2DA00EF70F}
 		{846FC9DD-8AAB-4FF7-863D-B6A6260F1174} = {EE36550C-49C7-4C66-82BD-44772C376D5E}
-		{53DC55F3-E165-4918-8AE7-EB4666780DEC} = {1222CCF2-C82E-454C-AC57-E0FF528EDB42}
+		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE} = {1222CCF2-C82E-454C-AC57-E0FF528EDB42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4560AA0-8A98-42EA-B2EC-EC9CDC541376}

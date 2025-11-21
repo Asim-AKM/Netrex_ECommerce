@@ -1,0 +1,8 @@
+﻿namespace Application_Service.Services.Interface
+{
+    public interface IPasswordEncriptor
+    {
+        Task<bool> VerifyPassword(string password, byte[] storesalt, byte[] storeHash);
+        Task CreateHashAndSalt(string password, out byte[] salt, out byte[] hash);
+    }
+}
