@@ -3,20 +3,21 @@ using Application_Service.Common.Mappers.UserMapper;
 using Application_Service.Common.Mappers.UserRoleMappers;
 using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Services.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain_Service.Entities.Users;
+using Domain_Service.RepoInterfaces.GenericRepo;
 
 namespace Application_Service.Services.Implementation
 {
     public class UserAccountService : IUserAccountService
     {
         private readonly IPasswordEncriptor _passwordEcriptor;
-        public UserAccountService(IPasswordEncriptor passwordEcriptor)
+        private readonly IRepository<User> _repository;
+     
+        public UserAccountService(IPasswordEncriptor passwordEcriptor , IRepository<User> repository)
         {
             _passwordEcriptor = passwordEcriptor;
+            _repository = repository;
+
         }
         public Task<string> UserRegistrationAsync(UserRegisterDto request)
         {

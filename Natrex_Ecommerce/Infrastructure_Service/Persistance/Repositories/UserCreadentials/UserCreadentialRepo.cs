@@ -1,5 +1,5 @@
 ﻿using Domain_Service.Entities.UserCredentials;
-using Domain_Service.RepoInterfaces.UserCreadentials;
+using Domain_Service.RepoInterfaces.GenericRepo;
 using System;
 using System.Collections.Generic;
 using System.Linq;

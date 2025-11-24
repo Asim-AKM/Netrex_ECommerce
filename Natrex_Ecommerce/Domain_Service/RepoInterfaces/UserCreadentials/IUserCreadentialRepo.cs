@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain_Service.RepoInterfaces.UserCreadentials
+namespace Domain_Service.RepoInterfaces.GenericRepo
 {
     public  interface IUserCreadentialRepo
     {
