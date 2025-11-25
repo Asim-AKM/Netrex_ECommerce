@@ -6,7 +6,6 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _dbSet;
         public Repository(ApplicationDbContext dbContext)
@@ -17,14 +16,12 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         public async Task<T> Create(T obj)
         {
             await _dbSet.AddAsync(obj);
-            await _context.SaveChangesAsync();
             return obj;
         }
 
         public async Task<bool> Delete(T obj)
         {
             _dbSet.Remove(obj);
-            await _context.SaveChangesAsync();
             return true;
         }
 
@@ -37,7 +34,6 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         public async Task<T> Update(T obj)
         {
             _dbSet.Update(obj);
-            await _context.SaveChangesAsync();
             return obj;
         }
     }
