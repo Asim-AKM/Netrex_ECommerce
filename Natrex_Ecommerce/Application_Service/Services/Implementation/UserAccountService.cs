@@ -3,8 +3,6 @@ using Application_Service.Common.Mappers.UserMapper;
 using Application_Service.Common.Mappers.UserRoleMappers;
 using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Services.Interface;
-using Domain_Service.Entities.Users;
-using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.Implementation
@@ -26,16 +24,17 @@ namespace Application_Service.Services.Implementation
             var UserdomainModel = request.Map();
             var UserRolDomainModel = UserdomainModel.AssingRole();
             var UserCredentialDomainModel = UserdomainModel.AssingToCreadential();
+          
             _passwordEcriptor.CreateHashAndSalt(request.password,out byte[] salt,out byte[] hash);
-            UserCredentialDomainModel.PasswordSalt = salt;
-            UserCredentialDomainModel.PasswordHash = hash;
+                    UserCredentialDomainModel.PasswordSalt = salt;
+                    UserCredentialDomainModel.PasswordHash = hash;
 
             _uOW.Users.Create(UserdomainModel);
             _uOW.UserRoles.Create(UserRolDomainModel);
             _uOW.UserCreads.Create(UserCredentialDomainModel);
             _uOW.SaveChangesAsync();
 
-            return Task.FromResult(" User Registered Sexyfully");
+            return Task.FromResult(" User Has Been Registered ");
         }
     }
 }
