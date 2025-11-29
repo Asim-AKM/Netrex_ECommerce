@@ -1,7 +1,7 @@
 ﻿using Domain_Service.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain_Service.Entities.Roles
+namespace Domain_Service.Entities.UserModule.Roles
 {
     /// <summary>
     /// Represents a user role within the system, defining the type of access 

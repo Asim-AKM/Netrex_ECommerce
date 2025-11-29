@@ -1,4 +1,4 @@
-﻿namespace Domain_Service.Entities.UserCredentials
+﻿namespace Domain_Service.Entities.UserModule.UserCredentials
 {
     /// <summary>
     /// Represents the authentication credentials associated with a user.

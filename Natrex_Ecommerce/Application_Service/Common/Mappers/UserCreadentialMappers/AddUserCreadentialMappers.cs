@@ -1,5 +1,5 @@
-﻿using Domain_Service.Entities.UserCredentials;
-using Domain_Service.Entities.Users;
+﻿using Domain_Service.Entities.UserModule.UserCredentials;
+using Domain_Service.Entities.UserModule.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using Domain_Service.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain_Service.Entities.Users
+namespace Domain_Service.Entities.UserModule.Users
 {
     /// <summary>
     /// Represents an application user entity containing identity, profile, 
@@ -52,6 +52,7 @@ namespace Domain_Service.Entities.Users
         /// The most recent date and time the record was updated.
         /// </summary>
         public DateTime UpdatedAt { get; set; }
+
 
     }
 }
