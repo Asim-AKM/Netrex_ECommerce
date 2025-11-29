@@ -1,4 +1,4 @@
-﻿using Domain_Service.Entities.Users;
+﻿using Domain_Service.Entities.UserModule.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

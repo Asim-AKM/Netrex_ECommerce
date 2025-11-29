@@ -1,4 +1,4 @@
-﻿using Domain_Service.Entities.UserCredentials;
+﻿using Domain_Service.Entities.UserModule.UserCredentials;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using System;
 using System.Collections.Generic;

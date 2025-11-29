@@ -1,4 +1,4 @@
-﻿using Domain_Service.Entities.Roles;
+﻿using Domain_Service.Entities.UserModule.Roles;
 using Domain_Service.RepoInterfaces.UserRoles;
 using System;
 using System.Collections.Generic;
