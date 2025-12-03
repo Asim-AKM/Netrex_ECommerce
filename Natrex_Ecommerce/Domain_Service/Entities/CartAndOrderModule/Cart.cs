@@ -1,4 +1,4 @@
-﻿namespace Domain_Service.Entities.CartModule.Carts
+﻿namespace Domain_Service.Entities.CartAndOrderModule
 {
     public class Cart
     {

@@ -24,6 +24,6 @@
         /// <summary>
         /// The user account has been permanently removed from the system.
         /// </summary>
-        Deleted = 4
+        Deleted = 5
     }
 }

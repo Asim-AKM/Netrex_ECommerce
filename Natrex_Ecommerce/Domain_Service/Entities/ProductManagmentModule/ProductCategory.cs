@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain_Service.Entities.ProductAndCategoryModule.ProductCategories
+namespace Domain_Service.Entities.ProductAndCategoryModule
 {
     public class ProductCategory
     {

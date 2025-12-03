@@ -1,7 +1,7 @@
 ﻿using Domain_Service.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain_Service.Entities.UserModule.Users
+namespace Domain_Service.Entities.UserManagmentModule.Users
 {
     /// <summary>
     /// Represents an application user entity containing identity, profile, 

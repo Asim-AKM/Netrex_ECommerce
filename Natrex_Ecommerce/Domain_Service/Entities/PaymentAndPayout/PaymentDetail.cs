@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain_Service.Entities.PaymentAndPayout.PaymentSystemModule
+namespace Domain_Service.Entities.PaymentAndPayout
 {
     public class PaymentDetail
     {
