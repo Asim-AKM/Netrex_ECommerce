@@ -1,4 +1,4 @@
-﻿namespace Domain_Service.Entities.SellerModule.Sellers
+﻿namespace Domain_Service.Entities.SellerModule
 {
     public class Seller
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain_Service.Entities.UserManagmentModule.CustomerModule
+namespace Domain_Service.Entities.UserManagmentModule
 {
     public class Customer
     {

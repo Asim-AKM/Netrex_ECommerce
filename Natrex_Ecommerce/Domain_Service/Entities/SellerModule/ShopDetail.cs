@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain_Service.Entities.SellerModule.ShopDetails
+namespace Domain_Service.Entities.SellerModule
 {
     public class ShopDetail
     {

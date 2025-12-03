@@ -1,9 +1,4 @@
-﻿using Domain_Service.Entities.UserModule.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain_Service.Entities.UserManagmentModule;
 
 namespace Domain_Service.RepoInterfaces.Users
 {
