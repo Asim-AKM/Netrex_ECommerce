@@ -11,7 +11,7 @@ namespace Domain_Service.Entities.UserManagmentModule
     public class User
     {
         [Key]
-        public Guid U_Id { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// The user's full legal or display name.
@@ -52,7 +52,5 @@ namespace Domain_Service.Entities.UserManagmentModule
         /// The most recent date and time the record was updated.
         /// </summary>
         public DateTime UpdatedAt { get; set; }
-
-
     }
 }

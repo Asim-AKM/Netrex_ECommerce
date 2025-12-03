@@ -8,8 +8,8 @@ namespace Application_Service.Common.Mappers.UserCreadentialMappers
         {
             return new UserCreadential
             {
-                Cread_Id = Guid.NewGuid(),
-                U_Id = user.U_Id,
+                CreadId = Guid.NewGuid(),
+                UserId = user.UserId,
             };
         }
 

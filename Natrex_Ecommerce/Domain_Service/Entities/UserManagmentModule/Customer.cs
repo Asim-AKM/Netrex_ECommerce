@@ -11,7 +11,5 @@ namespace Domain_Service.Entities.UserManagmentModule
         public string Province { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-
-
     }
 }

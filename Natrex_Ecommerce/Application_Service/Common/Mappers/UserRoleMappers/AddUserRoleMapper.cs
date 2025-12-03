@@ -9,8 +9,8 @@ namespace Application_Service.Common.Mappers.UserRoleMappers
         {
             return new UserRole
             {
-                UR_Id = Guid.NewGuid(),
-                UserId = user.U_Id,
+                UserRoleId = Guid.NewGuid(),
+                UserId = user.UserId,
                 RoleName = RoleType.Customer,
             };
         }

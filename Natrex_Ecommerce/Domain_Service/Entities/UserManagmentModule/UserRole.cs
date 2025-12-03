@@ -15,7 +15,7 @@ namespace Domain_Service.Entities.UserManagmentModule
         /// Unique identifier for the user role.
         /// </summary>
         /// 
-        public Guid UR_Id { get; set; }
+        public Guid UserRoleId { get; set; }
        
         public  RoleType RoleName { get; set; }
 

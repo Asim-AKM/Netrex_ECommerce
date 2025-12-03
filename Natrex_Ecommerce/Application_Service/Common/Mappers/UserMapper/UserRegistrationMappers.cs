@@ -9,7 +9,7 @@ namespace Application_Service.Common.Mappers.UserMapper
         {
             return new User
             {
-                U_Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
                 UserName = registerDto.username,
                 Email = registerDto.email,
                 Contact = registerDto.contact,

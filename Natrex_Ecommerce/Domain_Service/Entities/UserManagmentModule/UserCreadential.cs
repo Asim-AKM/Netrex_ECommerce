@@ -1,4 +1,6 @@
-﻿namespace Domain_Service.Entities.UserManagmentModule
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain_Service.Entities.UserManagmentModule
 {
     /// <summary>
     /// Represents the authentication credentials associated with a user.
@@ -9,12 +11,13 @@
         /// <summary>
         /// Unique identifier for the user credential record.
         /// </summary>
-        public Guid Cread_Id { get; set; }
+        [Key]
+        public Guid CreadId { get; set; }
 
         /// <summary>
         /// Foreign key referencing the associated user entity.
         /// </summary>
-        public Guid U_Id { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Cryptographically hashed password stored for secure authentication.
