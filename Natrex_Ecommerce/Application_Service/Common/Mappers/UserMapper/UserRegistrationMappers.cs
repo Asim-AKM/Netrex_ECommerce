@@ -1,10 +1,5 @@
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
-using Domain_Service.Entities.UserModule.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain_Service.Entities.UserManagmentModule;
 
 namespace Application_Service.Common.Mappers.UserMapper
 {
