@@ -14,6 +14,7 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IPasswordEncriptor, PasswordEncriptor>()
                           .AddScoped<IUserAccountService, UserAccountService>()
                     .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
+                   .AddScoped<IInvoiceService,InvoiceService>()
                     .AddFluentValidationAutoValidation();
     }
 }
