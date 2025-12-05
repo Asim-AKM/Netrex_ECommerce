@@ -1,8 +1,9 @@
 ﻿using Application_Service.Common.Mappers.UserCreadentialMappers;
 using Application_Service.Common.Mappers.UserMapper;
 using Application_Service.Common.Mappers.UserRoleMappers;
-using Application_Service.DTO_s.UsersDto.Accounts;
+using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Services.Interface;
+using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.Implementation
@@ -19,7 +20,7 @@ namespace Application_Service.Services.Implementation
 
 
         }
-        public Task<string> UserRegistrationAsync(UserRegisterDto request)
+        public Task<string> CreateUserAsync(UserRegisterDto request)
         {
             var UserdomainModel = request.Map();
             var UserRolDomainModel = UserdomainModel.AssingRole();
@@ -35,6 +36,21 @@ namespace Application_Service.Services.Implementation
             _uOW.SaveChangesAsync();
 
             return Task.FromResult(" User Has Been Registered ");
+        }
+
+        public Task<string> DeleteUserAsync(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<User>> GetUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> UpdateUserAsync(UpdateUserDto Request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

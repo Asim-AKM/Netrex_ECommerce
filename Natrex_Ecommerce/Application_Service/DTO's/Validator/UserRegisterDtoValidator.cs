@@ -1,4 +1,4 @@
-﻿using Application_Service.DTO_s.UsersDto.Accounts;
+﻿using Application_Service.DTO_s.UserManagmentDto_s;
 using FluentValidation;
 
 namespace Application_Service.DTO_s.Validator

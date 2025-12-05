@@ -13,7 +13,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         {
             _context = dbContext;
         }
-        public IRepository<User> Users =>  new Repository<User>(_context);
+        public IRepository<User> Users => new Repository<User>(_context);
         public IRepository<UserCreadential> UserCreads => new Repository<UserCreadential>(_context);
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
         public async Task<int> SaveChangesAsync()
