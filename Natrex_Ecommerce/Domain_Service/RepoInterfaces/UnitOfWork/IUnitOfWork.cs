@@ -1,5 +1,6 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.UserManagment;
 
 namespace Domain_Service.RepoInterfaces.UnitOfWork
 {
@@ -8,6 +9,7 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<User> Users { get; }
         IRepository<UserCreadential> UserCreads { get; }
         IRepository<UserRole> UserRoles { get; }
+        IUserRepo UserRepo { get; }
         Task<int> SaveChangesAsync();
     }
 }

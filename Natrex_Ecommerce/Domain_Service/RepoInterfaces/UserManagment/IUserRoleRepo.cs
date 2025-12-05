@@ -1,6 +1,6 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
 
-namespace Domain_Service.RepoInterfaces.UserRoles
+namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public  interface IUserRoleRepo
     {
