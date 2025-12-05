@@ -1,4 +1,4 @@
-﻿namespace Application_Service.Services.Interface
+﻿namespace Application_Service.Services.UserManagmentServices.Interface
 {
     public interface IPasswordEncriptor
     {

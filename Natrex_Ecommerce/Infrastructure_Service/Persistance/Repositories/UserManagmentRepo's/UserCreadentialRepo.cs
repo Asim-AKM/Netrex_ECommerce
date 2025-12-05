@@ -1,5 +1,5 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.UserManagment;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
 {

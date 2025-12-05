@@ -1,8 +1,7 @@
 ﻿using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using Domain_Service.RepoInterfaces.UserRoles;
-using Domain_Service.RepoInterfaces.Users;
+using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;

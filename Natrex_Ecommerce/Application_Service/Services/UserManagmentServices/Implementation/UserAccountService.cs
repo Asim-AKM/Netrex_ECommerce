@@ -2,10 +2,10 @@
 using Application_Service.Common.Mappers.UserMapper;
 using Application_Service.Common.Mappers.UserRoleMappers;
 using Application_Service.DTO_s.UsersDto.Accounts;
-using Application_Service.Services.Interface;
+using Application_Service.Services.UserManagmentServices.Interface;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
-namespace Application_Service.Services.Implementation
+namespace Application_Service.Services.UserManagmentServices.Implementation
 {
     public class UserAccountService : IUserAccountService
     {

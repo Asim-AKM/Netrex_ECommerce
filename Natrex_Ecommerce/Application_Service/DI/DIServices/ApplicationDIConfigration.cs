@@ -1,6 +1,6 @@
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
-using Application_Service.Services.Implementation;
-using Application_Service.Services.Interface;
+using Application_Service.Services.UserManagmentServices.Implementation;
+using Application_Service.Services.UserManagmentServices.Interface;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
