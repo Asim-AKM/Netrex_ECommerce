@@ -21,7 +21,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<UserCreadential> UserCreads => new Repository<UserCreadential>(_context);
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
 
-        IRepository<Invoice> IUnitOfWork.Invoices => new Repository<Invoice>(_context);
+        public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
 
         public async Task<int> SaveChangesAsync()
         {
