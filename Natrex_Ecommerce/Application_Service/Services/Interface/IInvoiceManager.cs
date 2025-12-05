@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application_Service.Services.Interface
 {
-    public interface IInvoiceService
+    public interface IInvoiceManager
     {
         Task GenerateInvoice(InvoiceDto dto);
         Task<FetchInvoiceDto> FetchInvoice(Guid InvoiceId);

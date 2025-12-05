@@ -19,8 +19,8 @@ namespace Infrastructure_Service.DI.DIRepository
                     .AddScoped<IUserRepo, UserRepo>()
                     .AddScoped<IUserCreadentialRepo, UserCreadentialRepo>()
                     .AddScoped<IUserRoleRepo, UserRoleRepo>()
-                    .AddScoped<IInvoiceRepo,InvoiceRepo>()
                     .AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                    .AddScoped<IUnitOfWork, UnitOfWork>();
+                    .AddScoped<IUnitOfWork, UnitOfWork>()
+                    .AddScoped<IInvoiceRepo,InvoiceRepo>();
     }
 }

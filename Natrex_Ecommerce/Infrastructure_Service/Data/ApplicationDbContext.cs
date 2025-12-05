@@ -12,6 +12,6 @@ namespace Infrastructure_Service.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        
     }
 }

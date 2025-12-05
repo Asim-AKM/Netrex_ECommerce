@@ -16,16 +16,6 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
         {
             _context = applicationDbContext;
         }
-        public async Task GenerateInvoice(Invoice invoice)
-        {
-            await _context.Invoices.AddAsync(invoice);
-        }
-
-        public async Task<Invoice> GetInvoiceById(Guid invoiceId)
-        {
-            var fetchinvoice = await _context.Invoices.FindAsync(invoiceId);
-            return fetchinvoice!;
-
-        }
+       
     }
 }

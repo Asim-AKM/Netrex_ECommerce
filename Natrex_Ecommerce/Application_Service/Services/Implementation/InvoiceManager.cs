@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Application_Service.Services.Implementation
 {
-    public class InvoiceService : IInvoiceService
+    public class InvoiceManager : IInvoiceManager
     {
         private readonly IUnitOfWork _unitOfWork;
-        public InvoiceService(IUnitOfWork unitOfWork)
+        public InvoiceManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public async Task<FetchInvoiceDto> FetchInvoice(Guid InvoiceId)
         {
-            var fetchinvoice = await _unitOfWork.Invoices.GetInvoiceById(InvoiceId);
+            var fetchinvoice = await _unitOfWork.Invoices.GetById(InvoiceId);
             if (fetchinvoice == null)
             {
                 return null!;
@@ -32,7 +32,8 @@ namespace Application_Service.Services.Implementation
         public async Task GenerateInvoice(InvoiceDto dto)
         {
             var invoice = dto.Map();
-            await _unitOfWork.Invoices.GenerateInvoice(invoice);
+            await _unitOfWork.Invoices.Create(invoice);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }
