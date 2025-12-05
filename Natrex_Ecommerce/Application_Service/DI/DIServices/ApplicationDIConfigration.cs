@@ -12,9 +12,9 @@ namespace Application_Service.DI.DIServices
         public static IServiceCollection ApplicationServiceDIConfigrations(this IServiceCollection services) => services
 
                             .AddScoped<IPasswordEncriptor, PasswordEncriptor>()
-                            .AddScoped<IUserAccountService, UserAccountService>()
-                            .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
-                            .AddFluentValidationAutoValidation()
-                            .AddScoped<IAuthenticationManager, AuthenticationManager>();
+                          .AddScoped<IUserAccountService, UserAccountService>()
+                    .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
+                    .AddFluentValidationAutoValidation()
+                   .AddScoped<IInvoiceManager, InvoiceManager>();
     }
 }

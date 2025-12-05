@@ -1,4 +1,5 @@
-﻿using Domain_Service.Entities.UserManagmentModule;
+﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.Entities.UserManagmentModule;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Data
@@ -7,9 +8,10 @@ namespace Infrastructure_Service.Data
     {
         public ApplicationDbContext()
         {
-            
+
         }
 
-         public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        
     }
 }
