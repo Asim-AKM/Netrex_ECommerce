@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.Services.Interface
+namespace Application_Service.Services.PaymentAndPayoutServices.Interface
 {
     public interface IInvoiceManager
     {
