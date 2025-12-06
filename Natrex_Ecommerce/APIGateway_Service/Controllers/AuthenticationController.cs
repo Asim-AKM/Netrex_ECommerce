@@ -20,7 +20,8 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login(LoginDto request)
         {
-            return Ok(await _authenticationManager.LoginAsync(request));
+            var response= await _authenticationManager.LoginAsync(request);
+            return StatusCode((int)response.Status,response);
         }
     }
 }
