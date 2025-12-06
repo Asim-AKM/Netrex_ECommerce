@@ -6,12 +6,16 @@ namespace Infrastructure_Service.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
 
         }
 
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<UserCreadential> UserCreadentials { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+
     }
 }
