@@ -10,6 +10,9 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<UserCreadential> UserCreads { get; }
         IRepository<UserRole> UserRoles { get; }
         IUserRepo UserRepo { get; }
+        IUserRoleRepo UserRoleRepo { get; }
+        IUserCreadentialRepo UserCreadRepo { get; }
+
         Task<int> SaveChangesAsync();
     }
 }

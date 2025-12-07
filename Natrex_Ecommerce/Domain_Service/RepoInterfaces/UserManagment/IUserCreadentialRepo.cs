@@ -4,6 +4,6 @@ namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public  interface IUserCreadentialRepo
     {
-        Task AddUserCreadential(UserCreadential userCreadential);
+        Task<UserCreadential> GetUserCredentialByFK(Guid id);
     }
 }

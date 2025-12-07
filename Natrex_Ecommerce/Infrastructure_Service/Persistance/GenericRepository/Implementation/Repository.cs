@@ -25,10 +25,14 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
             return true;
         }
 
-        public async Task<T> GetById(Guid id)
+        public async Task<List<T>> GetAll()
+        {
+           return await _dbSet.ToListAsync();
+        }
+
+        public async Task<T?> GetById(Guid id)
         {
             return await _dbSet.FindAsync(id);
-
         }
 
         public async Task<T> Update(T obj)
