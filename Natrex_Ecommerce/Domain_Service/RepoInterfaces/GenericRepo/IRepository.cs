@@ -4,7 +4,7 @@
     {
         Task<T> Create(T obj);
         Task<T> Update(T obj);
-        Task<bool> Delete(T obj);
+        Task<bool> Delete(Guid Id);
         Task<T> GetById(Guid id);
 
     }

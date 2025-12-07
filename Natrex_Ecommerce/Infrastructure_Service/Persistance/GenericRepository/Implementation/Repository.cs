@@ -19,10 +19,15 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
             return obj;
         }
 
-        public async Task<bool> Delete(T obj)
+        public async Task<bool> Delete(Guid Id)
         {
-            _dbSet.Remove(obj);
+            var Entity= await _dbSet.FindAsync(Id);
+            if (Entity!=null)
+            {
+            _dbSet.Remove(Entity);
             return true;
+            }
+            return false;
         }
 
         public async Task<T> GetById(Guid id)

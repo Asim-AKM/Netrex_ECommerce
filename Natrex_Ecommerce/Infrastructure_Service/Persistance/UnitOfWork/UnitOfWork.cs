@@ -1,4 +1,5 @@
 ﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
@@ -22,6 +23,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
 
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
+        public IRepository<Seller> Seller => new Repository<Seller>(_context);
 
         public async Task<int> SaveChangesAsync()
         {
