@@ -23,6 +23,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
 
+        public IUserRoleRepo UserRoleRepo => new UserRoleRepo(_context);
+        public IUserCreadentialRepo UserCreadRepo => new UserCreadentialRepo(_context);
+
         public async Task<int> SaveChangesAsync()
         {
            return  await _context.SaveChangesAsync();

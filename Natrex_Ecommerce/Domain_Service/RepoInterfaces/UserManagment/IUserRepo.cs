@@ -4,7 +4,8 @@ namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public interface IUserRepo
     {
-        Task<User?> GetUserByIdentifier(string userIdentifier);
+        Task<List<User>> GetAllUser();
+        Task<User?> CheckEmail(string email);
 
     }
 }

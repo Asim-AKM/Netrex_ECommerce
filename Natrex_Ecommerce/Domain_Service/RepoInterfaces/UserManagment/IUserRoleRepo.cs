@@ -4,6 +4,7 @@ namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public  interface IUserRoleRepo
     {
-        Task AddUserRole(UserRole role);
+        Task<List<UserRole>> GetAllRoles();
+        Task<UserRole> GetUserRoleByFK(Guid id);
     }
 }
