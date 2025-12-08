@@ -2,6 +2,7 @@
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
+using Domain_Service.RepoInterfaces.UserManagment;
 
 namespace Domain_Service.RepoInterfaces.UnitOfWork
 {
@@ -10,6 +11,8 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<User> Users { get; }
         IRepository<UserCreadential> UserCreads { get; }
         IRepository<UserRole> UserRoles { get; }
+        IUserRepo UserRepository { get; }
+        IUserCreadentialRepo UserCreadRepository { get; }
         IRepository<Invoice> Invoices { get; }
         IRepository<PaymentDetail> PaymentDetails { get; }
 
