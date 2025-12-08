@@ -5,11 +5,11 @@ using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 {
-    public class PaymentManager : IPaymentManager
+    public class PaymentDetailManager : IPaymentDetailManager
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentManager(IUnitOfWork unitOfWork)
+        public PaymentDetailManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

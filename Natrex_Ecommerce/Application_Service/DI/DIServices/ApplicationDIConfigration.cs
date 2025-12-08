@@ -19,6 +19,6 @@ namespace Application_Service.DI.DIServices
                             .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
                             .AddFluentValidationAutoValidation()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
-                            .AddScoped<IPaymentManager, PaymentManager>();
+                            .AddScoped<IPaymentDetailManager, PaymentDetailManager>();
     }
 }

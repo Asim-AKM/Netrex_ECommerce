@@ -2,7 +2,7 @@
 
 namespace Application_Service.Services.PaymentAndPayoutServices.Interface
 {
-    public interface IPaymentManager
+    public interface IPaymentDetailManager
     {
         Task ProcessPayment(ProcessPaymentDto dto);
         Task<FetchPaymentDto> FetchPayment(Guid paymentId);

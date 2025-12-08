@@ -8,9 +8,9 @@ namespace APIGateway_Service.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentManager _paymentManager;
+        private readonly IPaymentDetailManager _paymentManager;
 
-        public PaymentController(IPaymentManager paymentManager)
+        public PaymentController(IPaymentDetailManager paymentManager)
         {
             _paymentManager = paymentManager;
         }
