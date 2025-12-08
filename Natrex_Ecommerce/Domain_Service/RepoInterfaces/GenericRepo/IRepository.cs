@@ -6,6 +6,6 @@
         Task<T> Update(T obj);
         Task<bool> Delete(T obj);
         Task<T> GetById(Guid id);
-
+       
     }
 }

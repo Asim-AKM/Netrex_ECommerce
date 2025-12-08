@@ -1,4 +1,8 @@
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
+using Application_Service.Services.Implementation;
+using Application_Service.Services.Interface;
+using Application_Service.Services.ProductManagementService.Implementation;
+using Application_Service.Services.ProductManagementService.Interfaces;
 using Application_Service.Services.UserManagmentServices.Implementation;
 using Application_Service.Services.UserManagmentServices.Interface;
 using FluentValidation;
@@ -15,6 +19,7 @@ namespace Application_Service.DI.DIServices
                           .AddScoped<IUserAccountService, UserAccountService>()
                     .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
                     .AddFluentValidationAutoValidation()
-                   .AddScoped<IInvoiceManager, InvoiceManager>();
+                   .AddScoped<IInvoiceManager, InvoiceManager>()
+                    .AddScoped<IProductServices, ProductManagement>();
     }
 }

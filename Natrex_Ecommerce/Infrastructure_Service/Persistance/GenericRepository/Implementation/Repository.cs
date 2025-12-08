@@ -28,8 +28,8 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         public async Task<T> GetById(Guid id)
         {
             return await _dbSet.FindAsync(id);
-
         }
+
 
         public async Task<T> Update(T obj)
         {

@@ -1,12 +1,11 @@
 ﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.Entities.ProductAndCategoryModule;
+using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 
 namespace Infrastructure_Service.Persistance.UnitOfWork
 {
@@ -22,6 +21,12 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
 
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
+
+        public IRepository<Product> Products =>  new Repository<Product>(_context);
+
+        public IRepository<ProductImage> ProductImages => new Repository<ProductImage>(_context);
+
+        public IRepository<Seller> Sellers => new Repository<Seller>(_context);
 
         public async Task<int> SaveChangesAsync()
         {
