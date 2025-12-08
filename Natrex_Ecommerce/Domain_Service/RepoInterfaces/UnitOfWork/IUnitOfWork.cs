@@ -14,6 +14,8 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IUserRepo UserRepository { get; }
         IUserCreadentialRepo UserCreadRepository { get; }
         IRepository<Invoice> Invoices { get; }
+        IRepository<PaymentDetail> PaymentDetails { get; }
+
         Task<int> SaveChangesAsync();
     }
 }

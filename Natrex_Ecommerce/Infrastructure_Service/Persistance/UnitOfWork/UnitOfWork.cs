@@ -24,6 +24,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
 
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
+        public IRepository<PaymentDetail> PaymentDetails => new Repository<PaymentDetail>(_context);
 
         public IUserRepo UserRepository => new UserRepo(_context);
 
