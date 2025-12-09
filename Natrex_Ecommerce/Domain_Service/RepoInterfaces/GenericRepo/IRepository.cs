@@ -1,4 +1,5 @@
-﻿namespace Domain_Service.RepoInterfaces.GenericRepo
+﻿
+namespace Domain_Service.RepoInterfaces.GenericRepo
 {
     /// <summary>
     /// Represents a generic repository interface that defines 
@@ -60,5 +61,8 @@
         /// Returns the entity if found; otherwise returns <c>null</c>.
         /// </returns>
         Task<T> GetById(Guid id);
+
+        Task SaveChangesAsync();
     }
 }
+
