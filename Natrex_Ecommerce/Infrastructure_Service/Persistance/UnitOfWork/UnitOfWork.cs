@@ -1,5 +1,4 @@
 ﻿using Domain_Service.Entities.PaymentAndPayout;
-using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
