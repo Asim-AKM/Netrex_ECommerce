@@ -2,12 +2,15 @@
 
   <ItemGroup>
     <Folder Include="Common\Filters\" />
-    <Folder Include="Common\APIResponses\" />
     <Folder Include="Security\PasswordEncriptor\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Serilog.AspNetCore" />
   </ItemGroup>

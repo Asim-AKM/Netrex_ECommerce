@@ -1,10 +1,14 @@
 ﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
+using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
+using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
+using Infrastructure_Service.Persistance.Repositories.Users;
 
 namespace Infrastructure_Service.Persistance.UnitOfWork
 {
@@ -60,12 +64,10 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         /// </summary>
         public IRepository<PaymentDetail> PaymentDetails => new Repository<PaymentDetail>(_context);
 
-        /// <summary>
-        /// Saves all pending changes to the database.
-        /// </summary>
-        /// <returns>
-        /// Returns the number of state entries written to the database.
-        /// </returns>
+        public IUserRepo UserRepository => new UserRepo(_context);
+
+        public IUserCreadentialRepo UserCreadRepository => new UserCreadentialRepo(_context);
+
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
