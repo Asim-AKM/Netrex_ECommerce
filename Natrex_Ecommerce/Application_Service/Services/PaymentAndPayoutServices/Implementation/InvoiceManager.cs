@@ -1,6 +1,6 @@
 ﻿using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
 using Application_Service.DTO_s.Payment_PayoutDtos;
-using Application_Service.Services.Interface;
+using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.Services.Implementation
+namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 {
     public class InvoiceManager : IInvoiceManager
     {
