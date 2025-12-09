@@ -1,5 +1,5 @@
 ﻿using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
-using Application_Service.DTO_s.Payment_PayoutDtos;
+using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 

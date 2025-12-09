@@ -1,4 +1,4 @@
-﻿using Application_Service.DTO_s.Payment_PayoutDtos;
+﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Domain_Service.Entities.SellerPaymentModule;
 using Domain_Service.Enums;
 

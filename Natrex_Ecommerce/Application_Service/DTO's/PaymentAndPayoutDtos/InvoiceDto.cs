@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.DTO_s.Payment_PayoutDtos
+namespace Application_Service.DTO_s.PaymentAndPayoutDtos
 {
     public record InvoiceDto(Guid OrderId,double Total);
 
