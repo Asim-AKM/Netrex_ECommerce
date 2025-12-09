@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application_Service\Application_Service.csproj" />
     <ProjectReference Include="..\Infrastructure_Service\Infrastructure_Service.csproj" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
   </ItemGroup>
 
 </Project>

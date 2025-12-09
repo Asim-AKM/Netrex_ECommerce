@@ -30,6 +30,7 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
             return await _dbSet.FindAsync(id);
         }
 
+
         public async Task<T> Update(T obj)
         {
             _dbSet.Update(obj);
