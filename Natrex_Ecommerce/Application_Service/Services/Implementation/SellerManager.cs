@@ -7,7 +7,8 @@ using Domain_Service.RepoInterfaces.UnitOfWork;
 namespace Application_Service.Services.Implementation
 {
     /// <summary>
-    /// Implements the <see cref="ISellerManager"/> interface to manage seller operations such as creation, updating, deletion, and retrieval.
+    /// Provides services for managing seller-related operations such as creation, retrieval,
+    /// update, and deletion. Implements the <see cref="ISellerManager"/> contract.
     /// </summary>
     public class SellerManager : ISellerManager
     {
@@ -16,41 +17,46 @@ namespace Application_Service.Services.Implementation
         /// <summary>
         /// Initializes a new instance of the <see cref="SellerManager"/> class.
         /// </summary>
-        /// <param name="unitOfWork">The unit of work instance used for repository operations.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="unitOfWork"/> is null.</exception>
+        /// <param name="unitOfWork">The unit of work instance providing access to seller repositories.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="unitOfWork"/> parameter is <c>null</c>.
+        /// </exception>
         public SellerManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         /// <summary>
-        /// Creates a new seller record.
+        /// Creates a new seller in the system.
         /// </summary>
-        /// <param name="createSellerDto">The DTO containing the seller data to create.</param>
+        /// <param name="createSellerDto">The data transfer object containing the seller details to create.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="createSellerDto"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="createSellerDto"/> parameter is <c>null</c>.
+        /// </exception>
         public async Task CreateSeller(CreateSellerDto createSellerDto)
         {
             if (createSellerDto is null)
-            {
                 throw new ArgumentNullException(nameof(createSellerDto));
-            }
 
             await _unitOfWork.Seller.Create(createSellerDto.Map());
         }
 
         /// <summary>
-        /// Deletes an existing seller by its unique identifier.
+        /// Deletes a seller using its unique identifier.
         /// </summary>
         /// <param name="SellerId">The unique identifier of the seller to delete.</param>
         /// <returns>
-        /// <c>true</c> if the seller was deleted successfully; otherwise, <c>false</c>.
+        /// A task that returns <c>true</c> if the seller is successfully deleted;
+        /// otherwise, <c>false</c>.
         /// </returns>
         public async Task<bool> DeleteSeller(Guid SellerId)
         {
-            if (SellerId != Guid.Empty)
+            var domain = await _unitOfWork.Seller.GetById(SellerId);
+
+            if (domain != null)
             {
-                await _unitOfWork.Seller.Delete(SellerId);
+                await _unitOfWork.Seller.Delete(domain);
                 return true;
             }
 
@@ -60,16 +66,15 @@ namespace Application_Service.Services.Implementation
         /// <summary>
         /// Retrieves a seller by its unique identifier.
         /// </summary>
-        /// <param name="SellerId">The unique identifier of the seller.</param>
+        /// <param name="SellerId">The unique identifier of the seller to retrieve.</param>
         /// <returns>
-        /// The <see cref="GetByIdSellerDto"/> containing seller details if found; otherwise, <c>null</c>.
+        /// A task that returns a <see cref="GetByIdSellerDto"/> containing seller details if found;
+        /// otherwise, <c>null</c>.
         /// </returns>
         public async Task<GetByIdSellerDto?> GetSellerById(Guid SellerId)
         {
             if (SellerId == Guid.Empty)
-            {
                 return null;
-            }
 
             var domain = await _unitOfWork.Seller.GetById(SellerId);
             return domain?.Map();
@@ -78,15 +83,17 @@ namespace Application_Service.Services.Implementation
         /// <summary>
         /// Updates an existing seller record.
         /// </summary>
-        /// <param name="updateSellerDto">The DTO containing updated seller information.</param>
-        /// <returns>The updated <see cref="UpdateSellerDto"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="updateSellerDto"/> is null.</exception>
+        /// <param name="updateSellerDto">The data transfer object containing updated seller information.</param>
+        /// <returns>
+        /// A task that returns the updated <see cref="UpdateSellerDto"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="updateSellerDto"/> parameter is <c>null</c>.
+        /// </exception>
         public async Task<UpdateSellerDto> UpdateSeller(UpdateSellerDto updateSellerDto)
         {
             if (updateSellerDto is null)
-            {
                 throw new ArgumentNullException(nameof(updateSellerDto));
-            }
 
             var domain = await _unitOfWork.Seller.Update(updateSellerDto.Map());
             return domain.MapDomainToDto();
