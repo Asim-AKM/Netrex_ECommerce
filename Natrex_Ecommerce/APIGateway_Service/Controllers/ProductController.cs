@@ -19,9 +19,8 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
-            var sellerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var id = Guid.Parse(sellerId!);
-             await _productServices.AddProduct(addProductDto, id);
+            
+             await _productServices.AddProduct(addProductDto);
             return Ok("Product Created Successfully");
         }
     }

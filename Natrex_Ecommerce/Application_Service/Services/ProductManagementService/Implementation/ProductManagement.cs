@@ -16,12 +16,13 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             _productCategories = productCategories;
 
         }
-        public async Task AddProduct(AddProductDto productDto, Guid loggedInSellerId)
+        public async Task AddProduct(AddProductDto productDto)
         {
             var category = await _productCategories.GetByName(productDto.CategoryName);
+
             if (category == null) throw new Exception("Category not found");
             var domainProduct = productDto.MapProduct();
-            domainProduct.SellerId = loggedInSellerId;
+            domainProduct.SellerId = Guid.NewGuid();  //Static Value just for now 
             domainProduct.ProductCategoryId = category.CategoryId;
             var domainImage = productDto.MapProductImage(domainProduct.ProductId);
             await _unitOfWork.Products.Create(domainProduct);

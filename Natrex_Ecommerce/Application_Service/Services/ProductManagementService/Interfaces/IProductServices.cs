@@ -4,6 +4,6 @@ namespace Application_Service.Services.ProductManagementService.Interfaces
 {
     public interface IProductServices
     {
-        Task AddProduct(AddProductDto productDto, Guid loggedInSellerId);
+        Task AddProduct(AddProductDto productDto);
     }
 }
