@@ -21,7 +21,7 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
 
         public async Task<bool> Delete(T obj)
         {
-            _dbSet.Remove(obj);
+           _dbSet.Remove(obj);
             return true;
         }
 
