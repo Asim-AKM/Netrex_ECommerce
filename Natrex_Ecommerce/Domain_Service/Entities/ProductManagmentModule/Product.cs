@@ -44,13 +44,13 @@ namespace Domain_Service.Entities.ProductAndCategoryModule
         /// <summary>
         /// Gets or sets the original price of the product.
         /// </summary>
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         /// <summary>
         /// Gets or sets the discount applied to the product.
         /// This can be a flat amount or percentage based on business rules.
         /// </summary>
-        public decimal Discount { get; set; }
+        public double Discount { get; set; }
 
         /// <summary>
         /// Gets or sets the available stock quantity of the product.

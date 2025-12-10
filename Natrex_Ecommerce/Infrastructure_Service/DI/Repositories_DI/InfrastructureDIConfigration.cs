@@ -28,8 +28,8 @@ namespace Infrastructure_Service.DI.DIRepository
                     .AddScoped<IInvoiceRepo, InvoiceRepo>()
                     .AddScoped<IProductRepo, ProductRepo>()
                     .AddScoped<IProductImageRepo, ProductImageRepo>()
-                    .AddScoped<IProductCategories, ProductCategoryRepo>();
+                    .AddScoped<IProductCategories, ProductCategoryRepo>()
                     .AddScoped<IInvoiceRepo,InvoiceRepo>()
-                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")));
     }
 }
