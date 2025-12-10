@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Application_Service.DTO_s.UsersDto.Accounts
 {
-    public record UserRegisterDto(string email,string password,string contact,string username);
+    public record CreateUserDto(string email,string password,string contact,string username);
    
 }
