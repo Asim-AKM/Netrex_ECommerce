@@ -50,14 +50,6 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             return false;
         }
 
-        public async Task<UpdateProductDto> UpdateProduct(UpdateProductDto productDto)
-        {
-            var domain = await _genericProductRepo.GetById(productDto.productId);
-            if (domain == null) throw new Exception("Product not found");
-            domain = productDto.Map();
-            await _genericProductRepo.Update(domain);
-            await _genericProductRepo.SaveChangesAsync();
-            return productDto;
-        }
+        
     }
 }

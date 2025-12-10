@@ -32,12 +32,6 @@ namespace APIGateway_Service.Controllers
                 return Ok("Product Deleted Successfully");
             return NotFound("Product Not Found");
         }
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto updateProductDto)
-        {
-            var result = await _productServices.UpdateProduct(updateProductDto);
-            return Ok(result);
-        }
+       
     }
 }
