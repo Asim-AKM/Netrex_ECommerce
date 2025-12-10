@@ -1,13 +1,27 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.UserManagment;
+using Infrastructure_Service.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
 {
     public class UserCreadentialRepo : IUserCreadentialRepo
     {
+        private readonly ApplicationDbContext _context;
+        public UserCreadentialRepo(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public Task AddUserCreadential(UserCreadential userCreadential)
         {
             throw new NotImplementedException();
         }
+
+        public async Task UpdateOtp(string otp, Guid userId)
+        {
+            await _context.UserCreadentials.Where(x => x.UserId == userId).ExecuteUpdateAsync(u => u.SetProperty(x => x.OTP, otp));
+        }
+
+
     }
 }
