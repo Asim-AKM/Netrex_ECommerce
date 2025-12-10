@@ -8,6 +8,7 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
     public interface IUnitOfWork
     {
         IRepository<User> Users { get; }
+        IRepository<Customer> Customers { get; }
         IRepository<UserCreadential> UserCreads { get; }
         IRepository<UserRole> UserRoles { get; }
         IRepository<Invoice> Invoices { get; }

@@ -23,6 +23,8 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
 
+        public IRepository<Customer> Customers =>  new Repository<Customer>(_context);
+
         public async Task<int> SaveChangesAsync()
         {
            return  await _context.SaveChangesAsync();
