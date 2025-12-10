@@ -23,5 +23,21 @@ namespace APIGateway_Service.Controllers
              await _productServices.AddProduct(addProductDto);
             return Ok("Product Created Successfully");
         }
+        [HttpDelete("{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid productId)
+        {
+            var result = await _productServices.DeleteProduct(productId);
+            if (result)
+                return Ok("Product Deleted Successfully");
+            return NotFound("Product Not Found");
+        }
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDto updateProductDto)
+        {
+            var result = await _productServices.UpdateProduct(updateProductDto);
+            return Ok(result);
+        }
     }
 }
