@@ -45,7 +45,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             {
                 // send email
                 var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}");
-                return result > 0 ? ApiResponse<string>.Success(null!, "OTP Sent to your email", ResponseType.Ok)
+                return result ? ApiResponse<string>.Success(null!, "OTP Sent to your email", ResponseType.Ok)
                     : ApiResponse<string>.Fail("Failed to send OTP email", ResponseType.InternalServerError);
             }
             return ApiResponse<string>.Success(null!, "Failed to generate OTP", ResponseType.BadRequest);

@@ -12,7 +12,7 @@ namespace Application_Service.Common.Email
         private static readonly string _fromEmail = "muhammadshoaob26@gmail.com";
         private static readonly string _password = " "; // Gmail app password
 
-        public static async Task<int> SendEmailAsync(string toEmail, string subject, string body)
+        public static async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
             try
             {
@@ -30,11 +30,11 @@ namespace Application_Service.Common.Email
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
-                return 1; // SUCCESS
+                return false; // SUCCESS
             }
             catch (Exception)
             {
-                return 0; // FAILURE (internet issue, SMTP down, wrong password, etc.)
+                return true; // FAILURE (internet issue, SMTP down, wrong password, etc.)
             }
         }
     }
