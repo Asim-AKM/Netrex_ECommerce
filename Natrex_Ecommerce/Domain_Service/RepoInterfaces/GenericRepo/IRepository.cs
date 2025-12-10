@@ -50,16 +50,6 @@ namespace Domain_Service.RepoInterfaces.GenericRepo
         /// otherwise <c>false</c>.
         /// </returns>
         Task<bool> Delete(T obj);
-
-        /// <summary>
-        /// Retrieves a single entity based on its unique identifier.
-        /// </summary>
-        /// <param name="id">
-        /// The unique identifier (GUID) of the entity.
-        /// </param>
-        /// <returns>
-        /// Returns the entity if found; otherwise returns <c>null</c>.
-        /// </returns>
         Task<T> GetById(Guid id);
 
         Task SaveChangesAsync();
