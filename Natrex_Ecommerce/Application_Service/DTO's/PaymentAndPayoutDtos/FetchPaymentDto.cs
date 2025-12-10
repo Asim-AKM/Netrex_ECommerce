@@ -1,7 +1,7 @@
 ﻿using Domain_Service.Enums;
 using System;
 
-namespace Application_Service.DTO_s.Payment_PayoutDtos
+namespace Application_Service.DTO_s.PaymentAndPayoutDtos
 {
     /// <summary>
     /// Data Transfer Object (DTO) for fetching payment details.
