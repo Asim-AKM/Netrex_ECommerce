@@ -14,5 +14,7 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
                 RoleName = RoleType.Customer,
             };
         }
+
+        
     }
 }
