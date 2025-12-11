@@ -19,9 +19,16 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
-            
              await _productServices.AddProduct(addProductDto);
             return Ok("Product Created Successfully");
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDTOS updateProductDto)
+        {
+            await _productServices.UpdateProduct(updateProductDto);
+            return Ok("Product Updated Successfully");
         }
     }
 }
