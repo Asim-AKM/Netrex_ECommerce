@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application_Service.DTO_s.Validators
 {
-    public class UserRegisterDtoValidator : AbstractValidator<CreateUserDto>
+    public class UserCreateDtoValidator : AbstractValidator<CreateUserDto>
     {
-        public UserRegisterDtoValidator()
+        public UserCreateDtoValidator()
         {
             RuleFor(x => x.email)
                 .NotEmpty().WithMessage("Email is required.")
