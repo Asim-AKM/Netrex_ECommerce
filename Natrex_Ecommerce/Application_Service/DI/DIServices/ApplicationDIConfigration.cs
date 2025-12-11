@@ -23,7 +23,7 @@ namespace Application_Service.DI.DIServices
                     .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
                     .AddFluentValidationAutoValidation()
                    .AddScoped<IInvoiceManager, InvoiceManager>()
-                    .AddScoped<IProductServices, ProductManagement>();
+                    .AddScoped<IProductServices, ProductManager>()
                             .AddScoped<IUserAccountService, UserAccountService>()
                             .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
                             .AddFluentValidationAutoValidation()
