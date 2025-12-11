@@ -1,11 +1,11 @@
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
 using Domain_Service.Entities.UserManagmentModule;
 
-namespace Application_Service.Common.Mappers.UserMapper
+namespace Application_Service.Common.Mappers.UserManagmentMapppers
 {
-    public static class UserRegistrationMappers
+    public static class UserMappers
     {
-        public static User Map(this UserRegisterDto registerDto)
+        public static User MapToDomain(this CreateUserDto registerDto)
         {
             return new User
             {

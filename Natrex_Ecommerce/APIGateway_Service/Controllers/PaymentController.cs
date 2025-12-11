@@ -1,4 +1,4 @@
-﻿using Application_Service.DTO_s.Payment_PayoutDtos;
+﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Microsoft.AspNetCore.Mvc;
 

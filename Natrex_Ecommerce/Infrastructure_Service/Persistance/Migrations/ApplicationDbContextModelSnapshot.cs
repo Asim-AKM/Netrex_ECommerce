@@ -22,6 +22,144 @@ namespace Infrastructure_Service.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.Product", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("ProductCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProductDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SellerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.ProductCategory", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("ProductCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = new Guid("4dba96a4-6fea-47df-af3a-e37cdbf0d2e7"),
+                            CategoryName = "Electronics"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("2f9abb81-f6ab-4507-8df5-f96a358edb51"),
+                            CategoryName = "Clothing"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("a1c3e5b2-3f4d-4c6e-8b2a-9f7e5d6c4b3a"),
+                            CategoryName = "Books"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("b5e8f7c6-1d2a-4e3b-9c8d-7f6e5d4c3b2a"),
+                            CategoryName = "Home & Kitchen"
+                        },
+                        new
+                        {
+                            CategoryId = new Guid("c3d4e5f6-7a8b-9c0d-1e2f-3a4b5c6d7e8f"),
+                            CategoryName = "Sports"
+                        });
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.ProductImage", b =>
+                {
+                    b.Property<Guid>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ImageId");
+
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.SellerModule.Seller", b =>
+                {
+                    b.Property<Guid>("SellerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StoreDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SellerId");
+
+                    b.ToTable("Sellers");
+                });
+
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.Customer", b =>
                 {
                     b.Property<Guid>("CustomerId")

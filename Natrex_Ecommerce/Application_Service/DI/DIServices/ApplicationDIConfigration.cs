@@ -26,8 +26,10 @@ namespace Application_Service.DI.DIServices
                     .AddScoped<IProductServices, ProductManager>()
                             .AddScoped<IUserAccountService, UserAccountService>()
                             .AddValidatorsFromAssemblyContaining<UserRegisterDto>()
+                            .AddValidatorsFromAssemblyContaining<CreateUserDto>()
                             .AddFluentValidationAutoValidation()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
-                            .AddScoped<IPaymentDetailManager, PaymentDetailManager>();
+                            .AddScoped<IPaymentDetailManager, PaymentDetailManager>()
+                            .AddScoped<IProductServices, ProductManagement>();
     }
 }

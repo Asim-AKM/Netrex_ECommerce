@@ -30,6 +30,6 @@ namespace Infrastructure_Service.DI.DIRepository
                     .AddScoped<IProductImageRepo, ProductImageRepo>()
                     .AddScoped<IProductCategories, ProductCategoryRepo>()
                     .AddScoped<IInvoiceRepo,InvoiceRepo>()
-                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")));
     }
 }
