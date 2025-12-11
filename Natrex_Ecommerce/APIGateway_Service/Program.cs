@@ -17,7 +17,7 @@ namespace APIGateway_Service
             builder.Services.ApplicationServiceDIConfigrations();
 
             // Infrastructure Service DI Configurations 
-            builder.Services.InfrastuctureDIConfig();
+            builder.Services.InfrastuctureDIConfig(builder.Configuration);
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();

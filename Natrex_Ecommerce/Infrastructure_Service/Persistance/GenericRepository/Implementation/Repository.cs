@@ -1,5 +1,5 @@
-﻿using Infrastructure_Service.Data;
-using Domain_Service.RepoInterfaces.GenericRepo;
+﻿using Domain_Service.RepoInterfaces.GenericRepo;
+using Infrastructure_Service.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
@@ -28,13 +28,20 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         public async Task<T> GetById(Guid id)
         {
             return await _dbSet.FindAsync(id);
-
         }
+
 
         public async Task<T> Update(T obj)
         {
             _dbSet.Update(obj);
             return obj;
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
+
+

@@ -1,0 +1,34 @@
+﻿using Application_Service.DTO_s.ProductDTOS;
+using Application_Service.Services.ProductManagementService.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+
+namespace APIGateway_Service.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductServices _productServices;
+        public ProductController(IProductServices productServices)
+        {
+            _productServices = productServices;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
+        {
+             await _productServices.AddProduct(addProductDto);
+            return Ok("Product Created Successfully");
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDTOS updateProductDto)
+        {
+            await _productServices.UpdateProduct(updateProductDto);
+            return Ok("Product Updated Successfully");
+        }
+    }
+}
