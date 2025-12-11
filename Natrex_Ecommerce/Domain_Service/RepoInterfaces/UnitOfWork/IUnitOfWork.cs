@@ -49,6 +49,7 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<Product> Products { get; }
         IRepository<Seller> Sellers { get; }
         IRepository<ProductImage> ProductImages { get; }
+        IRepository<Customer> Customers { get; }
        
 
         /// <summary>

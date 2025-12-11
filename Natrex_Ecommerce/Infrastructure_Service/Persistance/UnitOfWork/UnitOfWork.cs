@@ -37,6 +37,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<PaymentDetail> PaymentDetails => new Repository<PaymentDetail>(_context);
         public IUserRepo UserRepository => new UserRepo(_context);
         public IUserCreadentialRepo UserCreadRepository => new UserCreadentialRepo(_context);
+
+        public IRepository<Customer> Customers => new Repository<Customer>(_context);
+
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
