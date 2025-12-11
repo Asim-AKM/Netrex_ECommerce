@@ -7,7 +7,7 @@ using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.ProductManagementService.Implementation
 {
-    public class ProductManager : IProductServices
+    public class ProductManager : IProductManager
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductImageRepo _productImageRepo;

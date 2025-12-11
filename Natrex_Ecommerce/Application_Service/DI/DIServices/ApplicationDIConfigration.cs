@@ -23,6 +23,6 @@ namespace Application_Service.DI.DIServices
                             .AddFluentValidationAutoValidation()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
                             .AddScoped<IPaymentDetailManager, PaymentDetailManager>()
-                            .AddScoped<IProductServices, ProductManagement>();
+                            .AddScoped<IProductManager, ProductManager>();
     }
 }

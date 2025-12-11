@@ -2,7 +2,7 @@
 
 namespace Application_Service.Services.ProductManagementService.Interfaces
 {
-    public interface IProductServices
+    public interface IProductManager
     {
         Task AddProduct(AddProductDto productDto);
         Task UpdateProduct(UpdateProductDTOS productDto);
