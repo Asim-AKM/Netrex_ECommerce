@@ -11,6 +11,7 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
             _context = applicationDbContext;
 
         }
+       
 
         
     }
