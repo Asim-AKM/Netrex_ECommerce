@@ -1,4 +1,5 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Interface
         /// Implementation should map the DTO to a domain entity, 
         /// persist it using a repository, and commit changes via unit of work.
         /// </remarks>
-        Task GenerateInvoice(InvoiceDto dto);
+        Task<ApiResponse<InvoiceDto>> GenerateInvoice(InvoiceDto dto);
 
         /// <summary>
         /// Fetches an invoice by its unique identifier.
@@ -41,6 +42,6 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Interface
         /// Implementation should retrieve the invoice from the repository,
         /// map it to a DTO, and handle cases where the invoice does not exist.
         /// </remarks>
-        Task<FetchInvoiceDto> FetchInvoice(Guid InvoiceId);
+        Task<ApiResponse<FetchInvoiceDto>> GetInvoiceById(Guid InvoiceId);
     }
 }
