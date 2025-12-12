@@ -41,6 +41,11 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<T>> GetAll()
+        {
+            return await _dbSet.ToListAsync();
+        }
     }
 }
 
