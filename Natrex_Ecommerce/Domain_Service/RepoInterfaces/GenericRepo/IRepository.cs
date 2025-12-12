@@ -52,6 +52,8 @@ namespace Domain_Service.RepoInterfaces.GenericRepo
         Task<bool> Delete(T obj);
         Task<T> GetById(Guid id);
 
+        Task<List<T>> GetAll();
+
         Task SaveChangesAsync();
     }
 }
