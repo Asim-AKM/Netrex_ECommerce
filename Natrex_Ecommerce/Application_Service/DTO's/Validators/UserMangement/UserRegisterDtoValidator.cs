@@ -1,11 +1,11 @@
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
 using FluentValidation;
 
-namespace Application_Service.DTO_s.Validators
+namespace Application_Service.DTO_s.Validators.UserMangement
 {
-    public class UserCreateDtoValidator : AbstractValidator<CreateUserDto>
+    public class UserRegisterDtoValidator : AbstractValidator<CreateUserDto>
     {
-        public UserCreateDtoValidator()
+        public UserRegisterDtoValidator()
         {
             RuleFor(x => x.email)
                 .NotEmpty().WithMessage("Email is required.")
