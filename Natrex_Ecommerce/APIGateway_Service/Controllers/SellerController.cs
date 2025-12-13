@@ -1,5 +1,5 @@
 ﻿using Application_Service.DTO_s.SellerDtos;
-using Application_Service.Services.Interface;
+using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -51,6 +51,7 @@ namespace APIGateway_Service.Controllers
         [HttpPut("UpdateSeller/{SellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateSeller(UpdateSellerDto updateSellerDto)
         {
@@ -69,6 +70,7 @@ namespace APIGateway_Service.Controllers
         [HttpDelete("DeleteSeller/{SellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSeller(Guid SellerId)
         {
@@ -93,11 +95,18 @@ namespace APIGateway_Service.Controllers
         public async Task<IActionResult> GetSellerById(Guid SellerId)
         {
             var seller = await _ISellerManager.GetSellerById(SellerId);
-            if (seller != null)
-            {
-                return Ok(seller);
-            }
-            return BadRequest();
+            return Ok(seller);
+           
+        }
+        [HttpGet("GetAllSellers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllSellers(GetAllSellerDto getAllSellerDto)
+        {
+            var Seller = await _ISellerManager.GetAllSeller(getAllSellerDto);
+            return Ok(Seller);
         }
     }
 }
