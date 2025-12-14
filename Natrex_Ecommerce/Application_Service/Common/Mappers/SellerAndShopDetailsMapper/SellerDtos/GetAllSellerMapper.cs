@@ -10,17 +10,7 @@ namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDt
 {
     public static class GetAllSellerMapper
     {
-        public static Seller Map(this GetAllSellerDto getAllSellers)
-        {
-            return new Seller
-            {
-                SellerId = getAllSellers.SellerId,
-                UserId = getAllSellers.UserId,
-                ShopId = getAllSellers.ShopId,
-                StoreName = getAllSellers.StoreName,
-                StoreDescription = getAllSellers.StoreDescription,
-            };
-        }
+
         public static GetAllSellerDto MapToDto(this Seller seller)
         {
             return new GetAllSellerDto

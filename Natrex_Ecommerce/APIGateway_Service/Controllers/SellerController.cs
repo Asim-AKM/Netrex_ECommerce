@@ -103,9 +103,9 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllSellers(GetAllSellerDto getAllSellerDto)
+        public async Task<IActionResult> GetAllSellers()
         {
-            var Seller = await _ISellerManager.GetAllSeller(getAllSellerDto);
+            var Seller = await _ISellerManager.GetAllSeller();
             return Ok(Seller);
         }
     }

@@ -43,14 +43,14 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             return false;
         }
 
-        public async Task<GetAllSellerDto> GetAllSeller(GetAllSellerDto getAllSellers)
+        public async Task<GetAllSellerDto> GetAllSeller()
         {
-           var Details= await _sellerRepository.GetAllSellers(getAllSellers.Map());
-            if(getAllSellers !=null)
+           var Details= await _sellerRepository.GetAllSellers();
+            if(Details !=null)
             {
                 return Details.MapToDto();
             }
-            throw new ArgumentException(nameof(getAllSellers));
+            throw new ArgumentException(nameof(Details));
         }
 
         public async Task<GetByIdSellerDto?> GetSellerById(Guid SellerId)

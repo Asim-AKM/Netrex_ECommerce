@@ -39,9 +39,9 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             return false;
         }
 
-        public async Task<GetAllShopDetailsDto> GetAllShopDetails(GetAllShopDetailsDto getAll)
+        public async Task<GetAllShopDetailsDto> GetAllShopDetails()
         {
-          var Details=await _shopDetails.GetAllShopDetails(getAll.Map());
+          var Details=await _shopDetails.GetAllShopDetails();
             if(Details != null)
             {
                 return Details.MapToDto();

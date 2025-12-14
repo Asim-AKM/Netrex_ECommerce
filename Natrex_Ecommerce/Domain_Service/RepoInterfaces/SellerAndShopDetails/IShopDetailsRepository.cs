@@ -9,6 +9,6 @@ namespace Domain_Service.RepoInterfaces.SellerAndShopDetails
 {
     public interface IShopDetailsRepository
     {
-        Task<ShopDetail> GetAllShopDetails(ShopDetail shopDetail);
+        Task<ShopDetail> GetAllShopDetails();
     }
 }

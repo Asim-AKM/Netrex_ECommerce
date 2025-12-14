@@ -59,9 +59,9 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllShopDetails(GetAllShopDetailsDto getAllShopDetailsDto)
+        public async Task<IActionResult> GetAllShopDetails()
         {
-            var Details = await _manager.GetAllShopDetails(getAllShopDetailsDto);
+            var Details = await _manager.GetAllShopDetails();
             return Ok(Details);
         }
 

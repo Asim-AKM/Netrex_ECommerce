@@ -13,7 +13,7 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
         Task<UpdateShopDetailsDto> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto);
         Task<bool> DeleteShopDetails(Guid ShopDetailId);
         Task<GetByIdShopDetailsDto> GetByIdShopDetails(Guid ShopDetailId);
-        Task<GetAllShopDetailsDto> GetAllShopDetails(GetAllShopDetailsDto getAll);
+        Task<GetAllShopDetailsDto> GetAllShopDetails();
 
     }
 }

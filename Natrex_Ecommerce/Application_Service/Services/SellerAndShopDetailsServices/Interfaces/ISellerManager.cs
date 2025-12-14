@@ -38,6 +38,6 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
         /// Returns the seller details if found; otherwise <c>null</c>.
         /// </returns>
         Task<GetByIdSellerDto?> GetSellerById(Guid SellerId);
-        Task<GetAllSellerDto> GetAllSeller(GetAllSellerDto getAllSellers);
+        Task<GetAllSellerDto> GetAllSeller();
     }
 }
