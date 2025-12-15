@@ -1,11 +1,12 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.UserManagmentDto_s;
 
 namespace Application_Service.Services.UserManagmentServices.Interface
 {
     public interface IUserManager
     {
-        Task<string> UpdateUserAsync(UpdateUserDto request);
-        Task<string> DeleteUserAsync(Guid id);
-        Task<List<GetUsersDto>> GetAllUserAsync();
+        Task<ApiResponse<string>> UpdateUserAsync(UpdateUserDto request);
+        Task<ApiResponse<string>> DeleteUserAsync(Guid id);
+        Task<ApiResponse<List<GetUsersDto>>> GetAllUserAsync();
     }
 }
