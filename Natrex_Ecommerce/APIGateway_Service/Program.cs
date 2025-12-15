@@ -9,11 +9,13 @@ namespace APIGateway_Service
         public static void Main(string[] args)
         {
 
+            // Application Service DI Configurations
+     
            
                 var builder = WebApplication.CreateBuilder(args);
 
                 // Add services to the container.
-
+            builder.Services.AddAppModelValidations();
                 builder.Services.AddControllers();
 
                 // Application Service DI Configurations
