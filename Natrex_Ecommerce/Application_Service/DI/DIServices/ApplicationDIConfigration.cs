@@ -1,3 +1,4 @@
+﻿using Application_Service.DTO_s.Validators.UserMangement;
 ﻿using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Services.PaymentAndPayoutServices.Implementation;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
@@ -16,7 +17,7 @@ namespace Application_Service.DI.DIServices
         public static IServiceCollection ApplicationServiceDIConfigrations(this IServiceCollection services) => services
 
                             .AddScoped<IPasswordEncriptor, PasswordEncriptor>()
-                            .AddValidatorsFromAssemblyContaining<CreateUserDto>()
+                            .AddValidatorsFromAssemblyContaining<UserRegisterDtoValidator>()
                             .AddFluentValidationAutoValidation()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
                             .AddScoped<IPaymentDetailManager, PaymentDetailManager>()
