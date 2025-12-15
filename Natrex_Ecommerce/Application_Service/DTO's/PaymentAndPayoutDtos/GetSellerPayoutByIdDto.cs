@@ -2,7 +2,7 @@
 
 namespace Application_Service.DTO_s.PaymentAndPayoutDtos
 {
-    public record FetchSellerPayoutDto(
+    public record GetSellerPayoutByIdDto(
                           Guid SellerPayoutId,
                           Guid SellerId,
                           Guid OrderId,

@@ -1,4 +1,5 @@
 ﻿using Application_Service.DTO_s.Validators.UserMangement;
+﻿using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Services.PaymentAndPayoutServices.Implementation;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Application_Service.Services.ProductManagementService.Implementation;
@@ -20,6 +21,7 @@ namespace Application_Service.DI.DIServices
                             .AddFluentValidationAutoValidation()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
                             .AddScoped<IPaymentDetailManager, PaymentDetailManager>()
-                            .AddScoped<IProductManager, ProductManager>();
+                            .AddScoped<IProductManager, ProductManager>()
+                            .AddScoped<IUserManager, UserManager>();
     }
 }

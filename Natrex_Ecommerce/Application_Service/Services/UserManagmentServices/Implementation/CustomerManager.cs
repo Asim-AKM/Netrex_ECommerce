@@ -1,18 +1,13 @@
-﻿using Application_Service.Common.Mappers.CustomesrMapper;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.UserManagmentMapppers;
 using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Services.UserManagmentServices.Interface;
-using Domain_Service.Entities.UserManagmentModule;
+using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application_Service.Services.UserManagmentServices.Implementation
 {
-    public class CustomerManager : ICustomermanager
+    public class CustomerManager : ICustomerManager
     {
         private readonly IUnitOfWork _unitOfWork;
         public CustomerManager(IUnitOfWork unitOfWork)
@@ -20,42 +15,38 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<string> DeleteCustomer(Guid customerId)
+        public async Task<ApiResponse<string>> DeleteCustomer(Guid customerId)
         {
-            // request to Sir : If we place the GetById logic directly inside the Delete function
-            // (used in the repository Directly), the manager code will remain much cleaner.
-            var data = await _unitOfWork.Customers.GetById(customerId);
-            await _unitOfWork.Customers.Delete(data);
-            var user = await _unitOfWork.Users.GetById(data.UserId);
+            var customer = await _unitOfWork.Customers.GetById(customerId);
+            if (customer == null)
+                return ApiResponse<string>.Fail("Customer Not Found", ResponseType.NotFound);
+
+            await _unitOfWork.Customers.Delete(customer);
+            var user = await _unitOfWork.Users.GetById(customer.UserId);
             await _unitOfWork.Users.Delete(user);
             var userCred = await _unitOfWork.UserCreads.GetById(user.UserId);
             await _unitOfWork.UserCreads.Delete(userCred);
             var userRole = await _unitOfWork.UserRoles.GetById(user.UserId);
             await _unitOfWork.UserRoles.Delete(userRole);
-            await _unitOfWork.SaveChangesAsync();
 
-            return "Customer Deleted Successfully";
+            return await _unitOfWork.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "Deleted Succesfuly") : ApiResponse<string>.Fail("Internal server Error", ResponseType.InternalServerError);
 
         }
 
-        public Task<Customer> GetAllCustomer(Guid customerId)
+        public async Task<ApiResponse<List<GetCustomerDto>>> GetAllCustomers()
         {
-            // The work is currently on hold as I need to discuss
-            // the implementation details on Microsoft Teams.
-            throw new NotImplementedException();
+            var customers = await _unitOfWork.Customers.GetAll();
+            return customers.Count > 0 ? ApiResponse<List<GetCustomerDto>>.Success(customers.MapToGetAllDto(), " Customer List Retrieved Succesfuly ") : ApiResponse<List<GetCustomerDto>>.Fail("List is Empty", ResponseType.NotFound);
         }
 
-        public async Task<string> UpdateCustomer(UpdateCustomerDto updateCustomer)
+        public async Task<ApiResponse<string>> UpdateCustomer(UpdateCustomerDto updateCustomer)
         {
-            var data = await _unitOfWork.Customers.GetById(updateCustomer.CustomerId);
-            data.Province = updateCustomer.Province;
-            data.City = updateCustomer.City;
-            data.Country = updateCustomer.Country;
-            data.Address = updateCustomer.Address;
-            await _unitOfWork.Customers.Update(data);
-            await _unitOfWork.SaveChangesAsync();
+            var domain = await _unitOfWork.Customers.GetById(updateCustomer.UserId);
+            if (domain == null)
+                return ApiResponse<string>.Fail("Customer Not Found ", ResponseType.NotFound);
 
-            return "Customer Updated Successfully";
+            await _unitOfWork.Customers.Update(updateCustomer.MapToDomain());
+            return await _unitOfWork.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "Customer Update Succesfully") : ApiResponse<string>.Fail("Internal Server Error", ResponseType.InternalServerError);
         }
 
     }
