@@ -12,7 +12,7 @@ namespace Application_Service.Common.APIResponses
         public T Data { get; set; } = default!;
         public bool IsSuccess { get; set; }
         public string Message { get; set; } = string.Empty;
-        public ResponseType Status { get; set;   
+        public ResponseType Status { get; set; }   
 
         public static ApiResponse<T> Success(T data, string messege, ResponseType status = ResponseType.Ok)
         {
