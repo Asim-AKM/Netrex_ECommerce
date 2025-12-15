@@ -14,8 +14,8 @@ namespace APIGateway_Service.Controllers
         {
             _productManager = productmanager;
         }
-
-        [HttpPost]
+        
+        [HttpPost("CreateProduct")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
@@ -23,7 +23,7 @@ namespace APIGateway_Service.Controllers
             return Ok("Product Created Successfully");
         }
 
-        [HttpPut]
+        [HttpPut("UpdateProduct/{ProductId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDTOS updateProductDto)
         {
