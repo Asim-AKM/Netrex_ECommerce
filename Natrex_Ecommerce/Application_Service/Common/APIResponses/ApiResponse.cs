@@ -21,7 +21,7 @@ namespace Application_Service.Common.APIResponses
                 Data = data!,
                 IsSuccess = true,
                 Status = status,
-                Messeg = messege
+                Message = messege
             };
 
         }
@@ -33,7 +33,7 @@ namespace Application_Service.Common.APIResponses
                 Data = default!,
                 IsSuccess = false,
                 Status = status,
-                Messeg = error
+                Message = error
             };
         }
 
@@ -44,7 +44,7 @@ namespace Application_Service.Common.APIResponses
                 Data = data,
                 IsSuccess = false,
                 Status = status,
-                Messeg = error
+                Message = error
             };
         }
     }
