@@ -1,6 +1,6 @@
 ﻿using Application_Service.DTO_s.SellerDtos;
 
-namespace Application_Service.Services.Interface
+namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
 {
     /// <summary>
     /// Defines contract methods for managing Seller operations including creation, updating, deletion, and fetching seller information.
@@ -38,5 +38,6 @@ namespace Application_Service.Services.Interface
         /// Returns the seller details if found; otherwise <c>null</c>.
         /// </returns>
         Task<GetByIdSellerDto?> GetSellerById(Guid SellerId);
+        Task<GetAllSellerDto> GetAllSeller();
     }
 }

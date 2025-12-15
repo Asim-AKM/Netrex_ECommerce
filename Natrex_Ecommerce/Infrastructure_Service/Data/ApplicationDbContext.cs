@@ -16,6 +16,7 @@ namespace Infrastructure_Service.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<ShopDetail> shopDetails {  get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
@@ -56,6 +57,7 @@ namespace Infrastructure_Service.Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<SellerPayout> SellerPayouts { get; set; }
+        
 
     }
 }
