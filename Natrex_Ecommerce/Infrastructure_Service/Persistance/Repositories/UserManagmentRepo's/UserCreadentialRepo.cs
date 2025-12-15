@@ -12,9 +12,9 @@ namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
         {
             _context = context;
         }
-        public Task AddUserCreadential(UserCreadential userCreadential)
+        public async Task<UserCreadential> GetCreadbyFK(Guid userId)
         {
-            throw new NotImplementedException();
+            return await _context.UserCreadentials.Where(ur => ur.UserId == userId).FirstOrDefaultAsync() ?? new UserCreadential();
         }
 
         public async Task UpdateOtp(string otp, Guid userId)

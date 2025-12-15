@@ -3,11 +3,11 @@ using Domain_Service.Entities.SellerPaymentModule;
 
 namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
 {
-    public static class FetchSellerPayoutMapper
+    public static class GetSellerPayoutByIdMapper
     {
-        public static FetchSellerPayoutDto Map(this SellerPayout sellerPayout)
+        public static GetSellerPayoutByIdDto Map(this SellerPayout sellerPayout)
         {
-            return new FetchSellerPayoutDto(
+            return new GetSellerPayoutByIdDto(
                 sellerPayout.SellerPayoutId,
                 sellerPayout.SellerId,
                 sellerPayout.OrderId,

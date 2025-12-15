@@ -1,4 +1,5 @@
-﻿using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
 using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Domain_Service.Entities.SellerPaymentModule;
@@ -14,31 +15,32 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
         {
             _sellerPayoutRepository = sellerpayoutrepo;
         }
-        public async Task CreateSellerPayout(AddSellerPayoutDto dto)
+        public async Task<ApiResponse<AddSellerPayoutDto>> CreateSellerPayout(AddSellerPayoutDto dto)
         {
             var sellerPayout = dto.Map();
             await _sellerPayoutRepository.Create(sellerPayout);
             await _sellerPayoutRepository.SaveChangesAsync();
+            return ApiResponse<AddSellerPayoutDto>.Success(dto, "Seller Payout Created Successfully", ResponseType.Created);
         }
 
-        public async Task<FetchSellerPayoutDto> GetSellerPayoutById(Guid sellerPayoutId)
+        public async Task<ApiResponse<GetSellerPayoutByIdDto>> GetSellerPayoutById(Guid sellerPayoutId)
         {
             var payout = await _sellerPayoutRepository.GetById(sellerPayoutId);
             if (payout == null)
             {
-                return null!;
+                return ApiResponse<GetSellerPayoutByIdDto>.Fail("Seller Payout not found", ResponseType.NotFound);
             }
-            return payout.Map();
-
+            var response = payout.Map();
+            return ApiResponse<GetSellerPayoutByIdDto>.Success(response, "Seller Payout retrieved successfully", ResponseType.Ok);
 
         }
 
-        public async Task UpdateSellerPayoutAsPaid(Guid sellerPayoutId)
+        public async Task<ApiResponse<GetSellerPayoutByIdDto>> UpdateSellerPayoutAsPaid(Guid sellerPayoutId)
         {
             var payout = await _sellerPayoutRepository.GetById(sellerPayoutId);
             if (payout == null)
             {
-                return;
+                return ApiResponse<GetSellerPayoutByIdDto>.Fail("Seller Payout not found", ResponseType.NotFound);
             }
 
             payout.PaymentStatus = PaymentStatus.success;
@@ -46,6 +48,7 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 
             await _sellerPayoutRepository.Update(payout);
             await _sellerPayoutRepository.SaveChangesAsync();
+            return ApiResponse<GetSellerPayoutByIdDto>.Success(payout.Map(), "Seller Payout Updated As Paid Successfully", ResponseType.Ok);
         }
     }
 }

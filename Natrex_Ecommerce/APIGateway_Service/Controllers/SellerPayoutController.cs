@@ -1,6 +1,5 @@
 ﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -20,12 +19,12 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateSellerPayout([FromBody] AddSellerPayoutDto request)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _sellerPayoutService.CreateSellerPayout(request);
-            return Created("", "Seller Payout Created Successfully");
+            var response = await _sellerPayoutService.CreateSellerPayout(request);
+            return StatusCode((int)response.Status, response);
         }
 
         [HttpGet("GetSellerPayoutById/{sellerPayoutId}")]
@@ -34,11 +33,7 @@ namespace APIGateway_Service.Controllers
         public async Task<IActionResult> GetSellerPayoutById([FromRoute] Guid sellerPayoutId)
         {
             var payout = await _sellerPayoutService.GetSellerPayoutById(sellerPayoutId);
-            if (payout == null)
-            {
-                return NotFound();
-            }
-            return Ok(payout);
+            return StatusCode((int)payout.Status, payout);
         }
 
         [HttpPut("UpdateSellerPayoutAsPaid/{sellerPayoutId}")]
@@ -46,13 +41,8 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateSellerPayoutAsPaid([FromRoute] Guid sellerPayoutId)
         {
-            var payout = await _sellerPayoutService.GetSellerPayoutById(sellerPayoutId);
-            if (payout == null)
-            {
-                return NotFound();
-            }
-            await _sellerPayoutService.UpdateSellerPayoutAsPaid(sellerPayoutId);
-            return Ok("Seller Payout Updated As Paid Successfully");
+            var payout = await _sellerPayoutService.UpdateSellerPayoutAsPaid(sellerPayoutId);
+            return StatusCode((int)payout.Status, payout);
         }
     }
 }

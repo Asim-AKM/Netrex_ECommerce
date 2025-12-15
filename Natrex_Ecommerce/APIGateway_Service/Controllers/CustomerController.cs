@@ -8,31 +8,39 @@ namespace APIGateway_Service.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomermanager _customermanager;
-        public CustomerController(ICustomermanager customermanager)
+        private readonly ICustomerManager _customermanager;
+        public CustomerController(ICustomerManager customermanager)
         {
             _customermanager = customermanager;
         }
 
-        
         [HttpPut("updateCustomer")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerDto request)
         {
-            await _customermanager.UpdateCustomer(request);
-            return Ok();
+            var response = await _customermanager.UpdateCustomer(request);
+            return StatusCode((int)response.Status, response);
         }
         [HttpDelete("deleteCustomer")]
-        public async Task<IActionResult> DeleteCustomer( Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteCustomer(Guid id)
         {
-            await _customermanager.DeleteCustomer(id);
-            return Ok();
+            var respone = await _customermanager.DeleteCustomer(id);
+            return StatusCode((int)respone.Status, respone);
         }
 
-        [HttpDelete("GetAllCustomer")]
-        public async Task<IActionResult> GetAllCustomer(Guid id)
+        [HttpDelete("getAllCustomers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllCustomers()
         {
-            await _customermanager.DeleteCustomer(id);
-            return Ok();
+            var response = await _customermanager.GetAllCustomers();
+            return StatusCode((int)response.Status, response);
         }
 
 

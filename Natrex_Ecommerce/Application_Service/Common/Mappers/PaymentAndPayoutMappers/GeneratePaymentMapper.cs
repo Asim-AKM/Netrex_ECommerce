@@ -7,7 +7,7 @@ namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
     /// <summary>
     /// Static mapper class for converting between Payment-related DTOs and Entities.
     /// Provides extension methods to map <see cref="ProcessPaymentDto"/> to <see cref="PaymentDetail"/>
-    /// and <see cref="PaymentDetail"/> to <see cref="FetchPaymentDto"/>.
+    /// and <see cref="PaymentDetail"/> to <see cref="GetPaymentByIdDto"/>.
     /// </summary>
     public static class PaymentMapper
     {
@@ -39,17 +39,17 @@ namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
         }
 
         /// <summary>
-        /// Maps a <see cref="PaymentDetail"/> entity to a <see cref="FetchPaymentDto"/>.
+        /// Maps a <see cref="PaymentDetail"/> entity to a <see cref="GetPaymentByIdDto"/>.
         /// </summary>
         /// <param name="entity">The <see cref="PaymentDetail"/> entity to convert.</param>
-        /// <returns>A <see cref="FetchPaymentDto"/> containing the same payment details for read operations.</returns>
+        /// <returns>A <see cref="GetPaymentByIdDto"/> containing the same payment details for read operations.</returns>
         /// <remarks>
         /// This method is intended for sending payment details to the client
         /// without exposing the internal entity directly.
         /// </remarks>
-        public static FetchPaymentDto Map(this PaymentDetail entity)
+        public static GetPaymentByIdDto Map(this PaymentDetail entity)
         {
-            return new FetchPaymentDto(
+            return new GetPaymentByIdDto(
                 entity.PaymentDetailId,
                 entity.OrderId,
                 entity.PaymentMethod,

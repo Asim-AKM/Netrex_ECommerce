@@ -1,17 +1,13 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.PaymentAndPayoutDtos;
 
 namespace Application_Service.Services.PaymentAndPayoutServices.Interface
 {
     public interface ISellerPayoutManager
     {
-        Task CreateSellerPayout(AddSellerPayoutDto dto);
-        Task UpdateSellerPayoutAsPaid(Guid sellerPayoutId);
-        Task<FetchSellerPayoutDto> GetSellerPayoutById(Guid sellerPayoutId);
+        Task<ApiResponse<AddSellerPayoutDto>> CreateSellerPayout(AddSellerPayoutDto dto);
+        Task<ApiResponse<GetSellerPayoutByIdDto>> UpdateSellerPayoutAsPaid(Guid sellerPayoutId);
+        Task<ApiResponse<GetSellerPayoutByIdDto>> GetSellerPayoutById(Guid sellerPayoutId);
 
     }
 }

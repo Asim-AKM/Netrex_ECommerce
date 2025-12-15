@@ -22,6 +22,56 @@ namespace Infrastructure_Service.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain_Service.Entities.PaymentAndPayout.Invoice", b =>
+                {
+                    b.Property<Guid>("InvoiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.HasKey("InvoiceId");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.PaymentAndPayout.PaymentDetail", b =>
+                {
+                    b.Property<Guid>("PaymentDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("AmountPaid")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentDetailId");
+
+                    b.ToTable("PaymentDetails");
+                });
+
             modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.Product", b =>
                 {
                     b.Property<Guid>("ProductId")
@@ -158,6 +208,32 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.HasKey("SellerId");
 
                     b.ToTable("Sellers");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.SellerPaymentModule.SellerPayout", b =>
+                {
+                    b.Property<Guid>("SellerPayoutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("AmountToPay")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PayOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SellerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SellerPayoutId");
+
+                    b.ToTable("SellerPayouts");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.Customer", b =>

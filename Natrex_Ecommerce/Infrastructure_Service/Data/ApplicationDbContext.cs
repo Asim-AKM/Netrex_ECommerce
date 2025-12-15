@@ -1,5 +1,7 @@
-﻿using Domain_Service.Entities.ProductAndCategoryModule;
+﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
+using Domain_Service.Entities.SellerPaymentModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +10,13 @@ namespace Infrastructure_Service.Data
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-     
+
         public DbSet<User> Users { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<ShopDetail> shopDetails {  get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
@@ -50,6 +53,11 @@ namespace Infrastructure_Service.Data
         public DbSet<UserCreadential> UserCreadentials { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<SellerPayout> SellerPayouts { get; set; }
+        
 
     }
 }
