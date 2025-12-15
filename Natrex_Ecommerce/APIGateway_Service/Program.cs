@@ -1,4 +1,4 @@
-using Application_Service.DI.DIServices; 
+using Application_Service.DI.DIServices;
 using Infrastructure_Service.DI.DIRepository;
 
 namespace APIGateway_Service
@@ -9,12 +9,9 @@ namespace APIGateway_Service
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-
             // Application Service DI Configurations
             builder.Services.ApplicationServiceDIConfigrations();
+            builder.Services.AddAppModelValidations();
 
             // Infrastructure Service DI Configurations 
             builder.Services.InfrastuctureDIConfig(builder.Configuration);

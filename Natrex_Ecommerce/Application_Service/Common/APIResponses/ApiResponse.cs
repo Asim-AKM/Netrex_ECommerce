@@ -9,10 +9,10 @@ namespace Application_Service.Common.APIResponses
 {
     public class ApiResponse<T>
     {
-        private T Data { get; set; } = default!;
-        private bool IsSuccess { get; set; }
-        private string Messeg { get; set; } = string.Empty;
-        public ResponseType Status { get; set; } // i keep this property public becuase i use it for checking the response type at controller level after checking we return that type of response to swagger  
+        public T Data { get; set; } = default!;
+        public bool IsSuccess { get; set; }
+        public string Messeg { get; set; } = string.Empty;
+        public ResponseType Status { get; set;   
 
         public static ApiResponse<T> Success(T data, string messege, ResponseType status = ResponseType.Ok)
         {
@@ -31,6 +31,17 @@ namespace Application_Service.Common.APIResponses
             return new ApiResponse<T>
             {
                 Data = default!,
+                IsSuccess = false,
+                Status = status,
+                Messeg = error
+            };
+        }
+
+        public static ApiResponse<T> Fail(T data, string error, ResponseType status = ResponseType.BadRequest)
+        {
+            return new ApiResponse<T>
+            {
+                Data = data,
                 IsSuccess = false,
                 Status = status,
                 Messeg = error
