@@ -6,5 +6,7 @@ namespace Application_Service.Services.ProductManagementService.Interfaces
     {
         Task AddProduct(AddProductDto productDto);
         Task UpdateProduct(UpdateProductDTOS productDto);
+        Task<bool> DeleteProduct(Guid productId);
+        Task<GetByProductIdDto> GetByProductId(Guid productId);
     }
 }
