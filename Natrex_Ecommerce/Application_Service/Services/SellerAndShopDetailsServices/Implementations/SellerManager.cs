@@ -1,23 +1,22 @@
-﻿using Application_Service.Common.Mappers.SellerAndShopDetailsMapper;
-using Application_Service.Common.Mappers.SellerAnShopDetailsMapper;
+﻿using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos;
 using Application_Service.DTO_s.SellerDtos;
-using Application_Service.Services.Interface;
+using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 
-namespace Application_Service.Services.Implementation
+namespace Application_Service.Services.SellerAndShopDetailsServices.Implementations
 {
-    /// <summary>
-    /// Provides services for managing seller-related operations such as creation, retrieval,
-    /// update, and deletion. Implements the <see cref="ISellerManager"/> contract.
-    /// </summary>
+
     public class SellerManager : ISellerManager
     {
         private readonly IRepository<Seller> _genericRepo;
+        private readonly ISellerRepository _sellerRepository;
 
-        public SellerManager(IRepository<Seller> repository)
+        public SellerManager(IRepository<Seller> repository, ISellerRepository sellerRepository)
         {
             _genericRepo = repository;
+            _sellerRepository = sellerRepository;
         }
 
 
@@ -42,6 +41,16 @@ namespace Application_Service.Services.Implementation
             }
 
             return false;
+        }
+
+        public async Task<GetAllSellerDto> GetAllSeller()
+        {
+           var Details= await _sellerRepository.GetAllSellers();
+            if(Details !=null)
+            {
+                return Details.MapToDto();
+            }
+            throw new ArgumentException(nameof(Details));
         }
 
         public async Task<GetByIdSellerDto?> GetSellerById(Guid SellerId)

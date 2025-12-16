@@ -2,7 +2,7 @@
 using Domain_Service.Entities.SellerModule;
 using System;
 
-namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper
+namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos
 {
     /// <summary>
     /// Provides mapping extension methods for converting <see cref="Seller"/> entities to <see cref="GetByIdSellerDto"/> objects.

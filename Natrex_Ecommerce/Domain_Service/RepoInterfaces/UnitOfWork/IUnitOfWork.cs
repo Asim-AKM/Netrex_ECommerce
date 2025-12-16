@@ -45,10 +45,12 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<UserRole> UserRoles { get; }
         IUserRepo UserRepository { get; }
         IUserCreadentialRepo UserCreadRepository { get; }
+        IUserRoleRepo UserRoleRepository { get; }
         IRepository<Invoice> Invoices { get; }
         IRepository<Product> Products { get; }
         IRepository<Seller> Sellers { get; }
         IRepository<ProductImage> ProductImages { get; }
+        IRepository<Customer> Customers { get; }
        
 
         /// <summary>

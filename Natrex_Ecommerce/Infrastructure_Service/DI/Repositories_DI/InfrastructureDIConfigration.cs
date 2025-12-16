@@ -12,6 +12,7 @@ using Infrastructure_Service.Persistance.Repositories.Cart_OrderRepo.OrderRepo;
 using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 using Infrastructure_Service.Persistance.Repositories.ProductManagement;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
+using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
 using Infrastructure_Service.Persistance.Repositories.UserRoles;
 using Infrastructure_Service.Persistance.Repositories.Users;
 using Infrastructure_Service.Persistance.UnitOfWork;
@@ -19,11 +20,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure_Service.DI.DIRepository
+namespace Infrastructure_Service.DI.Repositories_DI
 {
     public static class InfrastructureDIConfigration
     {
-        public static IServiceCollection InfrastuctureDIConfig(this IServiceCollection services, IConfigurationManager configuration) => services
+        public static IServiceCollection InfrastructureDIConfig(this IServiceCollection services, IConfiguration configuration) => services
                     .AddScoped<IUserRepo, UserRepo>()
                     .AddScoped<IUserCreadentialRepo, UserCreadentialRepo>()
                     .AddScoped<IUserRoleRepo, UserRoleRepo>()
@@ -38,6 +39,8 @@ namespace Infrastructure_Service.DI.DIRepository
                     .AddScoped<IOrderItemRepo, OrderItemRepo>()
                     .AddScoped<ICartRepo, CartRepo>()
                     .AddScoped<ICartItemRepo, CartItemRepo>()
-                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")));
+                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")))          
+                    .AddScoped<ICustomerRepo, CustomerRepo>();
+                    
     }
 }

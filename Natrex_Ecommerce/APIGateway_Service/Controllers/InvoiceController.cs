@@ -1,6 +1,5 @@
 ﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -36,6 +35,7 @@ namespace APIGateway_Service.Controllers
         /// <returns>
         /// Returns <see cref="StatusCodes.Status201Created"/> if the invoice is successfully created.
         /// Returns <see cref="StatusCodes.Status400BadRequest"/> if the request is invalid.
+        /// Returns <see cref="StatusCodes.Status500InternalServerError"/>
         /// </returns>
         /// <remarks>
         /// This action maps the DTO to a domain entity, creates the invoice via the service layer,
@@ -44,10 +44,11 @@ namespace APIGateway_Service.Controllers
         [HttpPost("GenerateInvoice")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GenerateInvoice([FromBody] InvoiceDto dto)
         {
-            await _invoiceService.GenerateInvoice(dto);
-            return Created("", "Invoice Created Successfully");
+           var response = await _invoiceService.GenerateInvoice(dto);
+            return StatusCode((int) response.Status, response);
         }
 
         /// <summary>
@@ -63,18 +64,15 @@ namespace APIGateway_Service.Controllers
         /// This action calls the application service to retrieve the invoice,
         /// maps it to a DTO, and returns it to the client.
         /// </remarks>
-        [HttpGet("FetchInvoice/{InvoiceId:guid}")]
+        [HttpGet("GetInvoiceById/{InvoiceId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> FetchInvoice(Guid InvoiceId)
+        public async Task<IActionResult> GetInvoiceById(Guid InvoiceId)
         {
-            var fetchinvoice = await _invoiceService.FetchInvoice(InvoiceId);
-            if (fetchinvoice == null)
-            {
-                return NotFound("Invoice Not Found");
-            }
-            return Ok(fetchinvoice);
+            var response = await _invoiceService.GetInvoiceById(InvoiceId);
+           
+            return StatusCode((int)response.Status,response);
         }
     }
 }

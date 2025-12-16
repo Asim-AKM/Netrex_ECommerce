@@ -3,6 +3,8 @@
   <ItemGroup>
     <Folder Include="Common\Filters\" />
     <Folder Include="Security\PasswordEncriptor\" />
+    <Folder Include="Services\Implementation\" />
+    <Folder Include="Services\Interface\" />
   </ItemGroup>
 
   <ItemGroup>

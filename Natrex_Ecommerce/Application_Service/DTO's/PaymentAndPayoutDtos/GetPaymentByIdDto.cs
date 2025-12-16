@@ -1,5 +1,4 @@
 ﻿using Domain_Service.Enums;
-using System;
 
 namespace Application_Service.DTO_s.PaymentAndPayoutDtos
 {
@@ -19,7 +18,7 @@ namespace Application_Service.DTO_s.PaymentAndPayoutDtos
     /// <param name="PaymentStatus">Current status of the payment (e.g., Pending, Paid, Failed).</param>
     /// <param name="AmountPaid">Amount actually paid by the user for this order.</param>
     /// <param name="CreatedAt">Timestamp when this payment record was created.</param>
-    public record FetchPaymentDto(
+    public record GetPaymentByIdDto(
         Guid PaymentDetailId,
         Guid OrderId,
         PaymentMethod PaymentMethod,

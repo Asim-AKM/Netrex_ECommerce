@@ -1,19 +1,27 @@
 ﻿<Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.1" />
-    <PackageVersion Include="MailKit" Version="4.14.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.1" />
+		<PackageVersion Include="MailKit" Version="4.14.1" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+
+		<!-- FIXED VERSIONS FOR SWAGGER/OPENAPI COMPATIBILITY -->
+		<PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+		<PackageVersion Include="Microsoft.OpenApi" Version="1.6.22" />
+		<PackageVersion Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+		<PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
+		<PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+		<PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+
+		<PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+	</ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 using Application_Service.DI.DIServices; 
-using Infrastructure_Service.DI.DIRepository;
+using Infrastructure_Service.DI.Repositories_DI;
+using System.Reflection;
 
 namespace APIGateway_Service
 {
@@ -7,37 +8,48 @@ namespace APIGateway_Service
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
 
             // Application Service DI Configurations
-            builder.Services.ApplicationServiceDIConfigrations();
+     
+           
+                var builder = WebApplication.CreateBuilder(args);
 
-            // Infrastructure Service DI Configurations 
-            builder.Services.InfrastuctureDIConfig(builder.Configuration);
+                // Add services to the container.
+            builder.Services.AddAppModelValidations();
+                builder.Services.AddControllers();
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-         
-            var app = builder.Build();
+                // Application Service DI Configurations
+                builder.Services.ApplicationServiceDIConfigrations();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
+                // Infrastructure Service DI Configurations 
+                builder.Services.InfrastructureDIConfig(builder.Configuration);
 
-            app.UseHttpsRedirection();
+                // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+                builder.Services.AddOpenApi();
+                builder.Services.AddSwaggerGen();
+                var app = builder.Build();
 
-            app.UseAuthorization();
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
+                {
+                   
+                    app.UseSwagger();
+                    app.UseSwaggerUI(options =>
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                        options.RoutePrefix = string.Empty; // Swagger at root
+                    });
+                    app.MapOpenApi();
+                }
+
+                app.UseHttpsRedirection();
+
+                app.UseAuthorization();
 
 
-            app.MapControllers();
+                app.MapControllers();
 
-            app.Run();
+                app.Run();
         }
     }
 }

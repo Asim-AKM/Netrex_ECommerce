@@ -19,7 +19,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create(CreateUserDto request)
+        public async Task<IActionResult> Create([FromBody] CreateUserDto request)
         {
             var response = await _authenticationManager.CreateUserAsync(request);
             return StatusCode((int)response.Status, response);
@@ -29,7 +29,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Login(LoginDto request)
+        public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
             var response = await _authenticationManager.LoginAsync(request);
             return StatusCode((int)response.Status, response);
@@ -39,7 +39,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ForgetPassword(string userIdentifier)
+        public async Task<IActionResult> ForgetPassword([FromBody] string userIdentifier)
         {
             var response = await _authenticationManager.ForgetPasswordAsync(userIdentifier);
             return StatusCode((int)response.Status, response);

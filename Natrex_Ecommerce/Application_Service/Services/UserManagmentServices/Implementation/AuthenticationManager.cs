@@ -21,6 +21,21 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
 
         public async Task<ApiResponse<CreateUserDto>> CreateUserAsync(CreateUserDto request)
         {
+            //Validate User
+            var userExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.username);
+            if (userExistance != null)
+            {
+                List<string> errorsList = new List<string>();
+                if (userExistance.Email == request.email)
+                    errorsList.Add("Email already exist");
+                if (userExistance.UserName == request.username)
+                    errorsList.Add("UserNAme already exist");
+                if (userExistance.Contact == request.contact)
+                    errorsList.Add("Contact already exist");
+                var error = string.Join(" | ", errorsList);
+                return ApiResponse<CreateUserDto>.Fail(error, ResponseType.Conflict);
+            }
+
             var user = request.MapToDomain();
             await _unitOfWork.Users.Create(user);
             await _unitOfWork.UserCreads.Create(user.AssignCreads(request.password));
@@ -37,14 +52,12 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (user == null) { return ApiResponse<string>.Fail("User Not Found", ResponseType.NotFound); }
             // generate and update otp 
             var otp = new Random().Next(100000, 999999).ToString();
-            var userCread = await _unitOfWork.UserCreads.GetById(user.UserId);
-            userCread.OTP = otp;
             await _unitOfWork.UserCreadRepository.UpdateOtp(otp, user.UserId);
-            // check is otp update 
+            // check is otp updated
             if (await _unitOfWork.SaveChangesAsync() > 0)
             {
                 // send email
-                var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}");
+                var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}"); 
                 return result ? ApiResponse<string>.Success(null!, "OTP Sent to your email", ResponseType.Ok)
                     : ApiResponse<string>.Fail("Failed to send OTP email", ResponseType.InternalServerError);
             }

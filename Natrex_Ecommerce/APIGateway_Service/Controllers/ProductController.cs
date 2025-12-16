@@ -9,19 +9,26 @@ namespace APIGateway_Service.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductServices _productServices;
-        public ProductController(IProductServices productServices)
+        private readonly IProductManager _productManager;
+        public ProductController(IProductManager productmanager)
         {
-            _productServices = productServices;
+            _productManager = productmanager;
         }
-
-        [HttpPost]
+        
+        [HttpPost("CreateProduct")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProduct([FromBody] AddProductDto addProductDto)
         {
-            
-             await _productServices.AddProduct(addProductDto);
+             await _productManager.AddProduct(addProductDto);
             return Ok("Product Created Successfully");
+        }
+
+        [HttpPut("UpdateProduct/{ProductId:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductDTOS updateProductDto)
+        {
+            await _productManager.UpdateProduct(updateProductDto);
+            return Ok("Product Updated Successfully");
         }
     }
 }

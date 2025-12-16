@@ -8,7 +8,7 @@ namespace Domain_Service.Entities.SellerModule
 {
     public class ShopDetail
     {
-        public Guid ShopId { get; set; }
+        public Guid ShopDetailsId { get; set; }
         public string CategoryName { get; set; } = string.Empty;
     }
 }

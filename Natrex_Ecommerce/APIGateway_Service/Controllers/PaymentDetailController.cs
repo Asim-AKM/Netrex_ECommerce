@@ -15,17 +15,17 @@ namespace APIGateway_Service.Controllers
     /// </remarks>
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase
+    public class PaymentDetailController : ControllerBase
     {
         private readonly IPaymentDetailManager _paymentManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentController"/>.
+        /// Initializes a new instance of the <see cref="PaymentDetailController"/>.
         /// </summary>
         /// <param name="paymentManager">
         /// The business logic service responsible for managing payment operations.
         /// </param>
-        public PaymentController(IPaymentDetailManager paymentManager)
+        public PaymentDetailController(IPaymentDetailManager paymentManager)
         {
             _paymentManager = paymentManager;
         }
@@ -46,12 +46,9 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ProcessPayment([FromBody] ProcessPaymentDto dto)
         {
-            await _paymentManager.ProcessPayment(dto);
+            var response = await _paymentManager.ProcessPayment(dto);
+            return StatusCode((int)response.Status, response);
 
-            return Created(
-                string.Empty,
-                "Payment Processed Successfully (mock integration)"
-            );
         }
 
         /// <summary>
@@ -63,17 +60,14 @@ namespace APIGateway_Service.Controllers
         /// </returns>
         /// <response code="200">Payment details retrieved successfully.</response>
         /// <response code="404">Payment not found.</response>
-        [HttpGet("FetchPayment/{paymentId:guid}")]
+        [HttpGet("GetPaymentDetailById/{paymentId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FetchPayment(Guid paymentId)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetPaymentDetailById(Guid paymentId)
         {
-            var result = await _paymentManager.FetchPayment(paymentId);
-
-            if (result == null)
-                return NotFound("Payment Not Found");
-
-            return Ok(result);
+            var result = await _paymentManager.GetPaymentById(paymentId);
+            return StatusCode((int)result.Status, result);
         }
     }
 }
