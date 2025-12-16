@@ -1,4 +1,5 @@
-﻿using Domain_Service.Entities.ProductAndCategoryModule;
+﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,10 @@ namespace Infrastructure_Service.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Seller> Sellers { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> cartItems { get; set; }  
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderItem>orderItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);

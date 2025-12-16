@@ -1,10 +1,14 @@
-﻿using Domain_Service.RepoInterfaces.GenericRepo;
+﻿using Domain_Service.RepoInterfaces.Cart_OrderRepos;
+using Domain_Service.RepoInterfaces.Cart_OrderRepos.OrderRepos;
+using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
+using Infrastructure_Service.Persistance.Repositories.Cart_OrderRepo.CartRepo;
+using Infrastructure_Service.Persistance.Repositories.Cart_OrderRepo.OrderRepo;
 using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 using Infrastructure_Service.Persistance.Repositories.ProductManagement;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
@@ -19,7 +23,7 @@ namespace Infrastructure_Service.DI.DIRepository
 {
     public static class InfrastructureDIConfigration
     {
-        public static IServiceCollection InfrastuctureDIConfig(this IServiceCollection services,IConfigurationManager configuration) => services
+        public static IServiceCollection InfrastuctureDIConfig(this IServiceCollection services, IConfigurationManager configuration) => services
                     .AddScoped<IUserRepo, UserRepo>()
                     .AddScoped<IUserCreadentialRepo, UserCreadentialRepo>()
                     .AddScoped<IUserRoleRepo, UserRoleRepo>()
@@ -29,7 +33,11 @@ namespace Infrastructure_Service.DI.DIRepository
                     .AddScoped<IProductRepo, ProductRepo>()
                     .AddScoped<IProductImageRepo, ProductImageRepo>()
                     .AddScoped<IProductCategories, ProductCategoryRepo>()
-                    .AddScoped<IInvoiceRepo,InvoiceRepo>()
+                    .AddScoped<IInvoiceRepo, InvoiceRepo>()
+                    .AddScoped<IOrderRepo, OrderRepo>()
+                    .AddScoped<IOrderItemRepo, OrderItemRepo>()
+                    .AddScoped<ICartRepo, CartRepo>()
+                    .AddScoped<ICartItemRepo, CartItemRepo>()
                     .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")));
     }
 }

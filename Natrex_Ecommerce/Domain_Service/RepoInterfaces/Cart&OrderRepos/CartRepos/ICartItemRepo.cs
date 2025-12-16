@@ -4,7 +4,7 @@ namespace Domain_Service.RepoInterfaces.Cart_OrderRepos
 {
     public interface ICartItemRepo
     {
-        //All the comented method will be used in the service 
+        //All the comented method will be used in the service
         //Task<CartItem> Create(CartItem item);
         //Task<CartItem> Update(CartItem item);
         //Task<bool> Delete(CartItem item);
