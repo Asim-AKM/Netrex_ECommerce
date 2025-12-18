@@ -1,6 +1,7 @@
 ﻿using Domain_Service.RepoInterfaces.GenericRepo;
 using Infrastructure_Service.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
 {
@@ -19,9 +20,14 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
             return obj;
         }
 
-        public async Task<bool> Delete(T obj)
+        public async Task<bool> Delete(Guid id)
         {
-            _dbSet.Remove(obj);
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                return false;
+            }
+            _dbSet.Remove(entity);
             return true;
         }
 
@@ -46,6 +52,12 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
         {
             return await _dbSet.ToListAsync();
         }
+
+        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
     }
 }
 

@@ -16,19 +16,25 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         }
         public async Task<ApiResponse<string>> DeleteUserAsync(Guid id)
         {
-            var data = await _uOW.Users.GetById(id);
-            if (data != null)
-            {
-                await _uOW.Users.Delete(data);
-                var creads = await _uOW.UserCreadRepository.GetCreadbyFK(data.UserId);
-                await _uOW.UserCreads.Delete(creads);
-                var role = await _uOW.UserRoleRepository.GetRolebyFK(data.UserId);
-                await _uOW.UserRoles.Delete(role);
-                var customer = await _uOW.CustomerRepository.GetCustomerbyFK(data.UserId);
-                await _uOW.Customers.Delete(customer);
-                return await _uOW.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "DeleteSuccesfully") : ApiResponse<string>.Fail("Internal Server Error", ResponseType.BadRequest);
-            }
-            return ApiResponse<string>.Fail("Data Not Found", ResponseType.NotFound);
+            var user = await _uOW.Users.GetById(id);
+            if (user == null)
+                return "Data Not Found";
+
+            var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (cred != null)
+                await _uOW.UserCreads.Delete(cred.CreadId); 
+
+            var role = await _uOW.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (role != null)
+                await _uOW.UserRoles.Delete(role.UserRoleId); 
+
+            await _uOW.Users.Delete(user.UserId); 
+
+            await _uOW.SaveChangesAsync();
+            return ApiResponse<string>.Success(default!, "Data Deleted Successfully");
+
         }
 
         public async Task<ApiResponse<List<GetUsersDto>>> GetAllUserAsync()

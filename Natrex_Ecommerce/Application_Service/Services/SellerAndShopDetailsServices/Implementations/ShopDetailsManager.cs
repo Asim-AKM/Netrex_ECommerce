@@ -30,13 +30,13 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
 
         public async Task<bool> DeleteShopDetails(Guid ShopDetailId)
         {
-            var Details = await _repository.GetById(ShopDetailId);
-            if (Details != null)
+            var Details = await _repository.Delete(ShopDetailId);
+            if (!Details)
             {
-                await _repository.Delete(Details);
-                return true;
+                return false;
             }
-            return false;
+            await _repository.SaveChangesAsync();
+            return true;
         }
 
         public async Task<GetAllShopDetailsDto> GetAllShopDetails()
