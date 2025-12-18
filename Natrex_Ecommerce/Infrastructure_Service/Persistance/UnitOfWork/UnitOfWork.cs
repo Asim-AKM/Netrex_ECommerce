@@ -8,6 +8,7 @@ using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
+using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
 using Infrastructure_Service.Persistance.Repositories.UserRoles;
 using Infrastructure_Service.Persistance.Repositories.Users;
 
@@ -43,6 +44,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<Customer> Customers => new Repository<Customer>(_context);
 
+        public ICustomerRepo CustomerRepository => new CustomerRepo(_context);
 
         public async Task<int> SaveChangesAsync()
         {
