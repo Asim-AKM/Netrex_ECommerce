@@ -13,18 +13,24 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         }
         public async Task<string> DeleteUserAsync(Guid id)
         {
-            var data = await _uOW.Users.GetById(id);
-            if (data != null)
-            {
-                await _uOW.Users.Delete(data);
-                var creads = await _uOW.UserCreadRepository.GetCreadbyFK(data.UserId);
-                await _uOW.UserCreads.Delete(creads);
-                var role = await _uOW.UserRoleRepository.GetRolebyFK(data.UserId);
-                await _uOW.UserRoles.Delete(role);
-                await _uOW.SaveChangesAsync();
-                return "Data Deleted Successfully";
-            }
-            return "Data is NotFound";
+            var user = await _uOW.Users.GetById(id);
+            if (user == null)
+                return "Data Not Found";
+
+            var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (cred != null)
+                await _uOW.UserCreads.Delete(cred.CreadId); 
+
+            var role = await _uOW.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (role != null)
+                await _uOW.UserRoles.Delete(role.UserRoleId); 
+
+            await _uOW.Users.Delete(user.UserId); 
+
+            await _uOW.SaveChangesAsync();
+            return "Data Deleted Successfully";
 
         }
 
