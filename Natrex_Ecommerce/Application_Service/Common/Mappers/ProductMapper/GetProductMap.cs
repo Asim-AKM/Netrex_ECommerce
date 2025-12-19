@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application_Service.Common.Mappers.ProductMapper
 {
-    public static class MapToGetByIdProductDto
+    public static class GetProductMap
     {
-        public static GetByProductIdDto MapToGetbyProductDto(Product product, ProductImage? productImage)
+        public static GetProductDto MapToGetProductDto(Product product, ProductImage? productImage)
         {
-            return new GetByProductIdDto(
+            return new GetProductDto(
                 product.ProductId,
                 productImage?.ImageId ?? Guid.Empty,
                 product.SellerId,
