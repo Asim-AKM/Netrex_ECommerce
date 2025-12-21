@@ -3,6 +3,7 @@ using Application_Service.Common.Email;
 using Application_Service.Common.Mappers.UserManagmentMapppers;
 using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.DTO_s.UsersDto.Accounts;
+using Application_Service.Security.Jwt;
 using Application_Service.Services.UserManagmentServices.Interface;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UnitOfWork;
@@ -13,10 +14,12 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordEncriptor _passwordEncriptor;
-        public AuthenticationManager(IUnitOfWork unitOfWork, IPasswordEncriptor passwordEncriptor)
+        private readonly IJwtManager _jwtManager;
+        public AuthenticationManager(IUnitOfWork unitOfWork, IPasswordEncriptor passwordEncriptor, IJwtManager jwtManager)
         {
             _unitOfWork = unitOfWork;
             _passwordEncriptor = passwordEncriptor;
+            _jwtManager = jwtManager;
         }
 
         public async Task<ApiResponse<CreateUserDto>> CreateUserAsync(CreateUserDto request)
@@ -57,7 +60,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (await _unitOfWork.SaveChangesAsync() > 0)
             {
                 // send email
-                var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}"); 
+                var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}");
                 return result ? ApiResponse<string>.Success(null!, "OTP Sent to your email", ResponseType.Ok)
                     : ApiResponse<string>.Fail("Failed to send OTP email", ResponseType.InternalServerError);
             }
@@ -77,10 +80,10 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
 
             if (isVerified)
             {
-                // the work of JWt token genartion is in progress
+                var userRole = await _unitOfWork.UserRoleRepository.GetUserRoles(userExistance.UserId);
+                await _jwtManager.GenerateJwtToken(userExistance, userRole);
                 return ApiResponse<string>.Success(default!, "Login Succesfuly", ResponseType.Ok);
             }
-
             return ApiResponse<string>.Fail("Invalid Creadentials", ResponseType.Unauthorized);
 
         }
