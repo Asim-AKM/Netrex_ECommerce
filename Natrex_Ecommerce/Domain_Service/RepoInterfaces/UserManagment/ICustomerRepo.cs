@@ -1,7 +1,9 @@
-﻿namespace Domain_Service.RepoInterfaces.UserManagment
+﻿using Domain_Service.Entities.UserManagmentModule;
+
+namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public interface ICustomerRepo 
     {
-        Task GetAll(); 
+        Task<Customer> GetCustomerbyFK(Guid userId);
     }
 }

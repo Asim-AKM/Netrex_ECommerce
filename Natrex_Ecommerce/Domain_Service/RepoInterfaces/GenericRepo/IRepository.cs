@@ -48,11 +48,12 @@
         /// Returns <c>true</c> if the entity was successfully deleted; 
         /// otherwise <c>false</c>.
         /// </returns>
-        Task<bool> Delete(T obj);
+        Task<bool> Delete(Guid id);
         Task<T> GetById(Guid id);
 
         Task<List<T>> GetAll();
 
+        Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         Task SaveChangesAsync();
     }
 }

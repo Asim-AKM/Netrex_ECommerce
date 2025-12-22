@@ -1,4 +1,5 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
+using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,11 @@ namespace Infrastructure_Service.Persistance.Repositories.UserRoles
         {
             return await _context.UserRoles
                .Where(ur => ur.UserId == userId).FirstOrDefaultAsync() ?? new UserRole();
+        }
+
+        public async Task<List<RoleType>> GetUserRoles(Guid userId)
+        {
+            return _context.UserRoles.Where(x => x.UserId == userId).Select(x => x.RoleName).ToList();
         }
     }
 }

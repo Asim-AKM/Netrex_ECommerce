@@ -9,17 +9,24 @@ using Application_Service.Services.UserManagmentServices.Interface;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Application_Service.DTO_s.UserManagmentDto_s;
+using Microsoft.Extensions.Configuration;
+using Application_Service.Security.Jwt;
 
 namespace Application_Service.DI.DIServices
 {
     public static class ApplicationDIConfigration
     {
-        public static IServiceCollection ApplicationServiceDIConfigrations(this IServiceCollection services) => services
+        public static IServiceCollection ApplicationServiceDIConfigrations(this IServiceCollection services, IConfiguration configuration) => services
 
                             .AddScoped<IPasswordEncriptor, PasswordEncriptor>()
                             .AddScoped<IInvoiceManager, InvoiceManager>()
                             .AddScoped<IPaymentDetailManager, PaymentDetailManager>()
                             .AddScoped<IProductManager, ProductManager>()
-                            .AddScoped<IUserManager, UserManager>();
+                            .AddScoped<IUserManager, UserManager>()
+                            .AddScoped<IAuthenticationManager, AuthenticationManager>()
+                            .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
+                            .AddScoped<IJwtManager, JwtManager>();
+                           
     }
 }

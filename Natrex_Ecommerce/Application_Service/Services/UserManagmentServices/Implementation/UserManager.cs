@@ -1,5 +1,8 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.UserManagmentMapppers;
+using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Services.UserManagmentServices.Interface;
+using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.UserManagmentServices.Implementation
@@ -11,24 +14,30 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         {
             _uOW = uOW;
         }
-        public async Task<string> DeleteUserAsync(Guid id)
+        public async Task<ApiResponse<string>> DeleteUserAsync(Guid id)
         {
-            var data = await _uOW.Users.GetById(id);
-            if (data != null)
-            {
-                await _uOW.Users.Delete(data);
-                var creads = await _uOW.UserCreadRepository.GetCreadbyFK(data.UserId);
-                await _uOW.UserCreads.Delete(creads);
-                var role = await _uOW.UserRoleRepository.GetRolebyFK(data.UserId);
-                await _uOW.UserRoles.Delete(role);
-                await _uOW.SaveChangesAsync();
-                return "Data Deleted Successfully";
-            }
-            return "Data is NotFound";
+            var user = await _uOW.Users.GetById(id);
+            if (user == null)
+                return ApiResponse<string>.Fail("User Not Found",ResponseType.Conflict);
+
+            var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (cred != null)
+                await _uOW.UserCreads.Delete(cred.CreadId); 
+
+            var role = await _uOW.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (role != null)
+                await _uOW.UserRoles.Delete(role.UserRoleId); 
+
+            await _uOW.Users.Delete(user.UserId); 
+
+            await _uOW.SaveChangesAsync();
+            return ApiResponse<string>.Success(default!, "Data Deleted Successfully");
 
         }
 
-        public async Task<List<GetUsersDto>> GetAllUserAsync()
+        public async Task<ApiResponse<List<GetUsersDto>>> GetAllUserAsync()
         {
             var user = await _uOW.Users.GetAll();
             var role = await _uOW.UserRoles.GetAll();
@@ -46,12 +55,19 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                             Username = u.UserName,
                             Userstatus = u.Status,
                         }).ToList();
-            return data;
+            return ApiResponse<List<GetUsersDto>>.Success(data,"Users fetched successfully");
         }
 
-        public Task<string> UpdateUserAsync(UpdateUserDto request)
+        public async Task<ApiResponse<string>> UpdateUserAsync(UpdateUserDto updateuser)
         {
-            throw new NotImplementedException();
+            var domain = await _uOW.Users.GetById(updateuser.Id);
+            if (domain != null)
+            {
+                await _uOW.Users.Update(updateuser.MapToDomain());
+                return await _uOW.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "Update Succesfully") : ApiResponse<string>.Fail("Internal Server Error", ResponseType.InternalServerError);
+
+            }
+            return ApiResponse<string>.Fail("Data Not Found ", ResponseType.NotFound);
         }
     }
 }

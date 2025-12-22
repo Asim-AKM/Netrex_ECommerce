@@ -32,15 +32,14 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
 
         public async Task<bool> DeleteSeller(Guid SellerId)
         {
-            var domain = await _genericRepo.GetById(SellerId);
+            var domain = await _genericRepo.Delete(SellerId);
 
-            if (domain != null)
+            if (!domain)
             {
-                await _genericRepo.Delete(domain);
-                return true;
+                return false;
             }
-
-            return false;
+            await _genericRepo.SaveChangesAsync();
+            return true;
         }
 
         public async Task<GetAllSellerDto> GetAllSeller()
