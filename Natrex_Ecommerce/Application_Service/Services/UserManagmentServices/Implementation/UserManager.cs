@@ -18,7 +18,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         {
             var user = await _uOW.Users.GetById(id);
             if (user == null)
-                return "Data Not Found";
+                return ApiResponse<string>.Fail("User Not Found",ResponseType.Conflict);
 
             var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
