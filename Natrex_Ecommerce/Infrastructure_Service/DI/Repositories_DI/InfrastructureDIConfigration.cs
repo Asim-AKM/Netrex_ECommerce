@@ -1,10 +1,14 @@
-﻿using Domain_Service.RepoInterfaces.GenericRepo;
+﻿using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
+using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
+using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
+using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo;
+using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.OrderRepo;
 using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 using Infrastructure_Service.Persistance.Repositories.ProductManagement;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
@@ -32,7 +36,12 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IProductCategories, ProductCategoryRepo>()
                     .AddScoped<IInvoiceRepo, InvoiceRepo>()
                     .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")))
-                    .AddScoped<ICustomerRepo, CustomerRepo>();
+                    .AddScoped<ICustomerRepo, CustomerRepo>()
+                    .AddScoped<ICartRepo, CartRepo>()
+                    .AddScoped<ICartItemRepo, CartItemRepo>()
+                    .AddScoped<IOrderRepo, OrderRepo>()
+                    .AddScoped<IOrderItemRepo, OrderItemRepo>();
+
                     
     }
 }

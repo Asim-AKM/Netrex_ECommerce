@@ -19,7 +19,7 @@ namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItem
                 ProductId = addOrderItemDto.ProductId,
                 Quantity = addOrderItemDto.Quantity,
                 Price = addOrderItemDto.Price,
-                PriceTotal = (decimal)addOrderItemDto.Price * addOrderItemDto.Quantity
+                PriceTotal = addOrderItemDto.Price * addOrderItemDto.Quantity
             };
         }
 

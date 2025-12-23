@@ -38,6 +38,6 @@ namespace Application_Service.DTO_s.Cart_OrderDtos.OrderItemDtos
         /// The total price for this order item (Quantity * Price).
         /// System-generated/calculated.
         /// </summary>
-        decimal PriceTotal
+        double PriceTotal
     );
 }

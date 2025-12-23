@@ -51,6 +51,6 @@ namespace Domain_Service.Entities.CartAndOrderModule
         /// Calculated as:
         /// Quantity × Price
         /// </summary>
-        public decimal PriceTotal { get; set; }
+        public double PriceTotal { get; set; }
     }
 }
