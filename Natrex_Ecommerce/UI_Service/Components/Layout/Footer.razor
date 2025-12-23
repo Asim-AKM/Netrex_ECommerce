@@ -1,0 +1,72 @@
+﻿<footer>
+
+    <section class="address">
+        <h2>Address</h2>
+
+        <div class="address-content">
+            <p>2nd Floor,Ashiyana center</p>
+            <p>Dera Ismail Khan, Pakistan</p>
+            <p>+92 3319270739</p>
+            <p>affanwajid2001@gmail.com</p>
+        </div>
+    </section>
+
+    <section class="links">
+        <h2>Quick Links</h2>
+
+        <ul class="nav-items">
+            <li><a href="">Home</a></li>
+            <li><a href="">Shop</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Contact Us</a></li>
+            <li><a href="">Blog</a></li>
+        </ul>
+    </section>
+
+    <section class="contact-us">
+        <h2>Contact Us</h2>
+
+        <div class="contact-info">
+            <p>Do you have any queries or suggestions?</p>
+            <a href="">AsimAkm@gmail.com</a>
+
+            <p>If you need support? Just give <br /> us a call.</p>
+            <a href="">+92 3319270739</a>
+        </div>
+    </section>
+
+    <section class="subscribe-sect">
+        <h2>Subscribe Us</h2>
+
+        <div class="subscribe-info">
+            <p>Subscribe to our newsletter to get updates about our grand offers.</p>
+
+            <input type="email" placeholder="Email Address" @bind="email" />
+
+            <button class="btn" type="button" @onclick="Subscribe">Subscribe</button>
+
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <p class="subscribe-msg">@message</p>
+            }
+        </div>
+    </section>
+
+</footer>
+
+@code {
+    private string email = string.Empty;
+    private string message = string.Empty;
+
+    private void Subscribe()
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            message = "Please enter an email address.";
+            return;
+        }
+
+        message = "Thanks for subscribing!";
+        email = string.Empty;
+    }
+}
