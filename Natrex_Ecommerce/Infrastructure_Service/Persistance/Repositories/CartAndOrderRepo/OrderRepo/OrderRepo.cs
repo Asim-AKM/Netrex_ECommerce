@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 
 namespace Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.OrderRepo
 {
-    internal class OrderRepo
+    public class OrderRepo:IOrderRepo
     {
     }
 }
