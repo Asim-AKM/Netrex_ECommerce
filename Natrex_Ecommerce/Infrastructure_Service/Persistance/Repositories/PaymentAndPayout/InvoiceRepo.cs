@@ -4,35 +4,36 @@ using Infrastructure_Service.Data;
 namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
 {
     /// <summary>
-    /// Concrete repository implementation for <see cref="IInvoiceRepo"/>.
-    /// Handles data operations for <see cref="Domain_Service.Entities.PaymentAndPayout.Invoice"/> entities.
+    /// Repository for performing CRUD operations on <see cref="Domain_Service.Entities.PaymentAndPayout.Invoice"/> entities.
+    /// Provides a clean abstraction over the database for the Invoice module.
     /// </summary>
     /// <remarks>
-    /// This class is part of the Infrastructure layer in Clean Architecture.
-    /// It uses <see cref="ApplicationDbContext"/> to interact with the database.
-    /// All invoice-specific CRUD operations should be implemented here.
+    /// Part of the Infrastructure layer in Clean Architecture.
+    /// Uses <see cref="ApplicationDbContext"/> to interact with the database.
+    /// All invoice-specific operations should be implemented in this class.
     /// </remarks>
     public class InvoiceRepo : IInvoiceRepo
     {
+        /// <summary>
+        /// EF Core database context for accessing invoice data.
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceRepo"/> class.
         /// </summary>
-        /// <param name="applicationDbContext">The database context used to access invoice data.</param>
+        /// <param name="applicationDbContext">The application's database context for Invoice entities.</param>
         public InvoiceRepo(ApplicationDbContext applicationDbContext)
         {
             _context = applicationDbContext;
         }
 
-        /// <summary>
-        /// (Optional) Add invoice-specific database operations here.
-        /// Examples include:
-        /// <list type="bullet">
-        /// <item>Get invoices by OrderId</item>
-        /// <item>Get invoices within a date range</item>
-        /// <item>Calculate total revenue from invoices</item>
-        /// </list>
-        /// </summary>
+        // -----------------------------------------------------------------
+        // NOTE:
+        // Add invoice-specific database methods here, for example:
+        //   - Get invoices by OrderId
+        //   - Get invoices within a date range
+        //   - Calculate total revenue from invoices
+        // -----------------------------------------------------------------
     }
 }
