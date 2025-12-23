@@ -1,6 +1,4 @@
-﻿
 using System.Linq.Expressions;
-
 namespace Domain_Service.RepoInterfaces.GenericRepo
 {
     /// <summary>
