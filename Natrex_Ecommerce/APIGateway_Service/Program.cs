@@ -1,3 +1,4 @@
+using APIGateway_Service.DIs;
 using Application_Service.DI.DIServices;
 using Infrastructure_Service.DI.Repositories_DI;
 using System.Reflection;
@@ -26,7 +27,9 @@ namespace APIGateway_Service
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddJwtValidation(builder.Configuration);
+            builder.Services.AddSwaggerConfiguration();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
