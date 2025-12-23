@@ -1,4 +1,5 @@
-﻿ namespace Domain_Service.RepoInterfaces.GenericRepo
+using System.Linq.Expressions;
+namespace Domain_Service.RepoInterfaces.GenericRepo
 {
     /// <summary>
     /// Represents a generic repository interface that defines 
