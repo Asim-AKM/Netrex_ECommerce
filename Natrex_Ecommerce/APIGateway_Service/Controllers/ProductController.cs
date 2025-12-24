@@ -30,20 +30,20 @@ namespace APIGateway_Service.Controllers
             await _productManager.UpdateProduct(updateProductDto);
             return Ok("Product Updated Successfully");
         }
-        [HttpDelete("DeleteProduct/{ProductId:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteProduct([FromRoute] Guid productId)
-        {
-            var result = await _productManager.DeleteProduct(productId);
-            if (result)
-            {
-                return Ok("Product Deleted Successfully");
-            }
-            return NotFound("Product Not Found");
-        }
+        //[HttpDelete("DeleteProduct/{ProductId:guid}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<IActionResult> DeleteProduct([FromRoute] Guid productId)
+        //{
+        //    var result = await _productManager.DeleteProduct(productId);
+        //    //if (result)
+        //    //{
+        //    //    return Ok("Product Deleted Successfully");
+        //    //}
+        //    //return NotFound("Product Not Found");
+        //}
         [HttpGet("GetProductById/{ProductId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
