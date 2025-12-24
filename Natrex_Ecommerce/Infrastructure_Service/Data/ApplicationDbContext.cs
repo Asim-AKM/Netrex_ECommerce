@@ -17,11 +17,11 @@ namespace Infrastructure_Service.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Seller> Sellers { get; set; }
-        public DbSet<ShopDetail> shopDetails {  get; set; }
-        public DbSet<Cart> carts { get; set; }
-        public DbSet<CartItem> cartItems { get; set; }
-        public DbSet<Order> orders { get; set; }
-        public DbSet<OrderItem> orderItems { get; set; }
+        public DbSet<ShopDetail> ShopDetails {  get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);

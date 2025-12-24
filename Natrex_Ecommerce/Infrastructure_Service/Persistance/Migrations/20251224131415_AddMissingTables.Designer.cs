@@ -4,6 +4,7 @@ using Infrastructure_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure_Service.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224131415_AddMissingTables")]
+    partial class AddMissingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("carts");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.CartItem", b =>
@@ -53,7 +56,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CartItemId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.Order", b =>
@@ -79,7 +82,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.OrderItem", b =>
@@ -105,7 +108,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("orderItems");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.PaymentAndPayout.Invoice", b =>
@@ -308,7 +311,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ShopDetailsId");
 
-                    b.ToTable("ShopDetails");
+                    b.ToTable("shopDetails");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.SellerPaymentModule.SellerPayout", b =>
