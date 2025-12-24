@@ -18,9 +18,9 @@ namespace Infrastructure_Service.Persistance.Repositories.Users
             return await _context.Users.ToListAsync();
         }
 
-        public Task<User?> GetUserByIdentifier(string userIdentifier)
+        public async Task<User?> GetUserByIdentifier(string userIdentifier)
         {
-            throw new NotImplementedException();
+            return await _context.Users.Where(x => x.Email == userIdentifier || x.Contact == userIdentifier || x.UserName == userIdentifier).FirstOrDefaultAsync();
         }
 
     }

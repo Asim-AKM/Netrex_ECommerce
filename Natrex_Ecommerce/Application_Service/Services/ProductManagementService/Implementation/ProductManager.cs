@@ -4,8 +4,10 @@ using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Enums;
+using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Application_Service.Services.ProductManagementService.Implementation
 {
@@ -14,11 +16,13 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductImageRepo _productImageRepo;
         private readonly IProductCategories _productCategories;
-        public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo)
+        private readonly IRepository<Product> _genericProductRepo;
+        public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo, IRepository<Product> repository)
         {
             _unitOfWork = unitOfWork;
             _productCategories = productCategories;
             _productImageRepo = productImageRepo;
+            _genericProductRepo = repository;
         }
         public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
@@ -41,7 +45,44 @@ namespace Application_Service.Services.ProductManagementService.Implementation
 
         }
 
-        public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto) 
+        
+        public async Task<ApiResponse<string>> DeleteProduct(Guid productId)
+        {
+            // Check if the product exists
+            var domain = await _genericProductRepo.GetById(productId);
+            if (domain == null)
+            {
+                return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
+            }
+            // Delete the product
+            await _genericProductRepo.Delete(domain.ProductId);
+
+            // Delete associated image
+            var domainimage = await _unitOfWork.ProductImages.GetById(productId);
+            // If an image exists, delete it
+            if (domainimage != null)
+            {
+                await _unitOfWork.ProductImages.Delete(domainimage.ImageId);
+            }
+
+            // Save changes to the database
+            await _genericProductRepo.SaveChangesAsync();
+            return ApiResponse<string>.Success(string.Empty, "Product deleted successfully", ResponseType.Ok);
+        }
+
+        public async Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId)
+        {
+            var domainProduct = await _genericProductRepo.GetById(productId);
+            if (domainProduct == null)
+            {
+                 return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
+            }
+            var domainImage = await _unitOfWork.ProductImages.GetById(domainProduct.ProductId);
+            var productDto = GetProductMap.MapToGetProductDto(domainProduct, domainImage);
+            return ApiResponse<GetProductDto>.Success(productDto, "Product Fatch to Successfully", ResponseType.Ok);
+        }
+
+       public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto) 
         {
             var Product = await _unitOfWork.Products.GetById(productDto.ProductId); 
             if (Product == null)

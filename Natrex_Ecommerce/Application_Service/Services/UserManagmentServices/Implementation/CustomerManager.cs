@@ -21,13 +21,22 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (customer == null)
                 return ApiResponse<string>.Fail("Customer Not Found", ResponseType.NotFound);
 
-            await _unitOfWork.Customers.Delete(customer);
+            await _unitOfWork.Customers.Delete(customer.CustomerId);
+
             var user = await _unitOfWork.Users.GetById(customer.UserId);
-            await _unitOfWork.Users.Delete(user);
-            var userCred = await _unitOfWork.UserCreads.GetById(user.UserId);
-            await _unitOfWork.UserCreads.Delete(userCred);
-            var userRole = await _unitOfWork.UserRoles.GetById(user.UserId);
-            await _unitOfWork.UserRoles.Delete(userRole);
+            if (user != null)
+            {
+                var userCred = await _unitOfWork.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+                if (userCred != null)
+                    await _unitOfWork.UserCreads.Delete(userCred.CreadId);
+
+                var userRole = await _unitOfWork.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+                if (userRole != null)
+                    await _unitOfWork.UserRoles.Delete(userRole.UserRoleId);
+
+                await _unitOfWork.Users.Delete(user.UserId);
+            }
+
 
             return await _unitOfWork.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "Deleted Succesfuly") : ApiResponse<string>.Fail("Internal server Error", ResponseType.InternalServerError);
 

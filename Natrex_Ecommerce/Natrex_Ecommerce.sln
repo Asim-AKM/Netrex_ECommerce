@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Item", "Solution I
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_Service", "UI_Service\UI_Service.csproj", "{FBC24218-8633-4B57-A0FB-9B1FBFCB5500}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC24218-8633-4B57-A0FB-9B1FBFCB5500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC24218-8633-4B57-A0FB-9B1FBFCB5500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC24218-8633-4B57-A0FB-9B1FBFCB5500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC24218-8633-4B57-A0FB-9B1FBFCB5500}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{FAE3C69C-17ED-4D7F-B6BB-EB5E0854F026} = {D6AE4116-D4B6-4F9F-B7B6-BE2DA00EF70F}
 		{846FC9DD-8AAB-4FF7-863D-B6A6260F1174} = {EE36550C-49C7-4C66-82BD-44772C376D5E}
 		{0DA0DD38-1EA1-4490-9EDD-5F57820ED8CE} = {1222CCF2-C82E-454C-AC57-E0FF528EDB42}
+		{FBC24218-8633-4B57-A0FB-9B1FBFCB5500} = {1222CCF2-C82E-454C-AC57-E0FF528EDB42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4560AA0-8A98-42EA-B2EC-EC9CDC541376}

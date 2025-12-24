@@ -1,0 +1,368 @@
+﻿@page "/"
+<PageTitle>Home</PageTitle>
+
+<div class="home-page">
+
+    <!-- Categories Section -->
+    <div class="Categories-list">
+        <ul>
+            <h2>Electronics</h2>
+            <li><a href="">Mobile</a></li>
+            <li><a href="">Laptops</a></li>
+            <li><a href="">Accessories</a></li>
+        </ul>
+
+        <ul>
+            <h2>Fashion</h2>
+            <li><a href="">Men</a></li>
+            <li><a href="">Women</a></li>
+            <li><a href="">Kids</a></li>
+        </ul>
+
+        <ul>
+            <h2>Home</h2>
+            <li><a href="">Furniture</a></li>
+            <li><a href="">Kitchen</a></li>
+            <li><a href="">Decor</a></li>
+        </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul class="nav-items">
+            <li><a href="">Home</a></li>
+            <li><a href="">Shop</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+
+        <div class="nav-icons">
+            <ul>
+                <li>
+                    <a href=""><img src="/assets/icons/people.png" width="32px" alt="" /></a>
+                </li>
+                <li>
+                    <a href=""><img src="/assets/icons/love.png" width="28px" height="28px" alt="" /></a>
+                </li>
+                <li class="cart">
+                    <a href=""><img src="/assets/icons/shopping-bag.png" width="30px" alt="" /></a>
+                    <div class="cart-count">
+                        <p class="counter"></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Slider -->
+    <div class="slide-container">
+        <div class="slide">
+            <img src="assets/images/home1-slider-1.jpg" alt="" />
+            <div class="caption">
+                <h2>Pakistan’s Smart Shopping Destination</h2>
+                <p>Your one-stop online store for authentic products, easy returns, and nationwide delivery.</p>
+                <button>Explore Now</button>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="assets/images/home1-slider-3.jpg" alt="" />
+            <div class="caption">
+                <h2>Best Products at Best Prices</h2>
+                <p>Premium quality products without the premium price tag.</p>
+                <button>Explore Now</button>
+            </div>
+        </div>
+
+        <span class="arrow prev" onclick="slideControler(-1)">&#10094;</span>
+        <span class="arrow next" onclick="slideControler(1)">&#10095;</span>
+    </div>
+
+    <!-- Categories Icons -->
+    <section class="categories">
+        <a href=""><div class="catg"><img src="/assets/icons/responsive.png" width="50px"><p>Technology</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/small-appliance.png" width="50px"><p>Home & Kitchen</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/fashion.png" width="50px"><p>Fashion</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/apple.png" width="50px"><p>Watch</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/clothes.png" width="50px"><p>Mens</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/sports.png" width="50px"><p>Sports</p></div></a>
+        <a href=""><div class="catg"><img src="/assets/icons/kids.png" width="50px"><p>Kids</p></div></a>
+    </section>
+
+    <!-- Products -->
+
+    <section class="product-list">
+        <h2 class="featured">Featured Products</h2>
+
+        <div class="products-cards">
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="discount">-30%</span>
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <a href=""><span class="wishlist" style="font-size: 25px;">&#9825;</span></a>
+                    <img src="assets/product-images/13.jpg" width="200px" alt="Product" />
+                </div>
+
+                <div class="product-info">
+                    <a href=""><h3 class="product-title">Trendy Casual Wear Shirt</h3></a>
+
+                    <div class="product-meta">
+                        <span class="unit">10 QTY</span>
+                        <span class="rating">
+                            <img src="assets/icons/star.png" width="15px" alt="" />
+                            <strong>4.5</strong>
+                        </span>
+                    </div>
+
+                    <div class="price">Rs 2000</div>
+
+                    <div class="cart-row">
+                        <button class="add-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <center>
+            <button class="more-products">More Products</button>
+        </center>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="netrex-guidence">
+        <h2 class="choose-us">Why Choose Us</h2>
+
+        <div class="choose">
+            <div class="netrex">
+                <img src="assets/icons/express-delivery.png" width="70px">
+                <div class="netrex-content">
+                    <h2>Fast Delivery</h2>
+                    <p>Get your products delivered quickly and reliably.</p>
+                </div>
+            </div>
+
+            <div class="netrex">
+                <img src="assets/icons/wallet.png" width="70px">
+                <div class="netrex-content">
+                    <h2>Secure Payment</h2>
+                    <p>Fully encrypted and safe transactions.</p>
+                </div>
+            </div>
+
+            <div class="netrex">
+                <img src="assets/icons/product-return.png" width="70px">
+                <div class="netrex-content">
+                    <h2>Easy Returns</h2>
+                    <p>Stress-free return process.</p>
+                </div>
+            </div>
+
+            <div class="netrex">
+                <img src="assets/icons/24-7.png" width="70px">
+                <div class="netrex-content">
+                    <h2>24/7 Support</h2>
+                    <p>Friendly support team available anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews-comments">
+        <div class="review">
+            <img src="" class="cust-image">
+            <div class="review-content">
+                <p id="user-review"></p>
+                <p class="user-name"></p>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <button class="left-arrow"><img src="assets/icons/left-arrow.png"></button>
+            <button class="right-arrow"><img src="assets/icons/right-arrow.png"></button>
+        </div>
+    </section>
+
+</div>
