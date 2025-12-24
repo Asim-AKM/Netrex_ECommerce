@@ -1,10 +1,11 @@
-﻿using Application_Service.DTO_s.ProductDTOS;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.ProductDTOS;
 
 namespace Application_Service.Services.ProductManagementService.Interfaces
 {
     public interface IProductManager
     {
-        Task AddProduct(AddProductDto productDto);
-        Task UpdateProduct(UpdateProductDTOS productDto);
+        Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto);
+        Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto);
     }
 }
