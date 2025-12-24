@@ -1,4 +1,5 @@
-﻿using Application_Service.DTO_s.SellerDtos;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.SellerDtos;
 
 namespace Application_Service.Services.Interface
 {
@@ -12,14 +13,14 @@ namespace Application_Service.Services.Interface
         /// </summary>
         /// <param name="createSellerDto">The data required to create a new seller.</param>
         /// <returns>A task representing the asynchronous create operation.</returns>
-        Task CreateSeller(CreateSellerDto createSellerDto);
+        Task <ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto);
 
         /// <summary>
         /// Updates an existing seller record.
         /// </summary>
         /// <param name="updateSellerDto">The updated seller information.</param>
         /// <returns>Returns the updated seller DTO.</returns>
-        Task<UpdateSellerDto> UpdateSeller(UpdateSellerDto updateSellerDto);
+        Task <ApiResponse<UpdateSellerDto>> UpdateSeller(UpdateSellerDto updateSellerDto);
 
         /// <summary>
         /// Deletes a seller based on the provided SellerId.
@@ -28,7 +29,7 @@ namespace Application_Service.Services.Interface
         /// <returns>
         /// Returns <c>true</c> if deletion is successful; otherwise <c>false</c>.
         /// </returns>
-        Task<bool> DeleteSeller(Guid SellerId);
+        Task <ApiResponse<bool>> DeleteSeller(Guid SellerId);
 
         /// <summary>
         /// Retrieves a seller by its unique identifier.
@@ -37,6 +38,6 @@ namespace Application_Service.Services.Interface
         /// <returns>
         /// Returns the seller details if found; otherwise <c>null</c>.
         /// </returns>
-        Task<GetByIdSellerDto?> GetSellerById(Guid SellerId);
+        Task <ApiResponse<GetByIdSellerDto?>> GetSellerById(Guid SellerId);
     }
 }

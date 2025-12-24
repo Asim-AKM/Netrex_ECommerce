@@ -1,5 +1,7 @@
-﻿using Application_Service.Common.Mappers.SellerAndShopDetailsMapper;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.SellerAndShopDetailsMapper;
 using Application_Service.Common.Mappers.SellerAnShopDetailsMapper;
+using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.DTO_s.SellerDtos;
 using Application_Service.Services.Interface;
 using Domain_Service.Entities.SellerModule;
@@ -20,46 +22,81 @@ namespace Application_Service.Services.Implementation
             _genericRepo = repository;
         }
 
-
-        public async Task CreateSeller(CreateSellerDto createSellerDto)
+        public async Task<ApiResponse<bool>> DeleteSeller(Guid SellerId)
         {
-            if (createSellerDto is null)
-                throw new ArgumentNullException(nameof(createSellerDto));
 
-            await _genericRepo.Create(createSellerDto.Map());
-            await _genericRepo.SaveChangesAsync();
-        }
-
-
-        public async Task<bool> DeleteSeller(Guid SellerId)
-        {
-            var domain = await _genericRepo.GetById(SellerId);
-
-            if (domain != null)
-            {
-                await _genericRepo.Delete(domain);
-                return true;
-            }
-
-            return false;
-        }
-
-        public async Task<GetByIdSellerDto?> GetSellerById(Guid SellerId)
-        {
             if (SellerId == Guid.Empty)
-                return null;
+                return ApiResponse<bool>
+                    .Fail("Invalid seller id");
 
             var domain = await _genericRepo.GetById(SellerId);
-            return domain?.Map();
+
+            if (domain == null)
+                return ApiResponse<bool>
+                    .Fail("Seller not found");
+
+            await _genericRepo.Delete(domain);
+            await _genericRepo.SaveChangesAsync();
+
+            return ApiResponse<bool>
+                .Success(true, "Seller deleted successfully");
         }
 
-        public async Task<UpdateSellerDto> UpdateSeller(UpdateSellerDto updateSellerDto)
+        public async Task<ApiResponse<GetByIdSellerDto?>> GetSellerById(Guid SellerId)
         {
-            if (updateSellerDto is null)
-                throw new ArgumentNullException(nameof(updateSellerDto));
+            var domain = await _genericRepo.GetById(SellerId);
 
-            var domain = await _genericRepo.Update(updateSellerDto.Map());
-            return domain.MapDomainToDto();
+            if (domain == null)
+                return ApiResponse<GetByIdSellerDto?>
+                    .Fail("Seller not found");
+
+            var resultDto = domain.Map();
+
+            return ApiResponse<GetByIdSellerDto?>
+                .Success(resultDto, "Seller fetched successfully");
+        }
+
+        public async Task<ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto)
+        {
+            if (createSellerDto == null)
+                return ApiResponse<CreateSellerDto>.Fail("Invalid request data");
+
+            var domain = createSellerDto.Map();
+
+            if (domain == null)
+                return ApiResponse<CreateSellerDto>.Fail("Mapping failed");
+
+            await _genericRepo.Create(domain);
+            await _genericRepo.SaveChangesAsync();
+
+            return ApiResponse<CreateSellerDto>
+                .Success(createSellerDto, "Seller Created Successfully");
+        }
+
+        public async Task<ApiResponse<UpdateSellerDto>> UpdateSeller(UpdateSellerDto updateSellerDto)
+        {
+            if (updateSellerDto == null)
+                return ApiResponse<UpdateSellerDto>
+                    .Fail("Invalid request data");
+
+            
+            var domain = updateSellerDto.Map();
+
+           
+            var updatedDomain = await _genericRepo.Update(domain);
+
+            if (updatedDomain == null)
+                return ApiResponse<UpdateSellerDto>
+                    .Fail("Seller not found");
+
+            await _genericRepo.SaveChangesAsync();
+
+           
+            var resultDto = updatedDomain.MapDomainToDto();
+
+            return ApiResponse<UpdateSellerDto>
+                .Success(resultDto, "Seller Updated Successfully");
+
         }
     }
 }
