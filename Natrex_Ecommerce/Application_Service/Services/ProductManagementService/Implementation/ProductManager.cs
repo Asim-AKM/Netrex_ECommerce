@@ -24,11 +24,15 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             _productImageRepo = productImageRepo;
             _genericProductRepo = repository;
         }
-        public async Task AddProduct(AddProductDto productDto)
+        public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
             var category = await _productCategories.GetByName(productDto.CategoryName);
 
-            if (category == null) throw new Exception("Category not found");
+            //if (category == null) throw new Exception("Category not found");
+            if (category == null)
+            {
+                return ApiResponse<AddProductDto>.Fail("Category not found", ResponseType.BadRequest);
+            }
             var domainProduct = productDto.MapProduct();
             domainProduct.SellerId = Guid.NewGuid();  //Static Value just for now 
             domainProduct.ProductCategoryId = category.CategoryId;
@@ -36,15 +40,19 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             await _unitOfWork.Products.Create(domainProduct);
             await _unitOfWork.ProductImages.Create(domainImage);
             await _unitOfWork.SaveChangesAsync();
+
+            return ApiResponse<AddProductDto>.Success(productDto, "Product added successfully", ResponseType.Created);
+
         }
 
+        
         public async Task<ApiResponse<string>> DeleteProduct(Guid productId)
         {
             // Check if the product exists
             var domain = await _genericProductRepo.GetById(productId);
             if (domain == null)
             {
-                ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
+                return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
             }
             // Delete the product
             await _genericProductRepo.Delete(domain.ProductId);
@@ -67,19 +75,19 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             var domainProduct = await _genericProductRepo.GetById(productId);
             if (domainProduct == null)
             {
-                ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
+                 return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
             }
             var domainImage = await _unitOfWork.ProductImages.GetById(domainProduct.ProductId);
             var productDto = GetProductMap.MapToGetProductDto(domainProduct, domainImage);
             return ApiResponse<GetProductDto>.Success(productDto, "Product Fatch to Successfully", ResponseType.Ok);
         }
 
-        public async Task UpdateProduct(UpdateProductDTOS productDto) 
+       public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto) 
         {
             var Product = await _unitOfWork.Products.GetById(productDto.ProductId); 
             if (Product == null)
             {
-                throw new Exception("Product not found");
+                return ApiResponse<string>.Fail("Product Not Found", ResponseType.NotFound);
             }
 
             productDto.Mapping(Product);
@@ -88,7 +96,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             {
                 await _unitOfWork.Products.Update(Product);
                 await _unitOfWork.SaveChangesAsync();
-                return;
+                return ApiResponse<string>.Success("","Product Updated Successfully", ResponseType.Ok);
             }
 
             var ProductImage = await _productImageRepo.GetByProductId(productDto.ProductId);
@@ -101,7 +109,6 @@ namespace Application_Service.Services.ProductManagementService.Implementation
                 newimage.IsPrimary = true;
                 newimage.UploadedAt = DateTime.UtcNow;
                 await _unitOfWork.ProductImages.Create(newimage);
-
             }
             else
             {
@@ -112,6 +119,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
 
             await _unitOfWork.Products.Update(Product);
             await _unitOfWork.SaveChangesAsync();
+            return ApiResponse<string>.Success("", "Product and Image Updated Successfully", ResponseType.Ok);
         }
 
     }
