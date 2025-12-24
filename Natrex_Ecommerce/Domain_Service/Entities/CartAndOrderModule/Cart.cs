@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain_Service.Entities.CartAndOrderModule
 {
@@ -9,8 +10,11 @@ namespace Domain_Service.Entities.CartAndOrderModule
     /// intends to purchase. Each customer can have only one active cart at a time.
     /// The cart acts as a container for CartItem entities.
     /// </summary>
+    /// 
+    
     public class Cart
     {
+      
         /// <summary>
         /// Unique identifier for the cart.
         /// This is the primary key used to uniquely identify a cart record.
