@@ -1,4 +1,5 @@
-﻿using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.ShopDetailsDto;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.ShopDetailsDto;
 using Application_Service.DTO_s.ShopDetailsDtos;
 using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
 using Domain_Service.Entities.SellerModule;
@@ -17,57 +18,84 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             _shopDetails = shopDetailsRepository;
         }
 
-        public async Task<CreateShopDetailsDto> CreateShopDetails(CreateShopDetailsDto createShopDetailsDto)
+        public async Task<ApiResponse<CreateShopDetailsDto>> CreateShopDetails(CreateShopDetailsDto createShopDetailsDto)
         {
-            if (createShopDetailsDto != null)
-            {
-                var Data = await _repository.Create(createShopDetailsDto.Map());
-                return Data.MapToCreateShopDto();
+            if (createShopDetailsDto == null)
+                return ApiResponse<CreateShopDetailsDto>.Fail("Invailed Request data");
 
-            }
-            throw new Exception(nameof(CreateShopDetails));
-        }
+            var Damain = createShopDetailsDto.Map();
 
-        public async Task<bool> DeleteShopDetails(Guid ShopDetailId)
-        {
-            var Details = await _repository.Delete(ShopDetailId);
-            if (!Details)
-            {
-                return false;
-            }
+            if (Damain == null)
+                return ApiResponse<CreateShopDetailsDto>.Fail("Mapping failed");
+
+            await _repository.Create(Damain);
             await _repository.SaveChangesAsync();
-            return true;
+
+            return ApiResponse<CreateShopDetailsDto>.Success(
+                createShopDetailsDto,
+                "Shop details created successfully");
+
         }
 
-        public async Task<GetAllShopDetailsDto> GetAllShopDetails()
+        public async Task<ApiResponse<bool>> DeleteShopDetails(Guid ShopDetailId)
         {
-          var Details=await _shopDetails.GetAllShopDetails();
-            if(Details != null)
-            {
-                return Details.MapToDto();
-            }
-            throw new Exception(nameof(GetAllShopDetails));
+            if (ShopDetailId == Guid.Empty)
+                return ApiResponse<bool>.Fail("Invailed ShopDetail Id");
+
+            await _repository.Delete(ShopDetailId);
+            await _repository.SaveChangesAsync();
+
+            return ApiResponse<bool>.Success(true, "ShopDetail deleted successfully");
+
         }
 
-        public async Task<GetByIdShopDetailsDto> GetByIdShopDetails(Guid ShopDetailId)
+        public async Task<ApiResponse<GetAllShopDetailsDto>> GetAllShopDetails()
         {
-         
-          var Data=await _repository.GetById(ShopDetailId);
-            if(Data != null)
+            var shopDetails = await _shopDetails.GetAllShopDetails();
+           
+
+            if (shopDetails == null)
             {
-                return Data.Map();
+                return ApiResponse<GetAllShopDetailsDto>.Fail("No shop details found");
             }
-            throw new Exception(nameof(GetByIdShopDetails));
+
+            return ApiResponse<GetAllShopDetailsDto>.Success(shopDetails.MapToDto(),"Operation Performed Successfully");
         }
 
-        public async Task<UpdateShopDetailsDto> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto)
+        public async Task<ApiResponse<GetByIdShopDetailsDto>> GetByIdShopDetails(Guid ShopDetailId)
         {
-          var Data=await _repository.Update(updateShopDetailsDto.MapToDomain());
-            if( Data != null)
-            {
-                return Data.MapToUpdateDto();
-            }
-            throw new Exception(nameof(UpdateShopDetails));
+            if(ShopDetailId==Guid.Empty)
+                return ApiResponse<GetByIdShopDetailsDto>
+                    .Fail("Invailed ShopDetail Id");
+
+            var Domain=await _repository.GetById(ShopDetailId);
+
+            if(Domain==null)
+                return ApiResponse<GetByIdShopDetailsDto>
+                    .Fail("ShopDetail not found");
+
+            var dto=Domain.Map();
+                return ApiResponse<GetByIdShopDetailsDto>
+                   .Success(dto,"Operation Performed Successfully");
+        }
+
+        public async Task<ApiResponse<UpdateShopDetailsDto>> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto)
+        {
+            if(updateShopDetailsDto==null)
+                return ApiResponse<UpdateShopDetailsDto>
+                    .Fail("Invailed Request data");
+
+            var Domain=await _repository.Update(updateShopDetailsDto.MapToDomain());
+            
+            if(Domain==null)
+                return ApiResponse<UpdateShopDetailsDto>
+                    .Fail("ShopDetail not found");
+
+            await _repository.SaveChangesAsync();
+
+            return ApiResponse<UpdateShopDetailsDto>
+                .Success(updateShopDetailsDto,"Shop details updated successfully");
+
         }
     }
 }

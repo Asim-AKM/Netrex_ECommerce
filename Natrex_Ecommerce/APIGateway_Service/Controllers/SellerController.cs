@@ -1,5 +1,5 @@
 ﻿using Application_Service.DTO_s.SellerDtos;
-using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
+using Application_Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -36,8 +36,8 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSeller([FromBody] CreateSellerDto createSellerDto)
         {
-            await _ISellerManager.CreateSeller(createSellerDto);
-            return Ok(createSellerDto);
+            var Response = await _ISellerManager.InsertSeller(createSellerDto);
+            return StatusCode((int)Response.Status, Response);
         }
 
         /// <summary>
@@ -51,12 +51,11 @@ namespace APIGateway_Service.Controllers
         [HttpPut("UpdateSeller/{SellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateSeller(UpdateSellerDto updateSellerDto)
         {
-            await _ISellerManager.UpdateSeller(updateSellerDto);
-            return Ok(updateSellerDto);
+            var Response = await _ISellerManager.UpdateSeller(updateSellerDto);
+            return StatusCode((int)Response.Status, Response);
         }
 
         /// <summary>
@@ -70,12 +69,11 @@ namespace APIGateway_Service.Controllers
         [HttpDelete("DeleteSeller/{SellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSeller(Guid SellerId)
         {
-            await _ISellerManager.DeleteSeller(SellerId);
-            return Ok();
+            var response = await _ISellerManager.DeleteSeller(SellerId);
+            return StatusCode((int)response.Status, response);
         }
 
         /// <summary>
@@ -94,19 +92,9 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSellerById(Guid SellerId)
         {
-            var seller = await _ISellerManager.GetSellerById(SellerId);
-            return Ok(seller);
-           
-        }
-        [HttpGet("GetAllSellers")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllSellers()
-        {
-            var Seller = await _ISellerManager.GetAllSeller();
-            return Ok(Seller);
+            var response = await _ISellerManager.GetSellerById(SellerId);
+
+            return StatusCode((int)response.Status, response);
         }
     }
 }

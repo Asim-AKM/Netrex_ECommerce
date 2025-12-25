@@ -1,4 +1,5 @@
-﻿using Application_Service.DTO_s.ShopDetailsDtos;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.ShopDetailsDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
 {
     public interface IShopDetailsManager
     {
-        Task<CreateShopDetailsDto> CreateShopDetails(CreateShopDetailsDto createShopDetailsDto);
-        Task<UpdateShopDetailsDto> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto);
-        Task<bool> DeleteShopDetails(Guid ShopDetailId);
-        Task<GetByIdShopDetailsDto> GetByIdShopDetails(Guid ShopDetailId);
-        Task<GetAllShopDetailsDto> GetAllShopDetails();
+        Task <ApiResponse<CreateShopDetailsDto>> CreateShopDetails(CreateShopDetailsDto createShopDetailsDto);
+        Task <ApiResponse<UpdateShopDetailsDto>> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto);
+        Task <ApiResponse<bool>> DeleteShopDetails(Guid ShopDetailId);
+        Task <ApiResponse<GetByIdShopDetailsDto>> GetByIdShopDetails(Guid ShopDetailId);
+        Task <ApiResponse<GetAllShopDetailsDto>> GetAllShopDetails();
 
     }
 }
