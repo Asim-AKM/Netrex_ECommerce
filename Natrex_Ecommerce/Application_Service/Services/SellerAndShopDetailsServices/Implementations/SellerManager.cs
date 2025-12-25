@@ -1,73 +1,96 @@
-﻿using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos;
 using Application_Service.DTO_s.SellerDtos;
-using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
+using Application_Service.Services.Interface;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 
-namespace Application_Service.Services.SellerAndShopDetailsServices.Implementations
+namespace Application_Service.Services.Implementation
 {
 
     public class SellerManager : ISellerManager
     {
         private readonly IRepository<Seller> _genericRepo;
-        private readonly ISellerRepository _sellerRepository;
 
-        public SellerManager(IRepository<Seller> repository, ISellerRepository sellerRepository)
+        public SellerManager(IRepository<Seller> repository)
         {
             _genericRepo = repository;
-            _sellerRepository = sellerRepository;
         }
 
-
-        public async Task CreateSeller(CreateSellerDto createSellerDto)
+        public async Task<ApiResponse<bool>> DeleteSeller(Guid SellerId)
         {
-            if (createSellerDto is null)
-                throw new ArgumentNullException(nameof(createSellerDto));
 
-            await _genericRepo.Create(createSellerDto.Map());
+            if (SellerId == Guid.Empty)
+                return ApiResponse<bool>
+                    .Fail("Invalid seller id");
+
+
+            await _genericRepo.Delete(SellerId);
             await _genericRepo.SaveChangesAsync();
+
+            return ApiResponse<bool>
+                .Success(true, "Seller deleted successfully");
         }
 
-
-        public async Task<bool> DeleteSeller(Guid SellerId)
-        {
-            var domain = await _genericRepo.Delete(SellerId);
-
-            if (!domain)
-            {
-                return false;
-            }
-            await _genericRepo.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<GetAllSellerDto> GetAllSeller()
-        {
-           var Details= await _sellerRepository.GetAllSellers();
-            if(Details !=null)
-            {
-                return Details.MapToDto();
-            }
-            throw new ArgumentException(nameof(Details));
-        }
-
-        public async Task<GetByIdSellerDto?> GetSellerById(Guid SellerId)
+        public async Task<ApiResponse<GetByIdSellerDto?>> GetSellerById(Guid SellerId)
         {
             if (SellerId == Guid.Empty)
-                return null;
+                return ApiResponse<GetByIdSellerDto?>
+                    .Fail("Invalid seller id");
 
             var domain = await _genericRepo.GetById(SellerId);
-            return domain?.Map();
+
+            if (domain == null)
+                return ApiResponse<GetByIdSellerDto?>
+                    .Fail("Seller not found");
+
+            var resultDto = domain.Map();
+
+            return ApiResponse<GetByIdSellerDto?>
+                .Success(resultDto, "Seller fetched successfully");
         }
 
-        public async Task<UpdateSellerDto> UpdateSeller(UpdateSellerDto updateSellerDto)
+        public async Task<ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto)
         {
-            if (updateSellerDto is null)
-                throw new ArgumentNullException(nameof(updateSellerDto));
+            if (createSellerDto == null)
+                return ApiResponse<CreateSellerDto>.Fail("Invalid request data");
 
-            var domain = await _genericRepo.Update(updateSellerDto.Map());
-            return domain.MapDomainToDto();
+            var domain = createSellerDto.Map();
+
+            if (domain == null)
+                return ApiResponse<CreateSellerDto>.Fail("Mapping failed");
+
+            await _genericRepo.Create(domain);
+            await _genericRepo.SaveChangesAsync();
+
+            return ApiResponse<CreateSellerDto>
+                .Success(createSellerDto, "Seller Created Successfully");
+        }
+
+        public async Task<ApiResponse<UpdateSellerDto>> UpdateSeller(UpdateSellerDto updateSellerDto)
+        {
+            if (updateSellerDto == null)
+                return ApiResponse<UpdateSellerDto>
+                    .Fail("Invalid request data");
+
+
+            var domain = updateSellerDto.Map();
+
+
+            var updatedDomain = await _genericRepo.Update(domain);
+
+            if (updatedDomain == null)
+                return ApiResponse<UpdateSellerDto>
+                    .Fail("Seller not found");
+
+            await _genericRepo.SaveChangesAsync();
+
+
+            var resultDto = updatedDomain.MapDomainToDto();
+
+            return ApiResponse<UpdateSellerDto>
+                .Success(resultDto, "Seller Updated Successfully");
+
         }
     }
 }
