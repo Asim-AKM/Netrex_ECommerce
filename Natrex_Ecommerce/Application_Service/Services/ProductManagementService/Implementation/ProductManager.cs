@@ -28,7 +28,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         {
             var category = await _productCategories.GetByName(productDto.CategoryName);
 
-            //if (category == null) throw new Exception("Category not found");
+
             if (category == null)
             {
                 return ApiResponse<AddProductDto>.Fail("Category not found", ResponseType.BadRequest);
@@ -58,7 +58,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             await _genericProductRepo.Delete(domain.ProductId);
 
             // Delete associated image
-            var domainimage = await _unitOfWork.ProductImages.GetById(productId);
+            var domainimage = await _productImageRepo.GetByProductId(productId);
             // If an image exists, delete it
             if (domainimage != null)
             {
@@ -66,7 +66,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             }
 
             // Save changes to the database
-            await _genericProductRepo.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
             return ApiResponse<string>.Success(string.Empty, "Product deleted successfully", ResponseType.Ok);
         }
 
@@ -77,9 +77,9 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             {
                  return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
             }
-            var domainImage = await _unitOfWork.ProductImages.GetById(domainProduct.ProductId);
+            var domainImage = await _productImageRepo.GetByProductId(domainProduct.ProductId);
             var productDto = GetProductMap.MapToGetProductDto(domainProduct, domainImage);
-            return ApiResponse<GetProductDto>.Success(productDto, "Product Fatch to Successfully", ResponseType.Ok);
+            return ApiResponse<GetProductDto>.Success(productDto, "Product Fetched Successfully", ResponseType.Ok);
         }
 
        public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto) 
