@@ -12,7 +12,7 @@ namespace Application_Service.DTO_s.Validators.UserMangement
                 .EmailAddress().WithMessage("Invalid Email Address");
 
             RuleFor(x => x.contact)
-                .Empty().WithMessage("Contact Required")
+                .NotEmpty().WithMessage("Contact Required")
                 .MaximumLength(11).WithMessage("Contact must contain 11 digits")
                 .Length(11).WithMessage("Contain Atleast 11 digits")
                 .Matches("[0-9]").WithMessage("Contact Only Contain digits(0-9)");
