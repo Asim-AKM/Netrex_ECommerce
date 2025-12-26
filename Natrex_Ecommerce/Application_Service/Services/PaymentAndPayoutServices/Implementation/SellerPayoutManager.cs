@@ -106,11 +106,22 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
                     "Seller Payout not found",
                     ResponseType.NotFound);
             }
-
+            if(payout.PaymentStatus == PaymentStatus.success)
+            {
+                return ApiResponse<GetSellerPayoutByIdDto>.Fail(
+                    "Seller Payout is already marked as Paid",
+                    ResponseType.BadRequest);
+            }
+      
+            if(payout.PaymentStatus == PaymentStatus.failed)
+            {
+                return ApiResponse<GetSellerPayoutByIdDto>.Fail(
+                    "Seller Payout has Failed, cannot mark as Paid",
+                    ResponseType.BadRequest);
+            }
             payout.PaymentStatus = PaymentStatus.success;
             payout.PayOutDate = DateTime.UtcNow;
 
-            await _sellerPayoutRepository.Update(payout);
             await _sellerPayoutRepository.SaveChangesAsync();
 
             return ApiResponse<GetSellerPayoutByIdDto>.Success(

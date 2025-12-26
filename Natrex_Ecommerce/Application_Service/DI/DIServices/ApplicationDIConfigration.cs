@@ -26,7 +26,8 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IUserManager, UserManager>()
                             .AddScoped<IAuthenticationManager, AuthenticationManager>()
                             .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
-                            .AddScoped<IJwtManager, JwtManager>();
-                           
+                            .AddScoped<IJwtManager, JwtManager>()
+                            .AddScoped<ISellerPayoutManager, SellerPayoutManager>();
+
     }
 }

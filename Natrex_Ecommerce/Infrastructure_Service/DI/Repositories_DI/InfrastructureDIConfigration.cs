@@ -34,14 +34,15 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IProductRepo, ProductRepo>()
                     .AddScoped<IProductImageRepo, ProductImageRepo>()
                     .AddScoped<IProductCategories, ProductCategoryRepo>()
-                    .AddScoped<IInvoiceRepo, InvoiceRepo>()
                     .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")))
                     .AddScoped<ICustomerRepo, CustomerRepo>()
                     .AddScoped<ICartRepo, CartRepo>()
                     .AddScoped<ICartItemRepo, CartItemRepo>()
                     .AddScoped<IOrderRepo, OrderRepo>()
-                    .AddScoped<IOrderItemRepo, OrderItemRepo>();
+                    .AddScoped<IOrderItemRepo, OrderItemRepo>()
+                    .AddScoped<IPaymentDetailRepo, PaymentDetailRepo>()
+                    .AddScoped<ISellerPayoutRepo, SellerPayoutRepo>();
 
-                    
+
     }
 }
