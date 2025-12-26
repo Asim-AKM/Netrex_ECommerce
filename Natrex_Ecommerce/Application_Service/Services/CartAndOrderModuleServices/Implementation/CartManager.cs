@@ -92,7 +92,7 @@ namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
    
             }
 
-            dto.Map(cart);
+            cart =dto.Map(cart);
 
             await _cartRepository.Update(cart);
             await _cartRepository.SaveChangesAsync();
