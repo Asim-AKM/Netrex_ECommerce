@@ -3,6 +3,7 @@ using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.ProductRepo;
+using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
@@ -11,6 +12,7 @@ using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo;
 using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.OrderRepo;
 using Infrastructure_Service.Persistance.Repositories.PaymentAndPayout;
 using Infrastructure_Service.Persistance.Repositories.ProductManagement;
+using Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
 using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
 using Infrastructure_Service.Persistance.Repositories.UserRoles;
@@ -40,8 +42,10 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<ICartRepo, CartRepo>()
                     .AddScoped<ICartItemRepo, CartItemRepo>()
                     .AddScoped<IOrderRepo, OrderRepo>()
-                    .AddScoped<IOrderItemRepo, OrderItemRepo>();
+                    .AddScoped<IOrderItemRepo, OrderItemRepo>()
+                    .AddScoped<ISellerRepository, SellerRepository>()
+                    .AddScoped<IShopDetailsRepository, ShopDetailsRepository>();
 
-                    
+
     }
 }

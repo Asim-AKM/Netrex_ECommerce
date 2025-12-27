@@ -9,7 +9,7 @@
     /// <param name="StoreName">The name of the store.</param>
     /// <param name="StoreDescription">The description of the store.</param>
     /// <param name="Address">The address of the store.</param>
-    public record GetByIdSellerDto
+    public record GetSellerDto
     (
         Guid SellerId,
         Guid UserId,
