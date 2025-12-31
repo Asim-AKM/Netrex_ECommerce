@@ -1,4 +1,5 @@
-﻿using Domain_Service.Entities.PaymentAndPayout;
+﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
@@ -49,7 +50,10 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<Seller> Sellers { get; }
         IRepository<ProductImage> ProductImages { get; }
         IRepository<Customer> Customers { get; }
-       
+        IRepository<CartItem> CartItems { get; }
+        IRepository<Cart> Carts { get; }
+        IRepository<Order> Orders {  get; }
+        IRepository<OrderItem> OrderItems {  get; }
 
         /// <summary>
         /// Gets the repository for processing and retrieving 

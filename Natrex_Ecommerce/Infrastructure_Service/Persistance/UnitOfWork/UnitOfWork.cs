@@ -1,4 +1,5 @@
-﻿using Domain_Service.Entities.PaymentAndPayout;
+﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
@@ -45,6 +46,14 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<Customer> Customers => new Repository<Customer>(_context);
 
         public ICustomerRepo CustomerRepository => new CustomerRepo(_context);
+
+        public IRepository<CartItem> CartItems => new Repository<CartItem>(_context);
+
+        public IRepository<Cart> Carts => new Repository<Cart>(_context);
+
+        public IRepository<Order> Orders => new Repository<Order>(_context);
+
+        public IRepository<OrderItem> OrderItems => new Repository<OrderItem>(_context);
 
         public async Task<int> SaveChangesAsync()
         {

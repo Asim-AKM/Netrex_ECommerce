@@ -1,10 +1,5 @@
-﻿using Application_Service.DTO_s.Cart_OrderDtos.OrderItemDtos;
+﻿using Application_Service.DTO_s.CartAndOrderDtos.OrderItemDtos;
 using Domain_Service.Entities.CartAndOrderModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItemMappers
 {
