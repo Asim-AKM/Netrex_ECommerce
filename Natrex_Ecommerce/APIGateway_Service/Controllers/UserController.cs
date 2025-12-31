@@ -1,6 +1,5 @@
 ﻿using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Services.UserManagmentServices.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -15,19 +14,31 @@ namespace APIGateway_Service.Controllers
             _usermanager = usermanager;
         }
         [HttpPut("update")]
-        public async Task<IActionResult> Update(UpdateUserDto dto)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Update([FromBody]UpdateUserDto dto)
         {
-            return Ok( await  _usermanager.UpdateUserAsync(dto));
+            var response= await  _usermanager.UpdateUserAsync(dto);
+            return StatusCode((int)response.Status, response);
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete([FromBody] Guid id)
         {
-            return Ok(await _usermanager.DeleteUserAsync(id));
+            var response=await _usermanager.DeleteUserAsync(id);
+            return StatusCode((int)response.Status, response);
         }
         [HttpGet("getall")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUsers()
         {
-            return Ok(await _usermanager.GetAllUserAsync());
+            var response = await _usermanager.GetAllUserAsync();
+            return StatusCode((int)response.Status, response);
         }
     }
 }
