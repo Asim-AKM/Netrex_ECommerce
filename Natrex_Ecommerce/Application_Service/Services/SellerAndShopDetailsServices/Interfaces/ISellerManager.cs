@@ -1,6 +1,7 @@
-﻿using Application_Service.DTO_s.SellerDtos;
+﻿using Application_Service.Common.APIResponses;
+using Application_Service.DTO_s.SellerDtos;
 
-namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
+namespace Application_Service.Services.Interface
 {
     /// <summary>
     /// Defines contract methods for managing Seller operations including creation, updating, deletion, and fetching seller information.
@@ -8,36 +9,47 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
     public interface ISellerManager
     {
         /// <summary>
-        /// Creates a new seller record.
+        /// Creates a new seller record asynchronously.
         /// </summary>
         /// <param name="createSellerDto">The data required to create a new seller.</param>
-        /// <returns>A task representing the asynchronous create operation.</returns>
-        Task CreateSeller(CreateSellerDto createSellerDto);
+        /// <returns>
+        /// An <see cref="ApiResponse{T}"/> containing the created <see cref="CreateSellerDto"/> and HTTP status.
+        /// </returns>
+        Task<ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto);
 
         /// <summary>
-        /// Updates an existing seller record.
+        /// Updates an existing seller record asynchronously.
         /// </summary>
         /// <param name="updateSellerDto">The updated seller information.</param>
-        /// <returns>Returns the updated seller DTO.</returns>
-        Task<UpdateSellerDto> UpdateSeller(UpdateSellerDto updateSellerDto);
+        /// <returns>
+        /// An <see cref="ApiResponse{T}"/> containing the updated <see cref="UpdateSellerDto"/> and HTTP status.
+        /// </returns>
+        Task<ApiResponse<UpdateSellerDto>> UpdateSeller(UpdateSellerDto updateSellerDto);
 
         /// <summary>
-        /// Deletes a seller based on the provided SellerId.
+        /// Deletes a seller based on the provided unique identifier.
         /// </summary>
-        /// <param name="SellerId">The unique identifier of the seller to delete.</param>
+        /// <param name="sellerId">The unique identifier of the seller to delete.</param>
         /// <returns>
-        /// Returns <c>true</c> if deletion is successful; otherwise <c>false</c>.
+        /// An <see cref="ApiResponse{T}"/> containing <c>true</c> if deletion is successful; otherwise <c>false</c>, along with HTTP status.
         /// </returns>
-        Task<bool> DeleteSeller(Guid SellerId);
+        Task<ApiResponse<bool>> DeleteSeller(Guid sellerId);
 
         /// <summary>
-        /// Retrieves a seller by its unique identifier.
+        /// Retrieves a seller by its unique identifier asynchronously.
         /// </summary>
-        /// <param name="SellerId">The unique identifier of the seller.</param>
+        /// <param name="sellerId">The unique identifier of the seller.</param>
         /// <returns>
-        /// Returns the seller details if found; otherwise <c>null</c>.
+        /// An <see cref="ApiResponse{T}"/> containing <see cref="GetSellerDto"/> if found; otherwise <c>null</c>, along with HTTP status.
         /// </returns>
-        Task<GetByIdSellerDto?> GetSellerById(Guid SellerId);
-        Task<GetAllSellerDto> GetAllSeller();
+        Task<ApiResponse<GetSellerDto?>> GetSellerById(Guid sellerId);
+
+        /// <summary>
+        /// Retrieves a list of all sellers asynchronously.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="ApiResponse{T}"/> containing a list of <see cref="GetSellerDto"/> and HTTP status.
+        /// </returns>
+        Task<ApiResponse<List<GetSellerDto>>> GetAllSellerList();
     }
 }

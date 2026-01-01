@@ -25,7 +25,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         public async Task<ApiResponse<CreateUserDto>> CreateUserAsync(CreateUserDto request)
         {
             //Validate User
-            var userExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.username);
+            var userExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.email);
             if (userExistance != null)
             {
                 List<string> errorsList = new List<string>();
@@ -79,9 +79,9 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (user == null) { return ApiResponse<string>.Fail("User Not Found", ResponseType.NotFound); }
             // generate and update otp 
             var otp = new Random().Next(100000, 999999).ToString();
-            await _unitOfWork.UserCreadRepository.UpdateOtp(otp, user.UserId);
+            var rowsAffected = await _unitOfWork.UserCreadRepository.UpdateOtp(otp, user.UserId);
             // check is otp updated
-            if (await _unitOfWork.SaveChangesAsync() > 0)
+            if (rowsAffected > 0)
             {
                 // send email
                 var result = await MailService.SendEmailAsync(user.Email, "Password Reset OTP", $"Your OTP for password reset is: {otp}");

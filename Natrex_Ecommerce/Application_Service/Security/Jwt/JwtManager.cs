@@ -29,12 +29,12 @@ namespace Application_Service.Security.Jwt
                 claimsList.Add(new Claim(ClaimTypes.Role, role.ToString()));
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSuperSecretKeyHere"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: "YourIssuer",
-                audience: "YourAudience",
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
                 claims: claimsList,
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: creds);

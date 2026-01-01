@@ -17,9 +17,9 @@ namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
             return await _context.UserCreadentials.AsNoTracking().Where(ur => ur.UserId == userId).FirstOrDefaultAsync() ?? new UserCreadential();
         }
 
-        public async Task UpdateOtp(string otp, Guid userId)
+        public async Task<int> UpdateOtp(string otp, Guid userId)
         {
-            await _context.UserCreadentials.Where(x => x.UserId == userId).ExecuteUpdateAsync(u => u.SetProperty(x => x.OTP, otp));
+            return await _context.UserCreadentials.Where(x => x.UserId == userId).ExecuteUpdateAsync(u => u.SetProperty(x => x.OTP, otp));
         }
 
 

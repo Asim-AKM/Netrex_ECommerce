@@ -46,7 +46,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                         on u.UserId equals r.UserId
                         select new GetUsersDto
                         {
-                            Id=u.UserId,
+                            Id = u.UserId,
                             FullName = u.FullName,
                             Contact = u.Contact,
                             CreateAt = u.CreateAt,

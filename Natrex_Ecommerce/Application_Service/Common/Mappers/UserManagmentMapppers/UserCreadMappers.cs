@@ -8,7 +8,7 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
         public static UserCreadential AssignCreads(this User user, string password)
         {
             PasswordEncriptor encryptor = new();
-            encryptor.CreateHashAndSalt(password, out byte[] newHash, out byte[] newSalt);
+            encryptor.CreateHashAndSalt(password, out byte[] newSalt, out byte[] newHash);
             return new UserCreadential
             {
                 CreadId = Guid.NewGuid(),
