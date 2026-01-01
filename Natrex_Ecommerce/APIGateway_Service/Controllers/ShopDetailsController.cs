@@ -30,11 +30,11 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Shop details successfully created.</response>
         /// <response code="400">Invalid request data.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPost("CreateShopDetails")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateShopDetails(CreateShopDetailsDto createShopDetailsDto)
+        public async Task<IActionResult> Create([FromBody] CreateShopDetailsDto createShopDetailsDto)
         {
             var data = await _manager.CreateShopDetails(createShopDetailsDto);
             return StatusCode((int)data.Status, data);
@@ -49,12 +49,12 @@ namespace APIGateway_Service.Controllers
         /// <response code="400">Invalid shop details data.</response>
         /// <response code="404">Shop detail not found.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut("UpdateShopDetails/{SellerId:guid}")]
+        [HttpPut("{shopDetailsId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateShopDetails(UpdateShopDetailsDto updateShopDetailsDto)
+        public async Task<IActionResult> Update([FromBody] UpdateShopDetailsDto updateShopDetailsDto)
         {
             var data = await _manager.UpdateShopDetails(updateShopDetailsDto);
             return StatusCode((int)data.Status, data);
@@ -63,38 +63,38 @@ namespace APIGateway_Service.Controllers
         /// <summary>
         /// Deletes an existing shop detail by its unique ShopDetailsId.
         /// </summary>
-        /// <param name="ShopDetailsId">Unique identifier of the shop detail to delete.</param>
+        /// <param name="shopDetailsId">Unique identifier of the shop detail to delete.</param>
         /// <returns>Returns 200 if deleted successfully.</returns>
         /// <response code="200">Shop detail successfully deleted.</response>
         /// <response code="400">Invalid shop detail ID.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpDelete("DeleteShopDetails/{ShopDetailsId:guid}")]
+        [HttpDelete("{shopDetailsId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteShopDetails(Guid ShopDetailsId)
+        public async Task<IActionResult> Delete(Guid shopDetailsId)
         {
-            var data = await _manager.DeleteShopDetails(ShopDetailsId);
+            var data = await _manager.DeleteShopDetails(shopDetailsId);
             return StatusCode((int)data.Status, data);
         }
 
         /// <summary>
         /// Retrieves a shop detail by its unique ShopDetailsId.
         /// </summary>
-        /// <param name="ShopDetailsId">Unique identifier of the shop detail.</param>
+        /// <param name="shopDetailsId">Unique identifier of the shop detail.</param>
         /// <returns>Returns shop detail data if found, otherwise an error response.</returns>
         /// <response code="200">Shop detail found.</response>
         /// <response code="404">Shop detail not found.</response>
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpGet("ShopDetailsId/{ShopDetailsId:guid}")]
+        [HttpGet("{shopDetailsId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetByIdShopDetails(Guid ShopDetailsId)
+        public async Task<IActionResult> GetById(Guid shopDetailsId)
         {
-            var data = await _manager.GetByIdShopDetails(ShopDetailsId);
+            var data = await _manager.GetByIdShopDetails(shopDetailsId);
             return StatusCode((int)data.Status, data);
         }
 
@@ -106,12 +106,12 @@ namespace APIGateway_Service.Controllers
         /// <response code="404">No shop details found.</response>
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpGet("GetAllShopDetails")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllShopDetails()
+        public async Task<IActionResult> GetAll()
         {
             var details = await _manager.GetAllShopDetails();
             return StatusCode((int)details.Status, details);

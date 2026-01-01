@@ -3,10 +3,12 @@ using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
+using Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
 using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
 using Infrastructure_Service.Persistance.Repositories.UserRoles;
@@ -33,6 +35,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<ProductImage> ProductImages => new Repository<ProductImage>(_context);
 
         public IRepository<Seller> Sellers => new Repository<Seller>(_context);
+        public ISellerRepository SellerRepository => new SellerRepository(_context);
+        public IRepository<ShopDetail> ShopDetails => new Repository<ShopDetail>(_context);
+       
         /// <summary>
         /// Gets the repository for managing <see cref="PaymentDetail"/> entities.
         /// </summary>
@@ -45,6 +50,8 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<Customer> Customers => new Repository<Customer>(_context);
 
         public ICustomerRepo CustomerRepository => new CustomerRepo(_context);
+
+        public IShopDetailsRepository ShopDetailsRepository => new ShopDetailsRepository(_context);
 
         public async Task<int> SaveChangesAsync()
         {

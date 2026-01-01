@@ -3,6 +3,7 @@ using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Domain_Service.RepoInterfaces.UserManagment;
 
 namespace Domain_Service.RepoInterfaces.UnitOfWork
@@ -47,6 +48,10 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<Invoice> Invoices { get; }
         IRepository<Product> Products { get; }
         IRepository<Seller> Sellers { get; }
+        ISellerRepository SellerRepository { get; }
+        IRepository<ShopDetail> ShopDetails { get; }
+        IShopDetailsRepository ShopDetailsRepository { get; }
+
         IRepository<ProductImage> ProductImages { get; }
         IRepository<Customer> Customers { get; }
        
