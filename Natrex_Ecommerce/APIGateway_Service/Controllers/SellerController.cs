@@ -9,15 +9,15 @@ namespace APIGateway_Service.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class SellerController : ControllerBase
+    public class SellersController : ControllerBase
     {
         private readonly ISellerManager _sellerManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SellerController"/> class.
+        /// Initializes a new instance of the <see cref="SellersController"/> class.
         /// </summary>
         /// <param name="sellerManager">Service layer interface for seller operations.</param>
-        public SellerController(ISellerManager sellerManager)
+        public SellersController(ISellerManager sellerManager)
         {
             _sellerManager = sellerManager;
         }
@@ -30,11 +30,11 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Seller successfully created.</response>
         /// <response code="400">Invalid request data.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPost("CreateSeller")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSeller([FromBody] CreateSellerDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateSellerDto dto)
         {
             var response = await _sellerManager.InsertSeller(dto);
             return StatusCode((int)response.Status, response);
@@ -48,11 +48,11 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Seller successfully updated.</response>
         /// <response code="400">Invalid seller data.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut("UpdateSeller/{sellerId:guid}")]
+        [HttpPut("{sellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateSeller([FromBody] UpdateSellerDto dto)
+        public async Task<IActionResult> Update([FromBody] UpdateSellerDto dto)
         {
             var response = await _sellerManager.UpdateSeller(dto);
             return StatusCode((int)response.Status, response);
@@ -66,11 +66,11 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Seller successfully deleted.</response>
         /// <response code="400">Invalid seller ID.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpDelete("DeleteSeller/{sellerId:guid}")]
+        [HttpDelete("{sellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteSeller(Guid sellerId)
+        public async Task<IActionResult> Delete(Guid sellerId)
         {
             var response = await _sellerManager.DeleteSeller(sellerId);
             return StatusCode((int)response.Status, response);
@@ -85,12 +85,12 @@ namespace APIGateway_Service.Controllers
         /// <response code="404">Seller not found.</response>
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpGet("GetSellerById/{sellerId:guid}")]
+        [HttpGet("{sellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetSellerById(Guid sellerId)
+        public async Task<IActionResult> GetById(Guid sellerId)
         {
             var response = await _sellerManager.GetSellerById(sellerId);
             return StatusCode((int)response.Status, response);
@@ -103,11 +103,11 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Sellers list retrieved successfully.</response>
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpGet("GetAllSellers")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllSellers()
+        public async Task<IActionResult> GetAll()
         {
             var response = await _sellerManager.GetAllSellerList();
             return StatusCode((int)response.Status, response);
