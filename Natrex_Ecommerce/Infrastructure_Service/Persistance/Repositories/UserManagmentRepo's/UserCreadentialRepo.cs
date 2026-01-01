@@ -14,7 +14,7 @@ namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
         }
         public async Task<UserCreadential> GetCreadbyFK(Guid userId)
         {
-            return await _context.UserCreadentials.Where(ur => ur.UserId == userId).FirstOrDefaultAsync() ?? new UserCreadential();
+            return await _context.UserCreadentials.AsNoTracking().Where(ur => ur.UserId == userId).FirstOrDefaultAsync() ?? new UserCreadential();
         }
 
         public async Task UpdateOtp(string otp, Guid userId)
