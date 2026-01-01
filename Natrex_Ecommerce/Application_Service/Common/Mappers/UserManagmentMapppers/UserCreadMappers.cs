@@ -18,5 +18,14 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
                 OTP = string.Empty
             };
         }
+        public static UserCreadential UpdateCreads(this UserCreadential userCread, string newPassword)
+        {
+            PasswordEncriptor encryptor = new();
+            encryptor.CreateHashAndSalt(newPassword, out byte[] newSalt, out byte[] newHash);
+            userCread.PasswordHash = newHash;
+            userCread.PasswordSalt = newSalt;
+            userCread.OTP = string.Empty;
+            return userCread;
+        }
     }
 }

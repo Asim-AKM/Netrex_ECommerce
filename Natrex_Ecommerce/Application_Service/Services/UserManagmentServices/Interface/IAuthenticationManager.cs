@@ -9,5 +9,6 @@ namespace Application_Service.Services.UserManagmentServices.Interface
         Task<ApiResponse<CreateUserDto>> CreateUserAsync(CreateUserDto request);
         Task<ApiResponse<string>> LoginAsync(LoginDto request);
         Task<ApiResponse<string>> ForgetPasswordAsync(string userIdentifier);
+        Task<ApiResponse<string>> ConfirmOtp(CheckOtpDto request);
     }
 }
