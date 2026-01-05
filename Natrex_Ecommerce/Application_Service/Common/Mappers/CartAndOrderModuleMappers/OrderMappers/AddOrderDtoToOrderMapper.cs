@@ -1,10 +1,5 @@
-﻿using Application_Service.DTO_s.Cart_OrderDtos.OrderDtos;
+﻿using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
 using Domain_Service.Entities.CartAndOrderModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers
 {
@@ -18,7 +13,7 @@ namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMapp
                 CustomerId = addOrderDto.CustomerId,
                 OrderStatus = false,
                 PaymentStatus = false,
-                TotalAmount = addOrderDto.TotalAmount,
+                TotalAmount= 0,
                 CreatedAt = DateTime.UtcNow
             };
         }
