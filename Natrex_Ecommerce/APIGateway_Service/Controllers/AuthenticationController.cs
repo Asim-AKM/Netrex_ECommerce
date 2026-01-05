@@ -15,7 +15,7 @@ namespace APIGateway_Service.Controllers
             _authenticationManager = authenticationManager;
         }
 
-        [HttpPost("create")]
+        [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -25,7 +25,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -35,7 +35,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPost("forgetPassoword")]
+        [HttpPost("ForgetPassoword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -43,6 +43,14 @@ namespace APIGateway_Service.Controllers
         {
             var response = await _authenticationManager.ForgetPasswordAsync(userIdentifier);
             return StatusCode((int)response.Status, response);
+        }
+        [HttpPost("ConfirmOtp")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ConfirmOtp(CheckOtpDto request)
+        {
+            var response = await _authenticationManager.ConfirmOtp(request);
+            return StatusCode((int)response.Status,response);
         }
     }
 }
