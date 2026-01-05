@@ -15,6 +15,18 @@ namespace APIGateway_Service
 
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowNetrexUI", policy =>
+                {
+                    policy
+                        .WithOrigins("https://localhost:7169")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+
             // Add services to the container.
             builder.Services.AddAppModelValidations();
             builder.Services.AddControllers();
@@ -46,6 +58,7 @@ namespace APIGateway_Service
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowNetrexUI");
 
             app.UseAuthorization();
 
