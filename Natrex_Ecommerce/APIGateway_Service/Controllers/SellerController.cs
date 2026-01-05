@@ -48,7 +48,7 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Seller successfully updated.</response>
         /// <response code="400">Invalid seller data.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPut("{sellerId:guid}")]
+        [HttpPut("Update/{sellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
