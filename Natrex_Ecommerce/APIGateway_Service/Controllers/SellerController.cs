@@ -30,7 +30,7 @@ namespace APIGateway_Service.Controllers
         /// <response code="200">Seller successfully created.</response>
         /// <response code="400">Invalid request data.</response>
         /// <response code="500">Internal server error.</response>
-        [HttpPost]
+        [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
