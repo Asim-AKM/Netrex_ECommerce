@@ -43,7 +43,7 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IOrderRepo, OrderRepo>()
                     .AddScoped<IOrderItemRepo, OrderItemRepo>()
                     .AddScoped<IPaymentDetailRepo, PaymentDetailRepo>()
-                    .AddScoped<ISellerPayoutRepo, SellerPayoutRepo>();
+                    .AddScoped<ISellerPayoutRepo, SellerPayoutRepo>()
                     .AddScoped<ISellerRepository, SellerRepository>()
                     .AddScoped<IShopDetailsRepository, ShopDetailsRepository>();
 
