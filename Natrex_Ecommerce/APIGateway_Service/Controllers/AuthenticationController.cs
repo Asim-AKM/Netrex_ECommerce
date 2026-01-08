@@ -7,6 +7,8 @@ namespace APIGateway_Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationManager _authenticationManager;
@@ -17,8 +19,6 @@ namespace APIGateway_Service.Controllers
 
         [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create([FromBody] CreateUserDto request)
         {
             var response = await _authenticationManager.CreateUserAsync(request);
@@ -28,7 +28,6 @@ namespace APIGateway_Service.Controllers
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
             var response = await _authenticationManager.LoginAsync(request);
@@ -38,7 +37,6 @@ namespace APIGateway_Service.Controllers
         [HttpPost("ForgetPassoword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ForgetPassword([FromBody] string userIdentifier)
         {
             var response = await _authenticationManager.ForgetPasswordAsync(userIdentifier);
@@ -46,11 +44,10 @@ namespace APIGateway_Service.Controllers
         }
         [HttpPost("ConfirmOtp")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ConfirmOtp(CheckOtpDto request)
         {
             var response = await _authenticationManager.ConfirmOtp(request);
-            return StatusCode((int)response.Status,response);
+            return StatusCode((int)response.Status, response);
         }
     }
 }
