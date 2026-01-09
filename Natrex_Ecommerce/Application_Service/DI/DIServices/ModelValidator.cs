@@ -22,11 +22,11 @@ namespace Application_Service.DI.DIServices
                     options.InvalidModelStateResponseFactory = context =>
                     {
                         var errors = context.ModelState
-                            .Where(x => x.Value.Errors.Count > 0)
+                            .Where(x => x.Value!.Errors.Count > 0)
                             .Select(x => new
                             {
                                 Field = x.Key,
-                                Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                                Errors = x.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
                             })
                             .ToList();
 

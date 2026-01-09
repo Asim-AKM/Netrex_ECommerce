@@ -5,6 +5,7 @@ using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Security.Jwt;
 using Application_Service.Services.UserManagmentServices.Interface;
+using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
@@ -24,26 +25,28 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
 
         public async Task<ApiResponse<CreateUserDto>> CreateUserAsync(CreateUserDto request)
         {
-            //Validate User
-            var userExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.email);
-            if (userExistance != null)
+            // Validate UserIdentifier for Unique Entry
+            var emailExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.Email);
+            var userNameExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.UserName);
+            // Acomulate Errors in a list 
+            if (emailExistance != null || userNameExistance != null)
             {
                 List<string> errorsList = new List<string>();
-                if (userExistance.Email == request.email)
-                    errorsList.Add("Email already exist");
-                if (userExistance.UserName == request.username)
-                    errorsList.Add("UserNAme already exist");
-                if (userExistance.Contact == request.contact)
-                    errorsList.Add("Contact already exist");
+                if (emailExistance != null)
+                    errorsList.Add("Email Already Exist");
+                if (userNameExistance != null)
+                    errorsList.Add("UserName Already Exist");
+
                 var error = string.Join(" | ", errorsList);
                 return ApiResponse<CreateUserDto>.Fail(error, ResponseType.Conflict);
             }
 
+            // Create a user thriugh generic repo
             var user = request.MapToDomain();
             await _unitOfWork.Users.Create(user);
-            await _unitOfWork.UserCreads.Create(user.AssignCreads(request.password));
+            await _unitOfWork.UserCreads.Create(user.AssignCreads(request.Password));
             await _unitOfWork.UserRoles.Create(user.AssingRole());
-            ;
+
             return await _unitOfWork.SaveChangesAsync() > 0 ? ApiResponse<CreateUserDto>.Success(request, "User Created Succesfuly", ResponseType.Created)
                 : ApiResponse<CreateUserDto>.Fail("Failed to Create User", ResponseType.BadRequest);
         }

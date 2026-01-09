@@ -11,9 +11,9 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
             return new User
             {
                 UserId = Guid.NewGuid(),
-                UserName = registerDto.username,
-                Email = registerDto.email,
-                Contact = registerDto.contact,
+                UserName = registerDto.UserName,
+                Email = registerDto.Email,
+                FullName = registerDto.FullName,
             };
         }
         public static User MapToDomain(this UpdateUserDto userdto)

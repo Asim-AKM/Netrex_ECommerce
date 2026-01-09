@@ -7,23 +7,27 @@ namespace Application_Service.DTO_s.Validators.UserMangement
     {
         public UserRegisterDtoValidator()
         {
-            RuleFor(x => x.email)
+            RuleFor(x => x.FullName)
+                .NotEmpty().WithMessage("Full name is required.")
+                .MaximumLength(30).WithMessage("Full name must not exceed 30 characters.")
+                .Must(name => name == name?.Trim())
+                    .WithMessage("Full name must not contain leading or trailing spaces.")
+                .Matches(@"^[A-Za-z]+( [A-Za-z]+)*$")
+                    .WithMessage("Full name can contain only letters and single spaces.");
+
+
+            RuleFor(x => x.UserName)
+                .NotEmpty().WithMessage("UserName Required")
+                .NotNull().WithMessage("UserName is null");
+
+            RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Invalid Email Address");
 
-            RuleFor(x => x.contact)
-                .NotEmpty().WithMessage("Contact Required")
-                .MaximumLength(11).WithMessage("Contact must contain 11 digits")
-                .Length(11).WithMessage("Contain Atleast 11 digits")
-                .Matches("[0-9]").WithMessage("Contact Only Contain digits(0-9)");
-
-            RuleFor(x => x.password)
+            RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required.")
                 .MinimumLength(8).WithMessage("Password Must be 8 Degits");
 
-            RuleFor(x => x.username)
-                .NotEmpty().WithMessage("UserName Required")
-                .NotNull().WithMessage("UserName is null");
         }
     }
 }
