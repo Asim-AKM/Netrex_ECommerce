@@ -7,6 +7,8 @@ namespace Application_Service.DTO_s.Validators.UserMangement
     {
         public UserRegisterDtoValidator()
         {
+            ClassLevelCascadeMode = CascadeMode.Stop;
+            RuleLevelCascadeMode = CascadeMode.Stop;
             RuleFor(x => x.FullName)
                 .NotEmpty().WithMessage("Full name is required.")
                 .MaximumLength(30).WithMessage("Full name must not exceed 30 characters.")

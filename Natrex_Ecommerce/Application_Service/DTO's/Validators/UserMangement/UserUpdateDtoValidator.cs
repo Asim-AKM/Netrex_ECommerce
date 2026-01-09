@@ -7,6 +7,9 @@ namespace Application_Service.DTO_s.Validators.UserMangement
     {
         public UserUpdateDtoValidator()
         {
+            ClassLevelCascadeMode = CascadeMode.Stop;
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.Id)
             .NotEmpty().WithMessage("User Id is required");
 

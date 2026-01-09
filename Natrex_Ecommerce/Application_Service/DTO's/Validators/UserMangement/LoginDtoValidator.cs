@@ -7,6 +7,9 @@ namespace Application_Service.DTO_s.Validators.UserMangement
     {
         public LoginDtoValidator() 
         {
+            ClassLevelCascadeMode = CascadeMode.Stop;
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.UserIdentifier)
                 .NotEmpty().WithMessage("UserIdentifier Required")
                 .EmailAddress().WithMessage("Invalid Email");
