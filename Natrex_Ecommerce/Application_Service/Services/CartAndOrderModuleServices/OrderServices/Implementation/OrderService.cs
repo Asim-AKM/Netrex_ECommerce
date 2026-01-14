@@ -1,14 +1,14 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers;
 using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
-using Application_Service.Services.CartAndOrderServices.OrderServices.Interface;
+using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
 using Domain_Service.Entities.CartAndOrderModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
-namespace Application_Service.Services.CartAndOrderServices.OrderServices.Implementation
+namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation
 {
     public class OrderService(IUnitOfWork _unitOfWork,IRepository<Order> genericRepo,IOrderRepo orderRepo) : IOrderService
     {
@@ -22,7 +22,7 @@ namespace Application_Service.Services.CartAndOrderServices.OrderServices.Implem
             var cartItems =(await _unitOfWork.CartItems.GetAll()).Where(x=>x.CartId==cart.CartId).ToList();//yaha pe me cartitem se get karoga jab cartitem k method ban jaye
             if (!cartItems.Any())
             {
-               return ApiResponse<GetOrderDto>.Fail("Cart is Empty",ResponseType.NoContent);
+               return ApiResponse<GetOrderDto>.Fail("Cart is Empty",ResponseType.NotFound);
             }
             var order = orderDto.Map();
             await _unitOfWork.Orders.Create(order);
@@ -32,7 +32,7 @@ namespace Application_Service.Services.CartAndOrderServices.OrderServices.Implem
                 var product =await _unitOfWork.Products.GetById(items.ProductId);
                 if(product == null)
                 {
-                    return ApiResponse<GetOrderDto>.Fail("Product not found", ResponseType.NoContent);
+                    return ApiResponse<GetOrderDto>.Fail("Product not found", ResponseType.NotFound);
                 }
                 var orderItem = new OrderItem
                 {
@@ -96,7 +96,7 @@ namespace Application_Service.Services.CartAndOrderServices.OrderServices.Implem
         {
             var order = await genericRepo.GetById(updateOrderDto.OrderId);
             if (order == null)
-                return ApiResponse<bool>.Fail(false,"Order is null", ResponseType.NoContent);
+                return ApiResponse<bool>.Fail(false,"Order is null", ResponseType.NotFound);
             order.PaymentStatus=updateOrderDto.PaymentStatus;
             order.OrderStatus = updateOrderDto.OrderStatus;
             await genericRepo.Update(order);

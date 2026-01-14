@@ -16,5 +16,9 @@ namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItem
                 orderItem.PriceTotal
             );
         }
+        public static IEnumerable<GetOrderItemDto> MapList(this IEnumerable<OrderItem> orderItems)
+        {
+            return orderItems.Select(oi => oi.Map());
+        }
     }
 }
