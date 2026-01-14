@@ -15,6 +15,8 @@ namespace APIGateway_Service.Controllers
     /// </remarks>
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class InvoiceController : ControllerBase
     {
         private readonly IInvoiceManager _invoiceService;
@@ -34,7 +36,6 @@ namespace APIGateway_Service.Controllers
         /// <param name="dto">The <see cref="InvoiceDto"/> containing order ID and total amount.</param>
         /// <returns>
         /// Returns <see cref="StatusCodes.Status201Created"/> if the invoice is successfully created.
-        /// Returns <see cref="StatusCodes.Status400BadRequest"/> if the request is invalid.
         /// Returns <see cref="StatusCodes.Status500InternalServerError"/>
         /// </returns>
         /// <remarks>
@@ -43,8 +44,6 @@ namespace APIGateway_Service.Controllers
         /// </remarks>
         [HttpPost("GenerateInvoice")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GenerateInvoice([FromBody] InvoiceDto dto)
         {
            var response = await _invoiceService.GenerateInvoice(dto);
@@ -58,7 +57,6 @@ namespace APIGateway_Service.Controllers
         /// <returns>
         /// Returns <see cref="StatusCodes.Status200OK"/> with <see cref="FetchInvoiceDto"/> if the invoice exists.
         /// Returns <see cref="StatusCodes.Status404NotFound"/> if the invoice is not found.
-        /// Returns <see cref="StatusCodes.Status400BadRequest"/> for invalid requests.
         /// </returns>
         /// <remarks>
         /// This action calls the application service to retrieve the invoice,
@@ -67,7 +65,6 @@ namespace APIGateway_Service.Controllers
         [HttpGet("GetInvoiceById/{InvoiceId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetInvoiceById(Guid InvoiceId)
         {
             var response = await _invoiceService.GetInvoiceById(InvoiceId);

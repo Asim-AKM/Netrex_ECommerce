@@ -15,6 +15,9 @@ namespace APIGateway_Service.Controllers
     /// </remarks>
     [Route("api/[controller]")]
     [ApiController]
+
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class PaymentDetailController : ControllerBase
     {
         private readonly IPaymentDetailManager _paymentManager;
@@ -43,7 +46,6 @@ namespace APIGateway_Service.Controllers
         /// <response code="400">Invalid or missing payment data.</response>
         [HttpPost("ProcessPayment")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ProcessPayment([FromBody] ProcessPaymentDto dto)
         {
             var response = await _paymentManager.ProcessPayment(dto);
@@ -63,7 +65,6 @@ namespace APIGateway_Service.Controllers
         [HttpGet("GetPaymentDetailById/{paymentId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPaymentDetailById(Guid paymentId)
         {
             var result = await _paymentManager.GetPaymentById(paymentId);
