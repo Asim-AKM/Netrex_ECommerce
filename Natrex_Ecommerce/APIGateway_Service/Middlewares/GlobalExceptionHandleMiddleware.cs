@@ -11,12 +11,12 @@ namespace APIGateway_Service.Middlewares
 {
     public class GlobalExceptionHandleMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _netx = next;
+        private readonly RequestDelegate _next = next;
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-               await next(context);
+               await _next(context);
             }
             catch (Exception ex)
             {
