@@ -1,5 +1,5 @@
 ﻿using Application_Service.DTO_s.CartAndOrderDtos.CartDtos;
-using Application_Service.Services.CartAndOrderModuleServices.Interface;
+using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

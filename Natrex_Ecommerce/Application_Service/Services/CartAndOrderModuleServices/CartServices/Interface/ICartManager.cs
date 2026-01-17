@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.Services.CartAndOrderModuleServices.Interface
+namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface
 {
     public interface ICartManager
     {

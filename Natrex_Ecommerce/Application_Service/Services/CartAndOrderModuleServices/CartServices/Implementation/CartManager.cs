@@ -1,7 +1,7 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartMappers;
 using Application_Service.DTO_s.CartAndOrderDtos.CartDtos;
-using Application_Service.Services.CartAndOrderModuleServices.Interface;
+using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
 using Domain_Service.Entities.CartAndOrderModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
+namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Implementation
 {
     public class CartManager : ICartManager
     {

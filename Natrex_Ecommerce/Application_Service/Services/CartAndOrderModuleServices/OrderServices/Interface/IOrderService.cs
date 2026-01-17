@@ -1,7 +1,7 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
 
-namespace Application_Service.Services.CartAndOrderServices.OrderServices.Interface
+namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface
 {
         public interface IOrderService
         {
