@@ -7,6 +7,8 @@ namespace APIGateway_Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class CartController : ControllerBase
     {
 
@@ -17,50 +19,44 @@ namespace APIGateway_Service.Controllers
             _cartManager = cartManager;
         }
 
-        [HttpPost("CreateCart")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        [HttpPost("Cart")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateCart([FromBody] AddCartDto dto)
         {
             var response = await _cartManager.CreateAsync(dto);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPut("UpdateCart")]
+        [HttpPut("Cart")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateCart([FromBody] UpdateCartDto dto)
         {
             var response = await _cartManager.UpdateAsync(dto);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpDelete("DeleteCart/{cartId:guid}")]
+        [HttpDelete("Cart")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteCart(Guid cartId)
         {
             var response = await _cartManager.DeleteAsync(cartId);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpGet("GetCartById/{cartId:guid}")]
+        [HttpGet("CartById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCartById(Guid cartId)
         {
             var response = await _cartManager.GetByIdAsync(cartId);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpGet("GetAllCarts")]
+        [HttpGet("Cart")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllCarts()
         {
             var response = await _cartManager.GetAllAsync();

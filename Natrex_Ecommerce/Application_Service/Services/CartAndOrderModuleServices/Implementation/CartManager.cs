@@ -29,34 +29,34 @@ namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
             await _cartRepository.Create(cart);
             await _cartRepository.SaveChangesAsync();
 
-            return ApiResponse<GetCartDto>.Success(cart.Map(),"Cart created successfully"  );
+            return ApiResponse<GetCartDto>.Success(cart.Map(), "Cart created successfully");
         }
 
         public async Task<ApiResponse<bool>> DeleteAsync(Guid cartId)
         {
             var isDeleted = await _cartRepository.Delete(cartId);
 
-             
+
             if (!isDeleted)
             {
                 return ApiResponse<bool>.Fail(false, "Cart not found", ResponseType.NotFound);
-                
+
             }
 
-            
+
             await _cartRepository.SaveChangesAsync();
 
-            
+
             return ApiResponse<bool>.Success(true, "Cart deleted successfully");
-                
-             
+
+
         }
 
         public async Task<ApiResponse<List<GetCartDto>>> GetAllAsync()
         {
             var carts = await _cartRepository.GetAll();
-            
-            var result = carts.Select(x=>x.Map()).ToList();
+
+            var result = carts.Select(x => x.Map()).ToList();
 
             return ApiResponse<List<GetCartDto>>.Success(
                 result, "Carts retrieved successfully"
@@ -65,16 +65,16 @@ namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
 
         public async Task<ApiResponse<GetCartDto>> GetByIdAsync(Guid cartId)
         {
-             
+
             var cart = await _cartRepository.GetById(cartId);
 
-             
+
             if (cart is null)
             {
-                return ApiResponse<GetCartDto>.Fail( "Cart not found", ResponseType.NotFound );
+                return ApiResponse<GetCartDto>.Fail("Cart not found", ResponseType.NotFound);
 
             }
-  
+
             return ApiResponse<GetCartDto>.Success(
                 cart.Map(),
                 "Cart retrieved successfully"
@@ -83,25 +83,27 @@ namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
 
         public async Task<ApiResponse<bool>> UpdateAsync(UpdateCartDto dto)
         {
-            
+
             var cart = await _cartRepository.GetById(dto.CartId);
 
             if (cart is null)
             {
                 return ApiResponse<bool>.Fail(false, "Cart not found", ResponseType.NotFound);
-   
+
             }
 
-            cart =dto.Map(cart);
+            var updatedcart = dto.Map();
+
+            cart.CustomerId = updatedcart.CustomerId;
 
             await _cartRepository.Update(cart);
             await _cartRepository.SaveChangesAsync();
 
             return ApiResponse<bool>.Success(true, "Cart updated successfully");
-                 
-             
+
+
         }
     }
 
 }
- 
+
