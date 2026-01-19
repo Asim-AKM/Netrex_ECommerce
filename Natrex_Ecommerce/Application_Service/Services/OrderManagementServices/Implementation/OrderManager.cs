@@ -1,16 +1,16 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers;
 using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
-using Application_Service.Services.CartAndOrderServices.OrderServices.Interface;
+using Application_Service.Services.OrderManagementServices.Interface;
 using Domain_Service.Entities.CartAndOrderModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 
-namespace Application_Service.Services.CartAndOrderServices.OrderServices.Implementation
+namespace Application_Service.Services.OrderManagementServices.Implementation
 {
-    public class OrderService(IUnitOfWork _unitOfWork,IRepository<Order> genericRepo,IOrderRepo orderRepo) : IOrderService
+    public class OrderManager(IUnitOfWork _unitOfWork,IRepository<Order> genericRepo,IOrderRepo orderRepo) : IOrderManager
     {
         public async Task<ApiResponse<GetOrderDto>> CreateOrderAsync(AddOrderDto orderDto)
         {

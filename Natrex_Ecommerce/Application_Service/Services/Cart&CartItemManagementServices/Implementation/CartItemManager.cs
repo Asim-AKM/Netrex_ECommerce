@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_Service.Services.CartAndOrderModuleServices.Implementation
+namespace Application_Service.Services.CartAndOrderManagementServices.Implementation
 {
     public class CartItemManager:ICartItemManager
     {

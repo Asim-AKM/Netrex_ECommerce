@@ -10,11 +10,11 @@ namespace APIGateway_Service.Controllers
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class CartItemController : ControllerBase
     {
-        private readonly ICartItemManager _manager;
+        private readonly ICartItemManager _cartItemManager;
 
-        public CartItemController(ICartItemManager manager)
+        public CartItemController(ICartItemManager cartItemManager)
         {
-            _manager = manager;
+            _cartItemManager = cartItemManager;
         }
 
         
@@ -22,7 +22,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCartItem(AddCartItemDto dto)
         {
-            var response = await _manager.CreateAsync(dto);
+            var response = await _cartItemManager.CreateAsync(dto);
             return StatusCode((int)response.Status, response);
         }
 
@@ -32,7 +32,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCartItemById(Guid cartItemId)
         {
-            var response = await _manager.GetByIdAsync(cartItemId);
+            var response = await _cartItemManager.GetByIdAsync(cartItemId);
             return StatusCode((int)response.Status, response);
         }
 
@@ -41,7 +41,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllCartItems()
         {
-            var response = await _manager.GetAllAsync();
+            var response = await _cartItemManager.GetAllAsync();
             return StatusCode((int)response.Status, response);
         }
 
@@ -51,7 +51,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateCartItem(UpdateCartItemDto dto)
         {
-            var response = await _manager.UpdateAsync(dto);
+            var response = await _cartItemManager.UpdateAsync(dto);
             return StatusCode((int)response.Status, response);
         }
 
@@ -61,7 +61,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCartItem(Guid cartItemId)
         {
-            var response = await _manager.DeleteAsync(cartItemId);
+            var response = await _cartItemManager.DeleteAsync(cartItemId);
             return StatusCode((int)response.Status, response);
         }
 
@@ -71,7 +71,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByCartAndProduct(Guid cartId, Guid productId)
         {
-            var response = await _manager.GetByCartAndProductAsync(cartId, productId);
+            var response = await _cartItemManager.GetByCartAndProductAsync(cartId, productId);
             return StatusCode((int)response.Status, response);
         }
     }
