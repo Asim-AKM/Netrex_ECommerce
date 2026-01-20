@@ -83,24 +83,23 @@ namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.I
 
         public async Task<ApiResponse<bool>> UpdateAsync(UpdateCartDto dto)
         {
-            
             var cart = await _cartRepository.GetById(dto.CartId);
 
             if (cart is null)
             {
                 return ApiResponse<bool>.Fail(false, "Cart not found", ResponseType.NotFound);
-   
             }
 
-            cart =dto.Map(cart);
+            var updatedCart = dto.Map();
+
+            cart.CustomerId = updatedCart.CustomerId;
 
             await _cartRepository.Update(cart);
             await _cartRepository.SaveChangesAsync();
 
             return ApiResponse<bool>.Success(true, "Cart updated successfully");
-                 
-             
         }
+
     }
 
 }

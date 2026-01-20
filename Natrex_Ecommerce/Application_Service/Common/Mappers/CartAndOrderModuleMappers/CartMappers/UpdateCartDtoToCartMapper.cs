@@ -5,11 +5,14 @@ namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartMappe
 {
     public static class UpdateCartDtoToCartMapper
     {
-        public static Cart Map(this UpdateCartDto dto,Cart cart)
+        public static Cart Map(this UpdateCartDto dto)
         {
-                cart.CustomerId = dto.CustomerId;
-                return cart;
-             
+            return new Cart
+            {
+                CartId = dto.CartId,
+                CustomerId = dto.CustomerId
+            };
+
         }
 
     }
