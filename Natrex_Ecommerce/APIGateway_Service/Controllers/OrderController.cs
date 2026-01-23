@@ -11,7 +11,7 @@ namespace APIGateway_Service.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
 
-    public class OrderController(IOrderService orderService) : ControllerBase
+    public class OrderController(IOrderManager orderService) : ControllerBase
     {
         [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)] // special case

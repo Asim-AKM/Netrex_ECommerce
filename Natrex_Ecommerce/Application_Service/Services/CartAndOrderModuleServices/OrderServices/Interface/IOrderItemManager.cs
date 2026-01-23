@@ -3,7 +3,7 @@ using Application_Service.DTO_s.CartAndOrderDtos.OrderItemDtos;
 
 namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface
 {
-    public interface IOrderItemService
+    public interface IOrderItemManager
     { 
         Task<ApiResponse<IEnumerable<GetOrderItemDto>>>GetOrderItemsByOrderId(Guid orderId);
     }

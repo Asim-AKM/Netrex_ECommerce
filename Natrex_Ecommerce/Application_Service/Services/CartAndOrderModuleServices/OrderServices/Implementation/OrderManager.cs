@@ -10,7 +10,7 @@ using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation
 {
-    public class OrderService(IUnitOfWork _unitOfWork,IRepository<Order> genericRepo,IOrderRepo orderRepo) : IOrderService
+    public class OrderManager(IUnitOfWork _unitOfWork,IRepository<Order> genericRepo,IOrderRepo orderRepo) : IOrderManager
     {
         public async Task<ApiResponse<GetOrderDto>> CreateOrderAsync(AddOrderDto orderDto)
         {

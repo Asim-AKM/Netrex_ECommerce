@@ -1,6 +1,7 @@
 ﻿using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
-using Application_Service.Services.CartAndOrderModuleServices.Interface;
+using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace APIGateway_Service.Controllers
 {
@@ -18,60 +19,50 @@ namespace APIGateway_Service.Controllers
         }
 
         
-        [HttpPost("CartItem")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateCartItem(AddCartItemDto dto)
+        public async Task<IActionResult> CreateCartItem([FromBody]AddCartItemDto dto)
         {
-            var response = await _manager.CreateAsync(dto);
+            var UserId=User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(string.IsNullOrEmpty(UserId))
+            {
+                return Unauthorized();
+            }
+            var response = await _manager.CreateAsync(dto,(Guid.Parse(UserId)));
             return StatusCode((int)response.Status, response);
         }
-
-       
-        [HttpGet("CartItemById")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCartItemById(Guid cartItemId)
-        {
-            var response = await _manager.GetByIdAsync(cartItemId);
-            return StatusCode((int)response.Status, response);
-        }
-
-        
-        [HttpGet("CartItem")]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllCartItems()
         {
-            var response = await _manager.GetAllAsync();
+            var UserId=User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(UserId))
+            {
+                return Unauthorized();
+            }
+            var response = await _manager.GetAllAsync(Guid.Parse(UserId));
             return StatusCode((int)response.Status, response);
         }
-
-        
-        [HttpPut("CartItem")]
+        [HttpPut("IncreaseQuantity")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateCartItem(UpdateCartItemDto dto)
+        public async Task<IActionResult> IncreaseQuantity(Guid cartItemId)
         {
-            var response = await _manager.UpdateAsync(dto);
+            var response = await _manager.IncreaseQuantityAsync(cartItemId);
             return StatusCode((int)response.Status, response);
         }
-
-        
-        [HttpDelete("CartItem")]
+        [HttpPut("DecreaseQuantity")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DecreaseQuantity(Guid cartItemId)
+        {
+            var response = await _manager.DecreaseQuantityAsync(cartItemId);
+            return StatusCode((int)response.Status, response);
+        }
+        [HttpDelete()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCartItem(Guid cartItemId)
         {
             var response = await _manager.DeleteAsync(cartItemId);
-            return StatusCode((int)response.Status, response);
-        }
-
-        
-        [HttpGet("CartItemByCartAndProductId")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByCartAndProduct(Guid cartId, Guid productId)
-        {
-            var response = await _manager.GetByCartAndProductAsync(cartId, productId);
             return StatusCode((int)response.Status, response);
         }
     }

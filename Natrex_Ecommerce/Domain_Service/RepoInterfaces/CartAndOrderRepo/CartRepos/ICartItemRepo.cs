@@ -9,5 +9,6 @@ namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
         /// Returns null if not found.
         /// </summary>
         Task<CartItem?> GetCartItem(Guid cartId, Guid productId);
+        Task<IEnumerable<CartItem>> GetCartItemsByCartId(Guid cartId);
     }
 }

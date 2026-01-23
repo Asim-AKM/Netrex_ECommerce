@@ -7,7 +7,7 @@ using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 
 namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation
 {
-    public class OrderItemService(IOrderItemRepo repo) : IOrderItemService
+    public class OrderItemManager(IOrderItemRepo repo) : IOrderItemManager
     {
         public async Task<ApiResponse<IEnumerable<GetOrderItemDto>>> GetOrderItemsByOrderId(Guid orderId)
         {

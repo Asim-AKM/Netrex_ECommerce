@@ -1,5 +1,7 @@
 ﻿using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Security.Jwt;
+using Application_Service.Services.CartAndOrderModuleServices.CartServices.Implementation;
+using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
 using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation;
 using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
 using Application_Service.Services.Implementation;
@@ -31,9 +33,10 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IJwtManager, JwtManager>()
                             .AddScoped<ISellerPayoutManager, SellerPayoutManager>()
                              .AddScoped<ISellerManager, SellerManager>()
+                             .AddScoped<ICartItemManager,CartItemManager>()         
                             .AddScoped<IShopDetailsManager, ShopDetailsManager>()
-                            .AddScoped<IOrderService, OrderService>()
-                            .AddScoped<IOrderItemService, OrderItemService>();
+                            .AddScoped<IOrderManager, OrderManager>()
+                            .AddScoped<IOrderItemManager, OrderItemManager>();
 
     }
 }
