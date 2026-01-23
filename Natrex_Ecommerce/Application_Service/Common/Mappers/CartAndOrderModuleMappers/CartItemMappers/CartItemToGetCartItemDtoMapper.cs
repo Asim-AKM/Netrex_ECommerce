@@ -1,13 +1,14 @@
 ﻿using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
 using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.ProductAndCategoryModule;
 
 namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartItemMappers
 {
     public static class CartItemToGetCartItemDtoMapper
     {
-        public static GetCartItemDto Map(this CartItem cartItem)
+        public static GetCartItemDto Map(this CartItem cartItem,Product product)
         {
-            return new GetCartItemDto(cartItem.CartItemId, cartItem.CartId, cartItem.ProductId, cartItem.Quantity);
+            return new GetCartItemDto(cartItem.CartItemId,product.ProductName,product.ProductDescription,product.Price,cartItem.Quantity);
         }
     }
 }

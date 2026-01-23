@@ -9,7 +9,7 @@ namespace APIGateway_Service.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public class OrderItemController(IOrderItemService orderItemService) : ControllerBase
+    public class OrderItemController(IOrderItemManager orderItemService) : ControllerBase
     { 
  
         [HttpGet("GetByOrder/{orderId}")]
