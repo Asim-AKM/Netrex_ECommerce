@@ -1,4 +1,5 @@
-﻿using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
+﻿using Application_Service.Common.Cloudinary;
+using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
@@ -7,6 +8,8 @@ using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.CloudinaryImplementation;
+using Infrastructure_Service.Persistance.CloudinaryImplementation.Configuration;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo;
 using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.OrderRepo;
@@ -45,7 +48,9 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IPaymentDetailRepo, PaymentDetailRepo>()
                     .AddScoped<ISellerPayoutRepo, SellerPayoutRepo>()
                     .AddScoped<ISellerRepository, SellerRepository>()
-                    .AddScoped<IShopDetailsRepository, ShopDetailsRepository>();
+                    .AddScoped<IShopDetailsRepository, ShopDetailsRepository>()
+                    .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
+                    .AddScoped<ICloudinaryManager, CloudinaryManager>();
 
 
     }
