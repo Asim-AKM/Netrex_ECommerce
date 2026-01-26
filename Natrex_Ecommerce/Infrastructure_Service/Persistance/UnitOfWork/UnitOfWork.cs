@@ -1,4 +1,5 @@
 ﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
@@ -54,6 +55,10 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<Order> Orders => new Repository<Order>(_context);
 
         public IRepository<OrderItem> OrderItems => new Repository<OrderItem>(_context);
+
+        public IRepository<Province> Provinces => new Repository<Province>(_context);
+
+        public IRepository<City> Cities => new Repository<City>(_context);
 
         public async Task<int> SaveChangesAsync()
         {
