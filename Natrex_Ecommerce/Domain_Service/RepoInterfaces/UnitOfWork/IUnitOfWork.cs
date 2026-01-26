@@ -1,4 +1,5 @@
 ﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Entities.SellerModule;
@@ -60,6 +61,9 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         /// <see cref="PaymentDetail"/> records.
         /// </summary>
         IRepository<PaymentDetail> PaymentDetails { get; }
+
+        IRepository<Province> Provinces { get; }
+        IRepository<City> Cities { get; }
 
         /// <summary>
         /// Saves all pending changes made through the repositories 

@@ -2,6 +2,7 @@
 using Application_Service.Common.Mappers.ProductMapper;
 using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
+using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
@@ -17,6 +18,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         private readonly IProductImageRepo _productImageRepo;
         private readonly IProductCategories _productCategories;
         private readonly IRepository<Product> _genericProductRepo;
+        private readonly IProductRepo _productRepo;
         public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo, IRepository<Product> repository)
         {
             _unitOfWork = unitOfWork;
@@ -122,5 +124,19 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             return ApiResponse<string>.Success("", "Product and Image Updated Successfully", ResponseType.Ok);
         }
 
+        public async Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces()
+        {
+            var provinces= await _unitOfWork.Provinces.GetAll();
+            return ApiResponse<List<GetProvinceDto>>.Success(provinces.Map(), "Provinces get succesfully");     
+        }
+
+        public async Task<ApiResponse<List<GetCityDto>>> GetCitiesByProvinceId(Guid Id)
+        {
+            if (Id == Guid.Empty)
+                return ApiResponse<List<GetCityDto>>.Fail("ProvinceId is not valid");
+
+            var cities = await _productRepo.GetCitiesByProvinceId(Id);
+            return ApiResponse<List<GetCityDto>>.Success(cities.Map(), "Cities Get Suuccesfuly");
+        }
     }
 }
