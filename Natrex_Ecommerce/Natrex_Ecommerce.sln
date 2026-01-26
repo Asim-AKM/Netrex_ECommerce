@@ -22,11 +22,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Item", "Solution Item", "{B3758DFC-76EE-43C1-BE82-A5E38B3D793F}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5E0CB724-D1FB-41F0-A0D5-984158403B76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netrex_Ecommerce_DbMigrator", "Netrex_Ecommerce_DbMigrator\Netrex_Ecommerce_DbMigrator.csproj", "{E9288222-5FF7-43D0-9E6F-379D649FAB00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{53474DE8-6843-4663-8852-2F2BC282CF89}"
+	ProjectSection(SolutionItems) = preProject
+		CloudinarySetup.md = CloudinarySetup.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
