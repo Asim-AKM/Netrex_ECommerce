@@ -90,11 +90,27 @@ namespace APIGateway_Service.Controllers
         /// </returns>
         [HttpGet("GetProductById/{ProductId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByProductId([FromRoute] Guid GetByproductId)
         {
             var response = await _productManager.GetByProductId(GetByproductId);
             return StatusCode((int)response.Status, response);
         }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllProvinces()
+        {
+            var response = await _productManager.GetAllProvinces();
+            return StatusCode((int)response.Status, response);
+        }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCitiesByProvinceId(Guid Id)
+        {
+            var response = _productManager.GetCitiesByProvinceId(Id);
+            return StatusCode((int)response.Status, response);
+        }
+
     }
 }
