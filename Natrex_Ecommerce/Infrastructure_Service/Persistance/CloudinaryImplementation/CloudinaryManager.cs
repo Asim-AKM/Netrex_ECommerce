@@ -45,7 +45,7 @@ namespace Infrastructure_Service.Persistance.CloudinaryImplementation
             return new CloudinaryUploadResult
             {
                 ImageUrl = uploadResult.SecureUrl.ToString(),
-                PublicId = uploadResult.PublicId
+                CloudPublicId = uploadResult.PublicId
             };
         }
 
