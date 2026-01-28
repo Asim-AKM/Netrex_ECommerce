@@ -13,6 +13,8 @@ namespace Domain_Service.Entities.UserManagmentModule
         [Key]
         public Guid UserId { get; set; }
 
+        public string PublicId { get; set; } = string.Empty;
+
         /// <summary>
         /// The user's full legal or display name.
         /// </summary>
