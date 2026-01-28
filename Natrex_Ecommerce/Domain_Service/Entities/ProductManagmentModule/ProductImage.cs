@@ -22,6 +22,8 @@ namespace Domain_Service.Entities.ProductAndCategoryModule
         /// </summary>
         public Guid ProductId { get; set; }
 
+        public string PublicId { get; set; } = string.Empty;
+
         /// <summary>
         /// Gets or sets the URL of the product image.
         /// This is used to load and display the image in the application.
