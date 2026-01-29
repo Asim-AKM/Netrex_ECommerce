@@ -96,7 +96,7 @@ namespace APIGateway_Service.Controllers
             var response = await _productManager.GetByProductId(GetByproductId);
             return StatusCode((int)response.Status, response);
         }
-        [HttpGet("Product")]
+        [HttpGet("GetAllProvinces")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllProvinces()
@@ -104,11 +104,11 @@ namespace APIGateway_Service.Controllers
             var response = await _productManager.GetAllProvinces();
             return StatusCode((int)response.Status, response);
         }
-        [HttpGet("Get")]
+        [HttpGet("GetCitiesByProvinceId")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCitiesByProvinceId(Guid Id)
         {
-            var response = _productManager.GetCitiesByProvinceId(Id);
+            var response = await _productManager.GetCitiesByProvinceId(Id);
             return StatusCode((int)response.Status, response);
         }
 
