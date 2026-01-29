@@ -26,7 +26,7 @@ namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDt
             {
                 SellerId = Guid.NewGuid(),
                 UserId = Guid.NewGuid(),
-                ShopId = Guid.NewGuid(),
+                ShopId = createSellerDto.ShopId,
                 StoreName = createSellerDto.StoreName,
                 StoreDescription = createSellerDto.StoreDescription,
                 Address = createSellerDto.Address,
