@@ -4,7 +4,7 @@ namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public  interface IUserCreadentialRepo
     {
-        Task<int> UpdateOtp(string otp,Guid userId);
+        Task<int> UpdateOtp(string otp,DateTime? otpExpiry,Guid userId);
         Task<UserCreadential> GetCreadbyFK(Guid userId);
     }
 }

@@ -7,6 +7,11 @@
     public enum UserStatus
     {
         /// <summary>
+        /// The user account is pending email verification
+        /// </summary>
+        Pending = 0,
+
+        /// <summary>
         /// The user account is active and fully functional.
         /// </summary>
         Active = 1,
