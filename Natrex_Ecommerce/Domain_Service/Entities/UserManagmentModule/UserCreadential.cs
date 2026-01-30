@@ -33,5 +33,10 @@ namespace Domain_Service.Entities.UserManagmentModule
         /// One-time password (OTP) used for verification or multi-factor authentication.
         /// </summary>
         public string OTP { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Expiry time for the OTP. OTP is valid only until this time.
+        /// </summary>
+        public DateTime? OTPExpiry { get; set; }
     }
 }

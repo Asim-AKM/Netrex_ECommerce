@@ -15,7 +15,9 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
                 UserName = registerDto.UserName,
                 Email = registerDto.Email,
                 FullName = registerDto.FullName,
-                Status = UserStatus.Active,
+                Status = UserStatus.Pending, 
+                CreateAt = DateOnly.FromDateTime(DateTime.UtcNow),
+                UpdatedAt = DateTime.UtcNow
             };
         }
         public static User MapToDomain(this UpdateUserDto userdto)

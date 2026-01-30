@@ -17,9 +17,9 @@ namespace APIGateway_Service.Controllers
             _authenticationManager = authenticationManager;
         }
 
-        [HttpPost("Create")]
+        [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Create([FromBody] CreateUserDto request)
+        public async Task<IActionResult> Register([FromBody] CreateUserDto request)
         {
             var response = await _authenticationManager.CreateUserAsync(request);
             return StatusCode((int)response.Status, response);
@@ -34,7 +34,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPost("ForgetPassoword")]
+        [HttpPost("ForgetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
         public async Task<IActionResult> ForgetPassword([FromBody] string userIdentifier)
@@ -49,5 +49,24 @@ namespace APIGateway_Service.Controllers
             var response = await _authenticationManager.ConfirmOtp(request);
             return StatusCode((int)response.Status, response);
         }
+
+        [HttpPost("VerifyEmail")] 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> VerifyEmail([FromBody] VerifyRegistrationOtpDto request)
+        {
+            var response = await _authenticationManager.VerifyRegistrationOtpAsync(request);
+            return StatusCode((int)response.Status, response);
+        }
+
+        [HttpPost("ResendOtp")] 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ResendOtp([FromBody] string email)
+        {
+            var response = await _authenticationManager.ResendRegistrationOtpAsync(email);
+            return StatusCode((int)response.Status, response);
+        }
+
     }
 }
