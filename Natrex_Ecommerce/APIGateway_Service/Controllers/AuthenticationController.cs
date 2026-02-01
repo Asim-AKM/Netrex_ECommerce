@@ -37,20 +37,20 @@ namespace APIGateway_Service.Controllers
         [HttpPost("ForgetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
-        public async Task<IActionResult> ForgetPassword([FromBody] string userIdentifier)
+        public async Task<IActionResult> ForgetPassword([FromBody] UserIdentifierDto request)
         {
-            var response = await _authenticationManager.ForgetPasswordAsync(userIdentifier);
+            var response = await _authenticationManager.ForgetPasswordAsync(request.UserIdentifier);
             return StatusCode((int)response.Status, response);
         }
         [HttpPost("ConfirmOtp")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ConfirmOtp(CheckOtpDto request)
+        public async Task<IActionResult> ConfirmOtp([FromBody] CheckOtpDto request)
         {
             var response = await _authenticationManager.ConfirmOtp(request);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPost("VerifyEmail")] 
+        [HttpPost("VerifyEmail")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> VerifyEmail([FromBody] VerifyRegistrationOtpDto request)
@@ -59,12 +59,12 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPost("ResendOtp")] 
+        [HttpPost("ResendOtp")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ResendOtp([FromBody] string email)
+        public async Task<IActionResult> ResendOtp([FromBody] EmailDto request)
         {
-            var response = await _authenticationManager.ResendRegistrationOtpAsync(email);
+            var response = await _authenticationManager.ResendRegistrationOtpAsync(request.Email);
             return StatusCode((int)response.Status, response);
         }
 
