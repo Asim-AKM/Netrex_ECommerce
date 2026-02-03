@@ -1,4 +1,4 @@
-﻿namespace Application_Service.Common.Cloudinary
+﻿namespace Application_Service.Services.Cloudinary
 {
     public class CloudinaryUploadResult
     {
