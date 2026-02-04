@@ -5,10 +5,10 @@ namespace Application_Service.Services.Cloudinary
     public interface ICloudinaryManager
     {
         Task<CloudinaryUploadResult> UploadImageAsync(IFormFile file, string folder);
-        Task<List<CloudinaryUploadResult>> UploadImagesAsync(List<IFormFile> files, string folder);
+        Task<List<CloudinaryUploadResult>> UploadMultipleImagesAsync(List<IFormFile> files, string folder);
 
         Task<bool> DeleteImageAsync(string publicId);
-        Task<bool> DeleteImagesAsync(List<string> publicIds);
+        Task<bool> DeleteMultipleImagesAsync(List<string> publicIds);
     }
 
 }
