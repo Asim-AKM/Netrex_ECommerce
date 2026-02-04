@@ -72,7 +72,7 @@ namespace APIGateway_Service.Controllers
             }
         }
         [HttpDelete("delete-batch")]
-        public async Task<IActionResult> DeletMultipleImages([FromBody] List<string> publicIds)
+        public async Task<IActionResult> DeleteMultipleImages([FromBody] List<string> publicIds)
         {
             try
             {
