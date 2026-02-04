@@ -42,7 +42,7 @@ namespace APIGateway_Service.Controllers
                     return BadRequest(ApiResponse<List<CloudinaryUploadResult>>.Fail("No files selected", ResponseType.BadRequest));
 
                 // Manager ka naya batch upload function call karein
-                var uploadResults = await _cloudinaryManager.UploadImagesAsync(files, folder);
+                var uploadResults = await _cloudinaryManager.UploadMultipleImagesAsync(files, folder);
 
                 return Ok(ApiResponse<List<CloudinaryUploadResult>>.Success(uploadResults, "Images uploaded successfully"));
             }
@@ -80,7 +80,7 @@ namespace APIGateway_Service.Controllers
                     return BadRequest(ApiResponse<bool>.Fail("No PublicIds provided", ResponseType.BadRequest));
 
                 // Yahan loop ki bajaye naya Manager method call karein jo humne batch delete ke liye banaya tha
-                var result = await _cloudinaryManager.DeleteImagesAsync(publicIds);
+                var result = await _cloudinaryManager.DeleteMultipleImagesAsync(publicIds);
 
                 return Ok(ApiResponse<bool>.Success(result, "Batch delete operation completed"));
             }
