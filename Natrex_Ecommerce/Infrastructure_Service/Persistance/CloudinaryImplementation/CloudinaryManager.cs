@@ -1,4 +1,4 @@
-﻿using Application_Service.Common.Cloudinary;
+﻿using Application_Service.Services.Cloudinary;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Infrastructure_Service.Persistance.CloudinaryImplementation.Configuration;
@@ -58,6 +58,41 @@ namespace Infrastructure_Service.Persistance.CloudinaryImplementation
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result.Result == "ok";
+        }
+
+        public async Task<List<CloudinaryUploadResult>> UploadMultipleImagesAsync(List<IFormFile> files, string folder)
+        {
+            if (files == null || !files.Any())
+                return new List<CloudinaryUploadResult>();
+
+            var uploadResults = new List<CloudinaryUploadResult>();
+
+            foreach (var file in files)
+            {
+                // Purane single upload function ko hi call kar rahe hain code reuse karne ke liye
+                var result = await UploadImageAsync(file, folder);
+                uploadResults.Add(result);
+            }
+
+            return uploadResults;
+        }
+
+        public async Task<bool> DeleteMultipleImagesAsync(List<string> publicIds)
+        {
+            if (publicIds == null || !publicIds.Any())
+                return false;
+            // Use DelResParams for batch deletion to optimize performance and reduce API round-trips.
+            var delParams = new DelResParams()
+            {
+                PublicIds = publicIds,
+                Type = "upload",
+                ResourceType = ResourceType.Image
+            };
+
+            var result = await _cloudinary.DeleteResourcesAsync(delParams);
+
+            // Verify if the deletion count is greater than zero to confirm success.
+            return result.Deleted.Count > 0;
         }
     }
 }

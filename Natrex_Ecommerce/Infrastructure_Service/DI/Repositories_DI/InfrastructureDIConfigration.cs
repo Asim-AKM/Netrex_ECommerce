@@ -1,4 +1,4 @@
-﻿using Application_Service.Common.Cloudinary;
+﻿using Application_Service.Services.Cloudinary;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
