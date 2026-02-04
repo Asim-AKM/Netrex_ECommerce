@@ -60,7 +60,7 @@ namespace Infrastructure_Service.Persistance.CloudinaryImplementation
             return result.Result == "ok";
         }
 
-        public async Task<List<CloudinaryUploadResult>> UploadImagesAsync(List<IFormFile> files, string folder)
+        public async Task<List<CloudinaryUploadResult>> UploadMultipleImagesAsync(List<IFormFile> files, string folder)
         {
             if (files == null || !files.Any())
                 return new List<CloudinaryUploadResult>();
@@ -77,7 +77,7 @@ namespace Infrastructure_Service.Persistance.CloudinaryImplementation
             return uploadResults;
         }
 
-        public async Task<bool> DeleteImagesAsync(List<string> publicIds)
+        public async Task<bool> DeleteMultipleImagesAsync(List<string> publicIds)
         {
             if (publicIds == null || !publicIds.Any())
                 return false;
