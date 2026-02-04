@@ -17,7 +17,7 @@ namespace APIGateway_Service.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadTest(IFormFile file, [FromQuery] string folder = "general")
+        public async Task<IActionResult> UploadImage(IFormFile file, [FromQuery] string folder = "general")
         {
             try
             {
@@ -34,7 +34,7 @@ namespace APIGateway_Service.Controllers
             }
         }
         [HttpPost("upload-batch")]
-        public async Task<IActionResult> UploadImages(List<IFormFile> files, [FromQuery] string folder = "general")
+        public async Task<IActionResult> UploadMultipleImages(List<IFormFile> files, [FromQuery] string folder = "general")
         {
             try
             {
@@ -52,7 +52,7 @@ namespace APIGateway_Service.Controllers
             }
         }
         [HttpDelete("delete")]
-        public async Task<IActionResult> DeleteTest([FromQuery] string publicId)
+        public async Task<IActionResult> DeleteImage([FromQuery] string publicId)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace APIGateway_Service.Controllers
             }
         }
         [HttpDelete("delete-batch")]
-        public async Task<IActionResult> DeleteImages([FromBody] List<string> publicIds)
+        public async Task<IActionResult> DeletMultipleImages([FromBody] List<string> publicIds)
         {
             try
             {
