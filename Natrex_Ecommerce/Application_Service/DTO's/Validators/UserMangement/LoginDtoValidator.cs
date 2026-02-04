@@ -12,11 +12,12 @@ namespace Application_Service.DTO_s.Validators.UserMangement
 
             RuleFor(x => x.UserIdentifier)
                 .NotEmpty().WithMessage("UserIdentifier Required")
-                .EmailAddress().WithMessage("Invalid Email");
+                .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage("UserIdentifier cannot be whitespace");
+
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password required")
-                .NotNull().WithMessage("Password should not null");
+                .Must(x => !string.IsNullOrWhiteSpace(x)).WithMessage("Password cannot be whitespace");
         }
     }
 }

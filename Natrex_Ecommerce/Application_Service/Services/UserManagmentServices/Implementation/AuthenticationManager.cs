@@ -8,8 +8,6 @@ using Application_Service.Services.UserManagmentServices.Interface;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using MailKit;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Application_Service.Services.UserManagmentServices.Implementation
 {
@@ -32,6 +30,35 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             // Validate UserIdentifier for Unique Entry
             var emailExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.Email);
             var userNameExistance = await _unitOfWork.UserRepository.GetUserByIdentifier(request.UserName);
+
+            //if email exist and is pending resend otp 
+            if (emailExistance != null && emailExistance.Status == UserStatus.Pending)
+            {
+                var userCread = await _unitOfWork.UserCreadRepository.GetCreadbyFK(emailExistance.UserId);
+
+                var otpcheck = OtpExpiryCheck(userCread);
+                if (otpcheck != null)
+                {
+                    return ApiResponse<CreateUserDto>.Fail(
+                        otpcheck.Message,
+                        otpcheck.Status
+                    );
+                }
+
+                // Generate new OTP only if expired
+                var otp = new Random().Next(100000, 999999).ToString();
+                var otpExpiry = DateTime.UtcNow.AddMinutes(5);
+
+                await _unitOfWork.UserCreadRepository.UpdateOtp(otp, otpExpiry, emailExistance.UserId);
+                await _emailManager.SendRegistrationOtpEmail(emailExistance.Email, emailExistance.FullName, otp);
+
+                return ApiResponse<CreateUserDto>.Success(
+                    request,
+                    "Account already exists but not verified. New OTP sent to your email.",
+                    ResponseType.Ok
+                );
+            }
+
             // Acomulate Errors in a list 
             if (emailExistance != null || userNameExistance != null)
             {
@@ -48,7 +75,8 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             // Create a user through generic repo
             var user = request.MapToDomain();
             await _unitOfWork.Users.Create(user);
-            await _unitOfWork.UserCreads.Create(user.AssignCreads(request.Password));
+            var cread = user.AssignCreads(request.Password);
+            await _unitOfWork.UserCreads.Create(cread);
             await _unitOfWork.UserRoles.Create(user.AssingRole());
 
             //Save to database
@@ -57,30 +85,21 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (!saved)
                 return ApiResponse<CreateUserDto>.Fail("Failed to Create User", ResponseType.BadRequest);
 
-            // Generate and send OTP
-            var otp = new Random().Next(100000, 999999).ToString();
-            var otpExpiry = DateTime.UtcNow.AddMinutes(10); // ADDED EXPIRY
-            var otpUpdated = await _unitOfWork.UserCreadRepository.UpdateOtp(otp, otpExpiry, user.UserId); // UPDATED
-
-            if (otpUpdated > 0)
+            // Send OTP email using new email service
+            var emailSent = await _emailManager.SendRegistrationOtpEmail(user.Email, user.FullName, cread.OTP);
+            if (emailSent)
             {
-                // Send OTP email using new email service
-                var emailSent = await _emailManager.SendRegistrationOtpEmail(user.Email, user.FullName, otp); 
-
-                if (emailSent)
-                {
-                    return ApiResponse<CreateUserDto>.Success(
-                        request,
-                        "User created successfully. Please verify your email with the OTP sent to your inbox.",
-                        ResponseType.Created
-                    );
-                }
+                return ApiResponse<CreateUserDto>.Success(
+                    request,
+                    "User created successfully. Please verify your email with the OTP sent to your inbox.",
+                    ResponseType.Created
+                );
             }
 
             return ApiResponse<CreateUserDto>.Fail("User created but failed to send verification email. Please use resend OTP.", ResponseType.InternalServerError);
         }
 
-        public async Task<ApiResponse<string>> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto request) 
+        public async Task<ApiResponse<string>> VerifyRegistrationOtpAsync(VerifyRegistrationOtpDto request)
         {
             // Find user by email
             var user = await _unitOfWork.UserRepository.GetUserByIdentifier(request.Email);
@@ -140,6 +159,11 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             if (user.Status == UserStatus.Active)
                 return ApiResponse<string>.Fail("Email already verified. You can login now.", ResponseType.BadRequest);
 
+            var userCread = await _unitOfWork.UserCreadRepository.GetCreadbyFK(user.UserId);
+            var checkotp = OtpExpiryCheck(userCread);
+            if (checkotp != null)
+                return checkotp;
+
             // Generate new OTP
             var otp = new Random().Next(100000, 999999).ToString();
             var otpExpiry = DateTime.UtcNow.AddMinutes(5);
@@ -165,10 +189,25 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                 return ApiResponse<string>.Fail("Invalid Creadentials", ResponseType.Unauthorized);
             }
 
-            // Check if email is verified
-            if (userExistance.Status == UserStatus.Pending) 
-                return ApiResponse<string>.Fail("Please verify your email before logging in. Check your inbox for OTP.", ResponseType.Unauthorized);
-            
+            // Check if email is verified , IF pending resend otp
+            if (userExistance.Status == UserStatus.Pending)
+            {
+                var userCreadcheck = await _unitOfWork.UserCreadRepository.GetCreadbyFK(userExistance.UserId);
+                var otpcheck = OtpExpiryCheck(userCreadcheck);
+                if (otpcheck != null) return otpcheck;
+
+                // Generate new OTP and send email
+                var otp = new Random().Next(100000, 999999).ToString();
+                var otpExpiry = DateTime.UtcNow.AddMinutes(5);
+                await _unitOfWork.UserCreadRepository.UpdateOtp(otp, otpExpiry, userExistance.UserId);
+                await _emailManager.SendRegistrationOtpEmail(userExistance.Email, userExistance.FullName, otp);
+
+                return ApiResponse<string>.Fail(
+                    "Please verify your email before logging in. New OTP sent to your inbox.",
+                    ResponseType.Unauthorized
+                );
+            }
+
             // check creadentials
             var userCread = await _unitOfWork.UserCreadRepository.GetCreadbyFK(userExistance.UserId);
             if (userCread == null)
@@ -192,6 +231,12 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             // validate user 
             var user = await _unitOfWork.UserRepository.GetUserByIdentifier(userIdentifier);
             if (user == null) { return ApiResponse<string>.Fail("User Not Found", ResponseType.NotFound); }
+
+            var userCread = await _unitOfWork.UserCreadRepository.GetCreadbyFK(user.UserId);
+            var otpcheck = OtpExpiryCheck(userCread);
+            if (otpcheck != null)
+                return otpcheck;
+
             // generate and update otp 
             var otp = new Random().Next(100000, 999999).ToString();
             var otpExpiry = DateTime.UtcNow.AddMinutes(5);
@@ -237,6 +282,25 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
             // and lastly Run the savechanges commond
             return await _unitOfWork.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(null!, "Password Updated Succesfuly", ResponseType.Ok)
                 : ApiResponse<string>.Fail("Failed to Update Password", ResponseType.InternalServerError);
+        }
+
+
+        //  PRIVATE HELPER METHOD
+        private ApiResponse<string>? OtpExpiryCheck(UserCreadential userCreadential)
+        {
+            if (userCreadential == null)
+                return ApiResponse<string>.Fail("User credentials not found", ResponseType.NotFound);
+
+            if (userCreadential.OTPExpiry != null && userCreadential.OTPExpiry > DateTime.UtcNow)
+            {
+                var remainingTime = (userCreadential.OTPExpiry.Value - DateTime.UtcNow).TotalMinutes;
+                return ApiResponse<string>.Fail(
+                    $"OTP already sent. Please wait {Math.Ceiling(remainingTime)} minutes before requesting again.",
+                    ResponseType.BadRequest
+                );
+            }
+
+            return null; 
         }
 
     }

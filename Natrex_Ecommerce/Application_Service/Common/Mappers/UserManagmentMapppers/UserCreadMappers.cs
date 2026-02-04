@@ -15,7 +15,9 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
                 UserId = user.UserId,
                 PasswordHash = newHash,
                 PasswordSalt = newSalt,
-                OTP = string.Empty
+                OTP = new Random().Next(100000, 999999).ToString(),
+                OTPExpiry = DateTime.UtcNow.AddMinutes(5)
+
             };
         }
         public static UserCreadential UpdateCreads(this UserCreadential userCread, string newPassword)
@@ -25,6 +27,7 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
             userCread.PasswordHash = newHash;
             userCread.PasswordSalt = newSalt;
             userCread.OTP = string.Empty;
+            userCread.OTPExpiry = null;
             return userCread;
         }
     }
