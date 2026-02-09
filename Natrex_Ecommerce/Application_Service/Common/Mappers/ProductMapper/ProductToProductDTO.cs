@@ -25,6 +25,7 @@ namespace Application_Service.Common.Mappers.ProductMapper
                 Discount = discountAmount,   // Discount amount
                 Price = finalPrice,          // Price after discount
                 StockQuantity = productDto.StockQuantity,
+                
                 CreatedAt = DateTime.UtcNow  
             };
         }

@@ -12,6 +12,7 @@ namespace Application_Service.Common.Mappers.ProductMapper
                 ImageId = Guid.NewGuid(),
                 ProductId = prodId,
                 ImageUrl = productImage.ImageUrl,
+                CloudPublicId = productImage.CloudPublicId,
                 IsPrimary = true,
                 UploadedAt = DateTime.UtcNow,
             };
