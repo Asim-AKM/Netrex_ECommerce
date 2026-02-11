@@ -18,24 +18,24 @@ namespace APIGateway_Service.Controllers
             _manager = manager;
         }
 
-        
+
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CreateCartItem([FromBody]AddCartItemDto dto)
+        public async Task<IActionResult> CreateCartItem([FromBody] AddCartItemDto dto)
         {
-            var UserId=User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(string.IsNullOrEmpty(UserId))
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(UserId))
             {
                 return Unauthorized();
             }
-            var response = await _manager.CreateAsync(dto,(Guid.Parse(UserId)));
+            var response = await _manager.CreateAsync(dto,Guid.Parse(UserId));
             return StatusCode((int)response.Status, response);
         }
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllCartItems()
         {
-            var UserId=User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(UserId))
             {
                 return Unauthorized();
@@ -43,21 +43,21 @@ namespace APIGateway_Service.Controllers
             var response = await _manager.GetAllAsync(Guid.Parse(UserId));
             return StatusCode((int)response.Status, response);
         }
-        [HttpPut("IncreaseQuantity")]
+        [HttpPut("IncreaseQuantity/{cartItemId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> IncreaseQuantity(Guid cartItemId)
         {
             var response = await _manager.IncreaseQuantityAsync(cartItemId);
             return StatusCode((int)response.Status, response);
         }
-        [HttpPut("DecreaseQuantity")]
+        [HttpPut("DecreaseQuantity/{cartItemId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> DecreaseQuantity(Guid cartItemId)
         {
             var response = await _manager.DecreaseQuantityAsync(cartItemId);
             return StatusCode((int)response.Status, response);
         }
-        [HttpDelete()]
+        [HttpDelete("{cartItemId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCartItem(Guid cartItemId)
