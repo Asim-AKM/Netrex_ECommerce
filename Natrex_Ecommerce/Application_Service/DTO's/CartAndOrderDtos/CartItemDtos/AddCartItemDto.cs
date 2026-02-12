@@ -7,7 +7,6 @@
         /// This is required to identify the product being added.
         /// </summary>
         Guid ProductId,
-
         /// <summary>
         /// The quantity of the product to add to the cart.
         /// Must be greater than zero.

@@ -5,7 +5,7 @@ namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.I
 {
     public interface ICartItemManager
     {
-        Task<ApiResponse<bool>> CreateAsync(AddCartItemDto dto, Guid customerId);
+        Task<ApiResponse<bool>> CreateAsync(AddCartItemDto dto,Guid userId);
         Task<ApiResponse<List<GetCartItemDto>>> GetAllAsync(Guid customerId);
         Task<ApiResponse<bool>> IncreaseQuantityAsync(Guid cartItemId);
         Task<ApiResponse<bool>> DecreaseQuantityAsync(Guid cartItemId);

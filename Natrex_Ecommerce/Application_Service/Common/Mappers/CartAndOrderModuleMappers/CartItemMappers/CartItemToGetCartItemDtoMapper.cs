@@ -6,7 +6,7 @@ namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartItemM
 {
     public static class CartItemToGetCartItemDtoMapper
     {
-        public static GetCartItemDto Map(this CartItem cartItem,Product product)
+        public static GetCartItemDto Map(this CartItem cartItem,Product product,string image)
         {
             return new GetCartItemDto(cartItem.CartItemId,product.ProductName,product.ProductDescription,product.Price,cartItem.Quantity);
         }
