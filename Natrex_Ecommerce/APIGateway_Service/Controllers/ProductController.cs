@@ -96,6 +96,14 @@ namespace APIGateway_Service.Controllers
             var response = await _productManager.GetByProductId(GetByproductId);
             return StatusCode((int)response.Status, response);
         }
+        [HttpGet("GetAllProducts")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllProducts()
+        {
+           var response= await _productManager.GetAllProducts();
+            return StatusCode((int)response.Status, response);
+        }
         [HttpGet("GetAllProvinces")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
