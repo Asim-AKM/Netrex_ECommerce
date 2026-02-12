@@ -19,5 +19,9 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
             var productImage = await _context.ProductImages.Where(pi => pi.ProductId == productId).FirstOrDefaultAsync();
             return productImage!;
         }
+        public async Task<List<ProductImage>> GetAllProductImages()
+        {
+            return await _context.ProductImages.ToListAsync();
+        }
     }
 }

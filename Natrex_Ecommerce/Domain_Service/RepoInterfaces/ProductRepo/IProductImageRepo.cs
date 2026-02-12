@@ -5,6 +5,7 @@ namespace Domain_Service.RepoInterfaces.ProductRepo
     public interface IProductImageRepo
     {
         Task<ProductImage> GetByProductId(Guid productId);
+        Task<List<ProductImage>> GetAllProductImages();
 
     }
 }

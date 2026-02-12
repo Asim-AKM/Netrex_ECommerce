@@ -11,7 +11,7 @@ namespace Application_Service.Services.ProductManagementService.Interfaces
         
         Task<ApiResponse<string>> DeleteProduct(Guid productId);
         Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId);
-
+        Task<ApiResponse<List<GetProductDto>>> GetAllProducts();
         Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces();
         Task<ApiResponse<List<GetCityDto>>> GetCitiesByProvinceId(Guid Id);
     }

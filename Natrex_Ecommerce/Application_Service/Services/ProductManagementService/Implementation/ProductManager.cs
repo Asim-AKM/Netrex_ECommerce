@@ -2,13 +2,12 @@
 using Application_Service.Common.Mappers.ProductMapper;
 using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
-using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application_Service.Services.ProductManagementService.Implementation
 {
@@ -47,7 +46,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
 
         }
 
-        
+
         public async Task<ApiResponse<string>> DeleteProduct(Guid productId)
         {
             // Check if the product exists
@@ -77,16 +76,16 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             var domainProduct = await _genericProductRepo.GetById(productId);
             if (domainProduct == null)
             {
-                 return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
+                return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
             }
             var domainImage = await _productImageRepo.GetByProductId(domainProduct.ProductId);
             var productDto = GetProductMap.MapToGetProductDto(domainProduct, domainImage);
             return ApiResponse<GetProductDto>.Success(productDto, "Product Fetched Successfully", ResponseType.Ok);
         }
 
-       public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto) 
+        public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto)
         {
-            var Product = await _unitOfWork.Products.GetById(productDto.ProductId); 
+            var Product = await _unitOfWork.Products.GetById(productDto.ProductId);
             if (Product == null)
             {
                 return ApiResponse<string>.Fail("Product Not Found", ResponseType.NotFound);
@@ -98,7 +97,7 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             {
                 await _unitOfWork.Products.Update(Product);
                 await _unitOfWork.SaveChangesAsync();
-                return ApiResponse<string>.Success("","Product Updated Successfully", ResponseType.Ok);
+                return ApiResponse<string>.Success("", "Product Updated Successfully", ResponseType.Ok);
             }
 
             var ProductImage = await _productImageRepo.GetByProductId(productDto.ProductId);
@@ -124,10 +123,26 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             return ApiResponse<string>.Success("", "Product and Image Updated Successfully", ResponseType.Ok);
         }
 
+        public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts()
+        {
+            var images = await _productImageRepo.GetAllProductImages();
+            var products = await _genericProductRepo.GetAll();
+
+            if (products == null || !products.Any())
+            {
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
+            }
+
+            
+            var dto = products.GetAllProducts(images);
+
+            return ApiResponse<List<GetProductDto>>.Success(dto, "Products fetched successfully", ResponseType.Ok);
+        }
+
         public async Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces()
         {
-            var provinces= await _unitOfWork.Provinces.GetAll();
-            return ApiResponse<List<GetProvinceDto>>.Success(provinces.Map(), "Provinces get succesfully");     
+            var provinces = await _unitOfWork.Provinces.GetAll();
+            return ApiResponse<List<GetProvinceDto>>.Success(provinces.Map(), "Provinces get succesfully");
         }
 
         public async Task<ApiResponse<List<GetCityDto>>> GetCitiesByProvinceId(Guid Id)
