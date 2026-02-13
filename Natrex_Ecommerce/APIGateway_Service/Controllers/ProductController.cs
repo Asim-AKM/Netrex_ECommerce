@@ -68,7 +68,7 @@ namespace APIGateway_Service.Controllers
         /// </summary>
         /// <param name="productId">The GUID of the product to delete.</param>
         /// <returns>
-        /// Returns <see cref="StatusCodes.Status200OK"/> if the product is deleted successfully.
+        /// Returns <see cref="StatusCodes.Status200OK"/> if the product is deleted successfully.   
         /// Returns <see cref="StatusCodes.Status404NotFound"/> if the product does not exist.
         /// </returns>
         [HttpDelete("DeleteProduct/{ProductId:guid}")]
