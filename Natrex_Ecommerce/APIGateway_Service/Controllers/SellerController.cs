@@ -36,7 +36,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSeller([FromBody] CreateSellerDto dto)
         {
-            var response = await _sellerManager.InsertSeller(dto);
+            var response = await _sellerManager.CreateSeller(dto);
             return StatusCode((int)response.Status, response);
         }
 

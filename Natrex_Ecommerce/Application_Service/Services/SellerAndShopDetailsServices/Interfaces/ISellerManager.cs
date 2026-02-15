@@ -15,7 +15,7 @@ namespace Application_Service.Services.Interface
         /// <returns>
         /// An <see cref="ApiResponse{T}"/> containing the created <see cref="CreateSellerDto"/> and HTTP status.
         /// </returns>
-        Task<ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto);
+        Task<ApiResponse<CreateSellerDto>> CreateSeller(CreateSellerDto createSellerDto);
 
         /// <summary>
         /// Updates an existing seller record asynchronously.

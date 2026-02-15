@@ -48,9 +48,21 @@ namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<T>> GetAll(int? pageNumber = null, int? pageSize = null)
         {
-            return await _dbSet.ToListAsync();
+            IQueryable<T> query = _dbSet;
+
+            if (pageNumber.HasValue && pageSize.HasValue)
+            {
+                int page = pageNumber.Value < 1 ? 1 : pageNumber.Value;
+                int size = pageSize.Value < 1 ? 10 : pageSize.Value;
+
+                query = query
+                    .Skip((page - 1) * size)
+                    .Take(size);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
