@@ -1,5 +1,6 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.DTO_s.UserManagmentDto_s;
+using Microsoft.AspNetCore.Http;
 
 namespace Application_Service.Services.UserManagmentServices.Interface
 {
@@ -9,6 +10,7 @@ namespace Application_Service.Services.UserManagmentServices.Interface
         Task<ApiResponse<string>> DeleteCustomer(Guid customerId);
         // Task<Customer> GetById(Guid id);
         Task<ApiResponse<List<GetCustomerDto>>> GetAllCustomers();
+        Task<ApiResponse<string>> UpdateProfileImage(Guid userId, IFormFile file);
 
     }
 }
