@@ -46,25 +46,25 @@ namespace APIGateway_Service.Controllers
         }
 
 
-        //[HttpPost("updateProfileImage")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> UpdateProfileImage([FromForm] IFormFile File, [FromForm] Guid UserId)
-        //{
-        //    if (File == null || File.Length == 0)
-        //    {
-        //        return BadRequest("No file uploaded.");
-        //    }
-        //    try
-        //    {
-        //        var response = await _customermanager.UpdateProfileImage(UserId, File);
-        //        return StatusCode((int)response.Status, response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, new { Message = "Internal server error", Error = ex.Message });
-        //    }
-        //}
+        [HttpPost("updateProfileImage")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateProfileImage([FromForm] IFormFile File, [FromForm] Guid UserId)
+        {
+            if (File == null || File.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+            try
+            {
+                var response = await _customermanager.UpdateProfileImage(UserId, File);
+                return StatusCode((int)response.Status, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal server error", Error = ex.Message });
+            }
+        }
     }
 }
