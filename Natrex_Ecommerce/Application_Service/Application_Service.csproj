@@ -1,10 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Services\Implementation\**" />
+    <Compile Remove="Services\Interface\**" />
+    <EmbeddedResource Remove="Services\Implementation\**" />
+    <EmbeddedResource Remove="Services\Interface\**" />
+    <None Remove="Services\Implementation\**" />
+    <None Remove="Services\Interface\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Common\Filters\" />
     <Folder Include="Security\PasswordEncriptor\" />
-    <Folder Include="Services\Implementation\" />
-    <Folder Include="Services\Interface\" />
   </ItemGroup>
 
   <ItemGroup>
