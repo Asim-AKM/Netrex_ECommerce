@@ -2,6 +2,7 @@
 using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
+using Domain_Service.Entities.ProductManagmentModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.SellerPaymentModule;
 using Domain_Service.Entities.UserManagmentModule;
@@ -35,6 +36,9 @@ namespace Infrastructure_Service.Data
 
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
+        //Add Two Tables for Product Views and Reviews
+        public DbSet<ProductView> ProductViews { get; set; }
+        public DbSet<ProductReview> ProductReviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
