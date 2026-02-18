@@ -65,6 +65,9 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<Province> Provinces { get; }
         IRepository<City> Cities { get; }
 
+        IRepository<UserSession> UserSessions { get; }
+        IUserSessionRepo UserSessionRepository { get; }
+
         /// <summary>
         /// Saves all pending changes made through the repositories 
         /// into the database.
