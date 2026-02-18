@@ -50,7 +50,8 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<ISellerRepository, SellerRepository>()
                     .AddScoped<IShopDetailsRepository, ShopDetailsRepository>()
                     .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
-                    .AddScoped<ICloudinaryManager, CloudinaryManager>();
+                    .AddScoped<ICloudinaryManager, CloudinaryManager>()
+                    .AddScoped<IUserSessionRepo, UserSessionRepo>();
 
 
     }

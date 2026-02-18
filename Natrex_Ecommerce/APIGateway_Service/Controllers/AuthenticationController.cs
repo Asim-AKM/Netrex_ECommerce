@@ -68,5 +68,14 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
+        [HttpDelete("Logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Logout([FromBody] string refreshToken)
+        {
+            var response = await _authenticationManager.LogoutAsync(refreshToken);
+            return StatusCode((int)response.Status, response);
+
+        }
     }
 }
