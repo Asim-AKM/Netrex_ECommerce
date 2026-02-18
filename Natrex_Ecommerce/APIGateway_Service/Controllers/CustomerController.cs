@@ -1,5 +1,7 @@
 ﻿using Application_Service.DTO_s.UserManagmentDto_s;
+using Application_Service.Services.UserManagmentServices.Implementation;
 using Application_Service.Services.UserManagmentServices.Interface;
+using Infrastructure_Service.Persistance.CloudinaryImplementation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -44,5 +46,25 @@ namespace APIGateway_Service.Controllers
         }
 
 
+        [HttpPost("updateProfileImage")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateProfileImage(IFormFile File, [FromForm] Guid UserId)
+        {
+            if (File == null || File.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+            try
+            {
+                var response = await _customermanager.UpdateProfileImage(UserId, File);
+                return StatusCode((int)response.Status, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Internal server error", Error = ex.Message });
+            }
+        }
     }
 }
