@@ -27,6 +27,7 @@ namespace  APIGateway_Service.DIs
             app.UseMiddleware<GlobalExceptionHandleMiddleware>();
             app.UseHttpsRedirection();
             app.UseCors("AllowNetrexUI");
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             return app;

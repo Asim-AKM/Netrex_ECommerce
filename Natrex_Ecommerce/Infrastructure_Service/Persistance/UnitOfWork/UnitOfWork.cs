@@ -60,6 +60,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<City> Cities => new Repository<City>(_context);
 
+        public IRepository<UserSession> UserSessions => new Repository<UserSession>(_context);
+        public IUserSessionRepo UserSessionRepository => new UserSessionRepo(_context);
+
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();

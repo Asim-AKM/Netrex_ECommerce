@@ -38,7 +38,9 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IShopDetailsManager, ShopDetailsManager>()
                             .AddScoped<IOrderManager, OrderManager>()
                             .AddScoped<IOrderItemManager, OrderItemManager>()
-                            .AddScoped<IEmailManager, EmailManager>();
+                            .AddScoped<IEmailManager, EmailManager>()
+                            .AddScoped<IUserSessionManager, UserSessionManager>()
 
+                            .AddScoped<ICustomerManager, CustomerManager>();
     }
 }
