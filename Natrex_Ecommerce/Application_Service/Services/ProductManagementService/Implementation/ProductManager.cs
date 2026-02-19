@@ -28,116 +28,103 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
             var category = await _productCategories.GetByName(productDto.CategoryName);
-
-
             if (category == null)
-            {
                 return ApiResponse<AddProductDto>.Fail("Category not found", ResponseType.BadRequest);
+
+            var product = productDto.MapProduct(category.CategoryId);
+
+            await _unitOfWork.Products.Create(product);
+
+            if (productDto.Images != null && productDto.Images.Any())
+            {
+                var productImages = productDto.Images.ToProductImages(product.ProductId);
+                foreach (var img in productImages)
+                {
+                    await _unitOfWork.ProductImages.Create(img);
+                }
             }
-            var domainProduct = productDto.MapProduct();
-            domainProduct.SellerId = Guid.NewGuid();  //Static Value just for now 
-            domainProduct.ProductCategoryId = category.CategoryId;
-            var domainImage = productDto.MapProductImage(domainProduct.ProductId);
-            await _unitOfWork.Products.Create(domainProduct);
-            await _unitOfWork.ProductImages.Create(domainImage);
+
             await _unitOfWork.SaveChangesAsync();
 
             return ApiResponse<AddProductDto>.Success(productDto, "Product added successfully", ResponseType.Created);
-
         }
 
-
-        public async Task<ApiResponse<string>> DeleteProduct(Guid productId)
-        {
-            // Check if the product exists
-            var domain = await _genericProductRepo.GetById(productId);
-            if (domain == null)
-            {
-                return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
-            }
-            // Delete the product
-            await _genericProductRepo.Delete(domain.ProductId);
-
-            // Delete associated image
-            var domainimage = await _productImageRepo.GetByProductId(productId);
-            // If an image exists, delete it
-            if (domainimage != null)
-            {
-                await _unitOfWork.ProductImages.Delete(domainimage.ImageId);
-            }
-
-            // Save changes to the database
-            await _unitOfWork.SaveChangesAsync();
-            return ApiResponse<string>.Success(string.Empty, "Product deleted successfully", ResponseType.Ok);
-        }
 
         public async Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId)
         {
-            var domainProduct = await _genericProductRepo.GetById(productId);
-            if (domainProduct == null)
-            {
+            var product = await _genericProductRepo.GetById(productId);
+            if (product == null)
                 return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
-            }
-            var domainImage = await _productImageRepo.GetByProductId(domainProduct.ProductId);
-            var productDto = GetProductMap.MapToGetProductDto(domainProduct, domainImage);
-            return ApiResponse<GetProductDto>.Success(productDto, "Product Fetched Successfully", ResponseType.Ok);
+
+            
+            var images = await _productImageRepo.GetByProductId(productId);
+            var productDto = GetProductMap.MapToGetProductDto(product, images);
+            return ApiResponse<GetProductDto>.Success(productDto, "Product fetched successfully", ResponseType.Ok);
         }
+
+       
+        public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts()
+        {
+            var products = await _genericProductRepo.GetAll();
+            if (products == null || !products.Any())
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
+
+            var images = await _productImageRepo.GetAllProductImages(); 
+            var dto = products.GetAllProducts(images); 
+            return ApiResponse<List<GetProductDto>>.Success(dto, "Products fetched successfully", ResponseType.Ok);
+        }
+
+
+        public async Task<ApiResponse<bool>> DeleteProduct(Guid productId)
+        {
+            var product = await _genericProductRepo.GetById(productId);
+
+            if (product == null)
+                return ApiResponse<bool>.Fail( Convert.ToString(false), ResponseType.NotFound);
+
+            var images = await _productImageRepo.GetByProductId(productId);
+
+            foreach (var img in images)
+            {
+                await _unitOfWork.ProductImages.Delete(img.ImageId);
+            }
+
+            await _genericProductRepo.Delete(product.ProductId);
+            await _unitOfWork.SaveChangesAsync();
+
+            return ApiResponse<bool>.Success(true, "Product deleted successfully", ResponseType.Ok);
+        }
+
+
 
         public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto)
         {
-            var Product = await _unitOfWork.Products.GetById(productDto.ProductId);
-            if (Product == null)
-            {
-                return ApiResponse<string>.Fail("Product Not Found", ResponseType.NotFound);
+            var product = await _unitOfWork.Products.GetById(productDto.ProductId);
+            if (product == null)
+                return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
+
+            productDto.Mapping(product); 
+           
+            if (productDto.Images != null)
+            { 
+                var existingImages = await _productImageRepo.GetByProductId(product.ProductId);
+                foreach (var img in existingImages)
+                {
+                    await _unitOfWork.ProductImages.Delete(img.ImageId);
+                }
+                var newImages = productDto.Images.ToProductImages(product.ProductId);
+                foreach (var img in newImages)
+                {
+                    await _unitOfWork.ProductImages.Create(img);
+                }
             }
 
-            productDto.Mapping(Product);
-
-            if (string.IsNullOrEmpty(productDto.ImageUrl))
-            {
-                await _unitOfWork.Products.Update(Product);
-                await _unitOfWork.SaveChangesAsync();
-                return ApiResponse<string>.Success("", "Product Updated Successfully", ResponseType.Ok);
-            }
-
-            var ProductImage = await _productImageRepo.GetByProductId(productDto.ProductId);
-
-            if (ProductImage == null)
-            {
-                var newimage = new ProductImage();
-                newimage.ProductId = productDto.ProductId;
-                newimage.ImageUrl = productDto.ImageUrl;
-                newimage.IsPrimary = true;
-                newimage.UploadedAt = DateTime.UtcNow;
-                await _unitOfWork.ProductImages.Create(newimage);
-            }
-            else
-            {
-                productDto.MapToExistingImage(ProductImage);
-
-                await _unitOfWork.ProductImages.Update(ProductImage);
-            }
-
-            await _unitOfWork.Products.Update(Product);
+            await _unitOfWork.Products.Update(product);
             await _unitOfWork.SaveChangesAsync();
-            return ApiResponse<string>.Success("", "Product and Image Updated Successfully", ResponseType.Ok);
+
+            return ApiResponse<string>.Success(string.Empty, "Product updated successfully", ResponseType.Ok);
         }
 
-        public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts()
-        {
-            var images = await _productImageRepo.GetAllProductImages();
-            var products = await _genericProductRepo.GetAll();
-
-            if (products == null || !products.Any())
-            {
-                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
-            }
-
-            
-            var dto = products.GetAllProducts(images);
-
-            return ApiResponse<List<GetProductDto>>.Success(dto, "Products fetched successfully", ResponseType.Ok);
-        }
 
         public async Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces()
         {

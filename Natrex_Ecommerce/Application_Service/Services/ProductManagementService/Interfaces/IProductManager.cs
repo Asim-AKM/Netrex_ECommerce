@@ -9,7 +9,7 @@ namespace Application_Service.Services.ProductManagementService.Interfaces
         Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto);
         Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto);
         
-        Task<ApiResponse<string>> DeleteProduct(Guid productId);
+        Task<ApiResponse<bool>> DeleteProduct(Guid productId);
         Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId);
         Task<ApiResponse<List<GetProductDto>>> GetAllProducts();
         Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces();
