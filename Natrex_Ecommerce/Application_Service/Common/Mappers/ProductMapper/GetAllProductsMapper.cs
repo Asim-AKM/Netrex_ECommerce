@@ -5,58 +5,35 @@ namespace Application_Service.Common.Mappers.ProductMapper
 {
     public static class GetAllProductsMapper
     {
-        public static List<GetProductDto> GetAllProducts(
-     this List<Product> products,
-     List<ProductImage> images)
+        public static List<GetProductDto> GetAllProducts(this List<Product> products, List<ProductImage> images)
         {
-            if (products == null)
-                return new List<GetProductDto>();
-
-            return products.SelectMany(product =>
+            return products.Select(product =>
             {
-                var productImages = images
-                    .Where(img => img.ProductId == product.ProductId)
-                    .ToList();
+                var productImages = images.Where(img => img.ProductId == product.ProductId).ToList();
+                var primary = productImages.FirstOrDefault(img => img.IsPrimary) ?? productImages.FirstOrDefault();
 
-              
-                if (!productImages.Any())
+                return new GetProductDto
                 {
-                    return new List<GetProductDto>
-            {
-                new GetProductDto(
-                    product.ProductId,              
-                    Guid.Empty,                    
-                    product.SellerId,               
-                    product.ProductCategoryId,     
-                    product.ProductName,           
-                    product.ProductDescription,     
-                    product.Price,                  
-                    product.Discount,              
-                    product.StockQuantity,          
-                    null,                           
-                    null,                           
-                    product.CreatedAt,             
-                    product.UpdatedAt              
-                )
-            };
-                }
-
-               
-                return productImages.Select(img => new GetProductDto(
-                    product.ProductId,             
-                    img.ImageId,                    
-                    product.SellerId,               
-                    product.ProductCategoryId,     
-                    product.ProductName,            
-                    product.ProductDescription,     
-                    product.Price,                  
-                    product.Discount,               
-                    product.StockQuantity,         
-                    img.ImageUrl,                  
-                    img.CloudPublicId,              
-                    product.CreatedAt,             
-                    product.UpdatedAt               
-                ));
+                    productId= product.ProductId,
+                    ImgeId = primary.ImageId,
+                    sellerId = product.SellerId,
+                    productcatorgayId = product.ProductCategoryId,
+                    productName = product.ProductName,
+                    productDescription = product.ProductDescription,
+                    price = product.Price,
+                    discount = product.Discount,
+                    stockQuantity = product.StockQuantity,
+                    ImageUrl = primary?.ImageUrl,
+                    CloudPublicId = primary?.CloudPublicId,
+                    createdAt = product.CreatedAt,
+                    updatedAt = product.UpdatedAt,
+                    Images = productImages.Select(img => new ImagesDto
+                    {
+                        ImageUrl = img.ImageUrl,
+                        CloudPublicId = img.CloudPublicId,
+                        IsPrimary = img.IsPrimary
+                    }).ToList()
+                };
             }).ToList();
         }
 

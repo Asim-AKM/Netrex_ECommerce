@@ -39,7 +39,14 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IProductRepo, ProductRepo>()
                     .AddScoped<IProductImageRepo, ProductImageRepo>()
                     .AddScoped<IProductCategories, ProductCategoryRepo>()
-                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString")))
+                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("NetrexConnectionString"),
+                    sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    }))
                     .AddScoped<ICustomerRepo, CustomerRepo>()
                     .AddScoped<ICartRepo, CartRepo>()
                     .AddScoped<ICartItemRepo, CartItemRepo>()
@@ -50,7 +57,8 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<ISellerRepository, SellerRepository>()
                     .AddScoped<IShopDetailsRepository, ShopDetailsRepository>()
                     .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
-                    .AddScoped<ICloudinaryManager, CloudinaryManager>();
+                    .AddScoped<ICloudinaryManager, CloudinaryManager>()
+                    .AddScoped<IUserSessionRepo, UserSessionRepo>();
 
 
     }

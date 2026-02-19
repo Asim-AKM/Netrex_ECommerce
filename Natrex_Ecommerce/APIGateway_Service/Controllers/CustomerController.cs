@@ -50,7 +50,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateProfileImage([FromForm] IFormFile File, [FromForm] Guid UserId)
+        public async Task<IActionResult> UpdateProfileImage(IFormFile File, [FromForm] Guid UserId)
         {
             if (File == null || File.Length == 0)
             {

@@ -39,6 +39,7 @@ namespace Infrastructure_Service.Data
         //Add Two Tables for Product Views and Reviews
         public DbSet<ProductView> ProductViews { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
+        public DbSet<UserSession> UserSessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

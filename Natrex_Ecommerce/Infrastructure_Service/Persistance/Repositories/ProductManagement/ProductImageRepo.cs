@@ -14,11 +14,11 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
 
         }
 
-        public async Task<ProductImage> GetByProductId(Guid productId)
+        public async Task<List<ProductImage>> GetByProductId(Guid productId)
         {
-            var productImage = await _context.ProductImages.Where(pi => pi.ProductId == productId).FirstOrDefaultAsync();
-            return productImage!;
+            return await _context.ProductImages.Where(pi => pi.ProductId == productId).ToListAsync();
         }
+           
         public async Task<List<ProductImage>> GetAllProductImages()
         {
             return await _context.ProductImages.ToListAsync();

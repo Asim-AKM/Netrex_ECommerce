@@ -12,5 +12,6 @@
         public string CloudPublicId {  get; set; }= string.Empty;
         public bool IsPrimary { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public List<ImagesDto> Images { get; set; } = new();
     }
 }

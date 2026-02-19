@@ -68,6 +68,9 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<ProductReview> ProductReview { get; }
         IRepository<ProductView> ProductView { get; }
 
+        IRepository<UserSession> UserSessions { get; }
+        IUserSessionRepo UserSessionRepository { get; }
+
         /// <summary>
         /// Saves all pending changes made through the repositories 
         /// into the database.

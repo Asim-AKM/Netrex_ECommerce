@@ -64,6 +64,8 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<ProductReview> ProductReview =>  new Repository<ProductReview>(_context);
 
         public IRepository<ProductView> ProductView =>  new Repository<ProductView>(_context);
+        public IRepository<UserSession> UserSessions => new Repository<UserSession>(_context);
+        public IUserSessionRepo UserSessionRepository => new UserSessionRepo(_context);
 
         public async Task<int> SaveChangesAsync()
         {
