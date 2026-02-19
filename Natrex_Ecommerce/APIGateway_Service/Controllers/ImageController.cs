@@ -1,6 +1,6 @@
 ﻿using Application_Service.Common.APIResponses;
-using Application_Service.Services.Cloudinary;
 using Domain_Service.Enums;
+using Domain_Service.RepoInterfaces.Cloudinary;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers

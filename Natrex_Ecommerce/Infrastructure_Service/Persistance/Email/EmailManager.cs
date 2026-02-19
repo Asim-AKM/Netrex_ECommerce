@@ -1,4 +1,4 @@
-﻿using Application_Service.Common.Email;
+﻿using Domain_Service.RepoInterfaces.Email;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;

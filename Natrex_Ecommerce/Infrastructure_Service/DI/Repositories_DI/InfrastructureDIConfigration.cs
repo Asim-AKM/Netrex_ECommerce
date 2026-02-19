@@ -1,7 +1,7 @@
-﻿using Application_Service.Common.Email;
-using Application_Service.Services.Cloudinary;
-using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
+﻿using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
+using Domain_Service.RepoInterfaces.Cloudinary;
+using Domain_Service.RepoInterfaces.Email;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.ProductRepo;
