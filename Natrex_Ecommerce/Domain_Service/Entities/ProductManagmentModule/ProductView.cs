@@ -1,7 +1,10 @@
-﻿namespace Domain_Service.Entities.ProductManagmentModule
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain_Service.Entities.ProductManagmentModule
 {
     public class ProductView
     {
+        [Key]
         public Guid ProductViewId { get; set; }
 
         public Guid ProductId { get; set; }
