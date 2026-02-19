@@ -1,4 +1,5 @@
-﻿using Application_Service.Services.Cloudinary;
+﻿using Application_Service.Common.Email;
+using Application_Service.Services.Cloudinary;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
@@ -10,6 +11,7 @@ using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.CloudinaryImplementation;
 using Infrastructure_Service.Persistance.CloudinaryImplementation.Configuration;
+using Infrastructure_Service.Persistance.Email;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo;
 using Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.OrderRepo;
@@ -58,7 +60,8 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<IShopDetailsRepository, ShopDetailsRepository>()
                     .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
                     .AddScoped<ICloudinaryManager, CloudinaryManager>()
-                    .AddScoped<IUserSessionRepo, UserSessionRepo>();
+                    .AddScoped<IUserSessionRepo, UserSessionRepo>()
+                    .AddScoped<IEmailManager, EmailManager>();
 
 
     }
