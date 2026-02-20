@@ -9,9 +9,13 @@
         public double Discount { get; set; }
         public int StockQuantity { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string ImageUrl { get; set; } = string.Empty;
-        public string CloudPublicId { get; set; }= string.Empty;
-        public bool IsPrimary { get; set; }
         public DateTime UploadedAt { get; set; }
+        public List<ImagesDto> Images { get; set; } = new();
+    }
+    public class ImagesDto
+    {
+        public string ImageUrl { get; set; } = string.Empty;
+        public string CloudPublicId { get; set; } = string.Empty;
+        public bool IsPrimary { get; set; }
     }
 }

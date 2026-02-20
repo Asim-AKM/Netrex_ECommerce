@@ -84,7 +84,7 @@ namespace Application_Service.Services.Implementation
         /// </summary>
         /// <param name="createSellerDto">The data required to create a new seller.</param>
         /// <returns>An <see cref="ApiResponse{T}"/> containing the created <see cref="CreateSellerDto"/>.</returns>
-        public async Task<ApiResponse<CreateSellerDto>> InsertSeller(CreateSellerDto createSellerDto)
+        public async Task<ApiResponse<CreateSellerDto>> CreateSeller(CreateSellerDto createSellerDto)
         {
             if (createSellerDto == null)
                 return ApiResponse<CreateSellerDto>.Fail("Invalid request data", ResponseType.BadRequest);
