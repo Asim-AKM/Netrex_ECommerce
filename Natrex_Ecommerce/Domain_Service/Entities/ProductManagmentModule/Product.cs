@@ -67,5 +67,13 @@ namespace Domain_Service.Entities.ProductAndCategoryModule
         /// Gets or sets the date and time when the product was last updated.
         /// </summary>
         public DateTime UpdatedAt { get; set; }
+
+
+        //New Coloumn
+        public int TotalViews { get; set; }
+
+        public decimal AverageRating { get; set; }
+
+        public int TotalReviews { get; set; }
     }
 }

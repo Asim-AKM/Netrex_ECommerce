@@ -2,6 +2,7 @@
 using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
+using Domain_Service.Entities.ProductManagmentModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
@@ -60,6 +61,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<City> Cities => new Repository<City>(_context);
 
+        public IRepository<ProductReview> ProductReview =>  new Repository<ProductReview>(_context);
+
+        public IRepository<ProductView> ProductView =>  new Repository<ProductView>(_context);
         public IRepository<UserSession> UserSessions => new Repository<UserSession>(_context);
         public IUserSessionRepo UserSessionRepository => new UserSessionRepo(_context);
 

@@ -39,6 +39,8 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IOrderManager, OrderManager>()
                             .AddScoped<IOrderItemManager, OrderItemManager>()
                             .AddScoped<IEmailManager, EmailManager>()
+                            .AddScoped<IProductViewManager, ProductViewManager>()
+                            .AddScoped<IProductReviewManager, ProductReviewManager>()
                             .AddScoped<IUserSessionManager, UserSessionManager>()
 
                             .AddScoped<ICustomerManager, CustomerManager>();

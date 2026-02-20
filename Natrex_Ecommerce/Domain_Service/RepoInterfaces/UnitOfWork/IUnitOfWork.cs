@@ -2,6 +2,7 @@
 using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Entities.ProductAndCategoryModule;
+using Domain_Service.Entities.ProductManagmentModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
@@ -64,6 +65,8 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
 
         IRepository<Province> Provinces { get; }
         IRepository<City> Cities { get; }
+        IRepository<ProductReview> ProductReview { get; }
+        IRepository<ProductView> ProductView { get; }
 
         IRepository<UserSession> UserSessions { get; }
         IUserSessionRepo UserSessionRepository { get; }

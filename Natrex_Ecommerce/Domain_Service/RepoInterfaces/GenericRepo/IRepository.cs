@@ -56,6 +56,7 @@ namespace Domain_Service.RepoInterfaces.GenericRepo
 
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         Task SaveChangesAsync();
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
     }
 }
 
