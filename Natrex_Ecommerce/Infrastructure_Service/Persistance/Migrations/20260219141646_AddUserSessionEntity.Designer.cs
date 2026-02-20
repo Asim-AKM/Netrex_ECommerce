@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure_Service.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260124065403_UpdateSeedEntitiesGuids")]
-    partial class UpdateSeedEntitiesGuids
+    [Migration("20260219141646_AddUserSessionEntity")]
+    partial class AddUserSessionEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -687,6 +687,10 @@ namespace Infrastructure_Service.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CloudPublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -750,6 +754,83 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.HasKey("ShopDetailsId");
 
                     b.ToTable("ShopDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            ShopDetailsId = new Guid("737eaf82-f95c-4fd2-b07b-48b73b34fa3e"),
+                            CategoryName = "Electronics"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("bebdcdbb-4f49-43ca-a386-8557122342bf"),
+                            CategoryName = "Clothing"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("702d36c2-f1c3-4f15-a2ac-d89b219b2c66"),
+                            CategoryName = "Books"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("7195ec03-cd19-4198-80ee-1f3a0219b3c8"),
+                            CategoryName = "Home & Kitchen"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("7ef2ec4a-7bba-4041-84c8-88ac50441fe5"),
+                            CategoryName = "Sports"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("1894c8ce-b6e3-41f7-90e5-bb7ed72d58b9"),
+                            CategoryName = "Mobiles & Tablets"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("044808fa-b50d-4158-87f1-1c366ade2fc4"),
+                            CategoryName = "Laptops & Computers"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("1b43faa3-43b9-4b5c-b00a-df27f60e3548"),
+                            CategoryName = "Beauty & Personal Care"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("6f96c2f1-3c56-41fe-ad1e-0cf9ae562b8a"),
+                            CategoryName = "Toys & Games"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("0797ea35-90ed-4cd2-8bfa-418b65fec051"),
+                            CategoryName = "Health & Household"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("e38e2e44-d181-424e-adbd-90f4d01bab6f"),
+                            CategoryName = "Automotive"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("c86da114-d7b8-48ec-870c-16e2ab0306ef"),
+                            CategoryName = "Groceries & Pet Supplies"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("400df0e2-af62-4f81-861c-7d27e1ad5dbe"),
+                            CategoryName = "Tools & Improvement"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("3218c802-d573-461a-a65b-9a5d0df6123e"),
+                            CategoryName = "Watches & Jewelry"
+                        },
+                        new
+                        {
+                            ShopDetailsId = new Guid("ad7e8ada-c088-470b-854d-e7358017a683"),
+                            CategoryName = "Video Games"
+                        });
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.SellerPaymentModule.SellerPayout", b =>
@@ -792,8 +873,14 @@ namespace Infrastructure_Service.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CloudPublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Country")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Province")
@@ -813,6 +900,10 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CloudPublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Contact")
                         .IsRequired()
@@ -858,6 +949,9 @@ namespace Infrastructure_Service.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("OTPExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -889,6 +983,39 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.HasKey("UserRoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.UserSession", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SessionId");
+
+                    b.ToTable("UserSessions");
                 });
 #pragma warning restore 612, 618
         }

@@ -52,7 +52,7 @@ namespace Domain_Service.RepoInterfaces.GenericRepo
         Task<bool> Delete(Guid id);
         Task<T> GetById(Guid id);
 
-        Task<List<T>> GetAll();
+        Task<List<T>> GetAll(int? pageNumber = null, int? pageSize = null);
 
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         Task SaveChangesAsync();
