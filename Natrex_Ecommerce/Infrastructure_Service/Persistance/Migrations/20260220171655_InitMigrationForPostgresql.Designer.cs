@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure_Service.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260220074340_InitMigrationForPostgresql")]
+    [Migration("20260220171655_InitMigrationForPostgresql")]
     partial class InitMigrationForPostgresql
     {
         /// <inheritdoc />
@@ -605,6 +605,9 @@ namespace Infrastructure_Service.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<decimal>("AverageRating")
+                        .HasColumnType("numeric");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -629,6 +632,12 @@ namespace Infrastructure_Service.Persistance.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<int>("StockQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalReviews")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalViews")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -710,6 +719,64 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.HasKey("ImageId");
 
                     b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.ProductReview", b =>
+                {
+                    b.Property<Guid>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ReviewId");
+
+                    b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.ProductView", b =>
+                {
+                    b.Property<Guid>("ProductViewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ViewedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ProductViewId");
+
+                    b.ToTable("ProductViews");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.SellerModule.Seller", b =>
@@ -983,6 +1050,39 @@ namespace Infrastructure_Service.Persistance.Migrations
                     b.HasKey("UserRoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.UserSession", b =>
+                {
+                    b.Property<Guid>("SessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LastUpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("SessionId");
+
+                    b.ToTable("UserSessions");
                 });
 #pragma warning restore 612, 618
         }
