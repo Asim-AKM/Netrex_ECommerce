@@ -14,7 +14,7 @@ namespace Application_Service.Common.Mappers.ProductMapper
 
                 return new GetProductDto
                 {
-                    productId= product.ProductId,
+                    productId = product.ProductId,
                     ImgeId = primary.ImageId,
                     sellerId = product.SellerId,
                     productcatorgayId = product.ProductCategoryId,
@@ -27,6 +27,9 @@ namespace Application_Service.Common.Mappers.ProductMapper
                     CloudPublicId = primary?.CloudPublicId,
                     createdAt = product.CreatedAt,
                     updatedAt = product.UpdatedAt,
+                    AverageRating = product.AverageRating,
+                    TotalViews=product.TotalViews,
+                    TotalReviews=product.TotalReviews,
                     Images = productImages.Select(img => new ImagesDto
                     {
                         ImageUrl = img.ImageUrl,

@@ -7,7 +7,7 @@
     int Rating,
     string Comment,
     DateTime CreatedAt,
+    string IPAddress,
     bool IsApproved
     );
-
 }

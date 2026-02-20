@@ -17,6 +17,9 @@
         public DateTime updatedAt { get; set; }
         public List<ImagesDto> Images { get; set; }
         public double FinalPrice => price - (price * discount / 100);
+        public int TotalViews { get; set; }
+        public decimal AverageRating { get; set; }
+        public int TotalReviews { get; set; }
     };
 
 
