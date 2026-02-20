@@ -1,5 +1,4 @@
 ﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Email;
 using Application_Service.Common.Mappers.UserManagmentMapppers;
 using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.DTO_s.UsersDto.Accounts;
@@ -7,6 +6,7 @@ using Application_Service.Security.Jwt;
 using Application_Service.Services.UserManagmentServices.Interface;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.Enums;
+using Domain_Service.RepoInterfaces.Email;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using System.Security.Cryptography;
 

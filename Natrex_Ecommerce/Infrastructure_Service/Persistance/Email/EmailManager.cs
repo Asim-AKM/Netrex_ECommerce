@@ -1,8 +1,9 @@
-﻿using MailKit.Net.Smtp;
+﻿using Domain_Service.RepoInterfaces.Email;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 
-namespace Application_Service.Common.Email
+namespace Infrastructure_Service.Persistance.Email
 {
     public class EmailManager : IEmailManager
     {
