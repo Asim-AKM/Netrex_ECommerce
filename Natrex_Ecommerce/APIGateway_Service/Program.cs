@@ -1,6 +1,7 @@
 using APIGateway_Service.DIs;
 using Application_Service.DI.DIServices;
 using Infrastructure_Service.DI.Repositories_DI;
+using Serilog;
 using System.Reflection;
 
 namespace APIGateway_Service
@@ -41,12 +42,25 @@ namespace APIGateway_Service
             builder.Services.AddOpenApi();
             builder.Services.AddJwtValidation(builder.Configuration);
             builder.Services.AddSwaggerConfiguration();
-            
+            builder.Host.AddSerilog(builder.Configuration);
             var app = builder.Build();
 
-          
-          app.MyMiddleware();
-            app.Run();
+
+            app.MyMiddleware();
+
+            try
+            {
+                Log.Information("Netrex API Starting...");
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Netrex API Failed to Start");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }
