@@ -12,20 +12,19 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         {
             _unitofWork = unitofWork;
         }
-        public async Task AddReviewAsync(AddProductReviewsDto dto)
+        public async Task<string> AddReviewAsync(AddProductReviewsDto dto)
         {
             // 1. Check if user already reviewed this product
             bool alreadyReviewed = await _unitofWork.ProductReview.AnyAsync(x =>
                 x.ProductId == dto.ProductId && x.CustomerId == dto.CustomerId);
 
             if (alreadyReviewed)
-                return;
+                return "You have already reviewed this product.";
 
             // 2. Map DTO to entity
             var review = dto.ToProductReview();
 
             // 3. Insert review into ProductReview table
-            await _unitofWork.ProductReview.Create(review);
 
             // 4. Update Product AverageRating and TotalReviews incrementally
             var product = await _unitofWork.Products.GetById(dto.ProductId);
@@ -39,11 +38,15 @@ namespace Application_Service.Services.ProductManagementService.Implementation
                 product.AverageRating = updatedAverage;
                 product.TotalReviews = currentTotal + 1;
 
+                await _unitofWork.ProductReview.Create(review);
                 await _unitofWork.Products.Update(product);
+                await _unitofWork.SaveChangesAsync();
+                return "Review added successfully";
             }
-
-            // 5. Save changes
-            await _unitofWork.SaveChangesAsync();
+            else
+            {
+                return "Product not found";
+            }
         }
 
         public async Task ApproveReviewAsync(Guid reviewId)
