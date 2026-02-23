@@ -75,5 +75,6 @@ namespace Domain_Service.Entities.ProductAndCategoryModule
         public decimal AverageRating { get; set; }
 
         public int TotalReviews { get; set; }
+        public int TotalSold { get; set; }  
     }
 }

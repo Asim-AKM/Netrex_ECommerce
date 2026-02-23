@@ -32,12 +32,15 @@ namespace Application_Service.DI.DIServices
                             .Configure<JwtSettings>(configuration.GetSection("JwtSettings"))
                             .AddScoped<IJwtManager, JwtManager>()
                             .AddScoped<ISellerPayoutManager, SellerPayoutManager>()
-                             .AddScoped<ISellerManager, SellerManager>()
-                             .AddScoped<ICartItemManager, CartItemManager>()
+                            .AddScoped<ISellerManager, SellerManager>()
+                            .AddScoped<ICartItemManager, CartItemManager>()
                             .AddScoped<IShopDetailsManager, ShopDetailsManager>()
                             .AddScoped<IOrderManager, OrderManager>()
-                            .AddScoped<IOrderItemManager, OrderItemManager>()                           
+                            .AddScoped<IOrderItemManager, OrderItemManager>()
                             .AddScoped<IUserSessionManager, UserSessionManager>()
-                            .AddScoped<ICustomerManager, CustomerManager>();
+                            .AddScoped<ICustomerManager, CustomerManager>()
+                            .AddScoped<IProductReviewManager, ProductReviewManager>()
+                            .AddScoped<IProductRankingManager, ProductRankingManager>()
+                            .AddScoped<IProductViewManager, ProductViewManager>();
     }
 }
