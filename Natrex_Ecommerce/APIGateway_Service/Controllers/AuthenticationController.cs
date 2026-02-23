@@ -12,15 +12,18 @@ namespace APIGateway_Service.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationManager _authenticationManager;
-        public AuthenticationController(IAuthenticationManager authenticationManager)
+        private readonly ILogger<AuthenticationController> _logger;
+        public AuthenticationController(IAuthenticationManager authenticationManager, ILogger<AuthenticationController> logger)
         {
             _authenticationManager = authenticationManager;
+            _logger = logger;
         }
 
         [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Register([FromBody] CreateUserDto request)
         {
+            _logger.LogInformation("Register Endpoint hit for Email: {Email}", request.Email);
             var response = await _authenticationManager.CreateUserAsync(request);
             return StatusCode((int)response.Status, response);
         }
@@ -30,6 +33,7 @@ namespace APIGateway_Service.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
+            _logger.LogInformation("Login endpoint hit for Identifier: {UserIdentifier}", request.UserIdentifier);
             var response = await _authenticationManager.LoginAsync(request);
             return StatusCode((int)response.Status, response);
         }
