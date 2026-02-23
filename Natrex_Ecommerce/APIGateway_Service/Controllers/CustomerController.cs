@@ -25,7 +25,7 @@ namespace APIGateway_Service.Controllers
             var response = await _customermanager.UpdateCustomer(request);
             return StatusCode((int)response.Status, response);
         }
-        [HttpDelete("deleteCustomer")]
+        [HttpDelete("deleteCustomer/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -35,7 +35,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)respone.Status, respone);
         }
 
-        [HttpDelete("getAllCustomers")]
+        [HttpGet("getAllCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
