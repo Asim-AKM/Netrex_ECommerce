@@ -38,6 +38,17 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
+        [HttpPost("SignIn")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SignIn([FromBody] LoginDto request)
+        {
+            _logger.LogInformation("SignIn endpoint hit for Identifier: {UserIdentifier}", request.UserIdentifier);
+            var response = await _authenticationManager.SignInAsync(request);
+            return StatusCode((int)response.Status, response);
+        }
+
+
         [HttpPost("ForgetPassword")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)] // e.g identifier not found
