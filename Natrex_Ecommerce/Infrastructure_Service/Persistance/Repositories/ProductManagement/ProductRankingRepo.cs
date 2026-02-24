@@ -14,7 +14,7 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
         }
         public async Task<List<Product>> GetBestSellersAsync()
         {
-            return await _context.Products
+           return await _context.Products
            .OrderByDescending(p => p.TotalSold)
            .Take(20)
            .ToListAsync();
