@@ -4,6 +4,7 @@ using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
 using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Enums;
+using Domain_Service.RepoInterfaces.Cloudinary;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
@@ -18,12 +19,14 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         private readonly IProductCategories _productCategories;
         private readonly IRepository<Product> _genericProductRepo;
         private readonly IProductRepo _productRepo;
-        public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo, IRepository<Product> repository)
+        private readonly ICloudinaryManager _cloudinaryManager;
+        public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo, IRepository<Product> repository,ICloudinaryManager cloudinaryManager)
         {
             _unitOfWork = unitOfWork;
             _productCategories = productCategories;
             _productImageRepo = productImageRepo;
             _genericProductRepo = repository;
+            _cloudinaryManager = cloudinaryManager;
         }
         public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
@@ -99,20 +102,47 @@ namespace Application_Service.Services.ProductManagementService.Implementation
 
         public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto)
         {
+
             var product = await _unitOfWork.Products.GetById(productDto.ProductId);
+
             if (product == null)
                 return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
 
-            productDto.Mapping(product); 
-           
-            if (productDto.Images != null)
-            { 
-                var existingImages = await _productImageRepo.GetByProductId(product.ProductId);
+            productDto.Mapping(product);
+
+            if (productDto.DeletedImagePublicIds != null &&
+                productDto.DeletedImagePublicIds.Any())
+            {
+                await _cloudinaryManager.DeleteMultipleImagesAsync(
+                    productDto.DeletedImagePublicIds);
+
+                var existingImages =
+                    await _productImageRepo.GetByProductId(product.ProductId);
+
+                var imagesToDelete = existingImages
+                    .Where(x => productDto.DeletedImagePublicIds.Contains(x.CloudPublicId))
+                    .ToList();
+
+                foreach (var img in imagesToDelete)
+                {
+                    await _unitOfWork.ProductImages.Delete(img.ImageId);
+                }
+            }
+
+            
+            if (productDto.Images != null && productDto.Images.Any())
+            {
+                var existingImages =
+                    await _productImageRepo.GetByProductId(product.ProductId);
+
                 foreach (var img in existingImages)
                 {
                     await _unitOfWork.ProductImages.Delete(img.ImageId);
                 }
-                var newImages = productDto.Images.ToProductImages(product.ProductId);
+
+                var newImages =
+                    productDto.Images.ToProductImages(product.ProductId);
+
                 foreach (var img in newImages)
                 {
                     await _unitOfWork.ProductImages.Create(img);
@@ -122,7 +152,10 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             await _unitOfWork.Products.Update(product);
             await _unitOfWork.SaveChangesAsync();
 
-            return ApiResponse<string>.Success(string.Empty, "Product updated successfully", ResponseType.Ok);
+            return ApiResponse<string>.Success(
+                string.Empty,
+                "Product updated successfully",
+                ResponseType.Ok);
         }
 
 
