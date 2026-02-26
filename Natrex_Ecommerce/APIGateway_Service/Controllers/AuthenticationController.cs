@@ -1,11 +1,13 @@
 ﻿using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.DTO_s.UsersDto.Accounts;
 using Application_Service.Services.UserManagmentServices.Interface;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
