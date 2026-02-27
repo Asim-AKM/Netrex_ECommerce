@@ -40,6 +40,8 @@ namespace Infrastructure_Service.Data
         public DbSet<ProductView> ProductViews { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<UserSession> UserSessions { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
+        public DbSet<WishListItem> WishListItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

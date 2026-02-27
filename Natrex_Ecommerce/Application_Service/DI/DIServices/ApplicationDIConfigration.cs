@@ -42,6 +42,7 @@ namespace Application_Service.DI.DIServices
                             .AddScoped<IProductReviewManager, ProductReviewManager>()
                             .AddScoped<IProductRankingManager, ProductRankingManager>()
                             .AddScoped<IProductViewManager, ProductViewManager>()
-                            .AddScoped<IProductRankingManager, ProductRankingManager>();
-    }
+                            .AddScoped<IProductRankingManager, ProductRankingManager>()
+                            .AddScoped<IWishListManager, WishListManager>();
+    }                       
 }
