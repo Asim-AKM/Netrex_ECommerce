@@ -2,7 +2,6 @@
 using Application_Service.Common.Mappers.ProductMapper;
 using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
-using Domain_Service.Entities.ProductAndCategoryModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.ProductRepo;
 

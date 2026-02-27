@@ -54,8 +54,7 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
                     .AddScoped<ICloudinaryManager, CloudinaryManager>()
                     .AddScoped<IUserSessionRepo, UserSessionRepo>()
-                    .AddScoped<IEmailManager, EmailManager>();
-
-
+                    .AddScoped<IEmailManager, EmailManager>()
+                   .AddScoped<IProductRankingRepo,ProductRankingRepo>();
     }
 }
