@@ -41,6 +41,7 @@ namespace APIGateway_Service
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddJwtValidation(builder.Configuration);
+            builder.Services.AddApiVersioningConfiguration();
             builder.Services.AddSwaggerConfiguration();
             builder.Host.AddSerilog(builder.Configuration);
             var app = builder.Build();

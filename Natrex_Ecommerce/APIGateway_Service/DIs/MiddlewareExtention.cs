@@ -1,4 +1,5 @@
 ﻿using APIGateway_Service.Middlewares;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,14 @@ namespace  APIGateway_Service.DIs
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            $"Netrex API {description.GroupName.ToUpperInvariant()}"
+                        );
+                    }
                     options.RoutePrefix = string.Empty; // Swagger at root
                 });
                 app.MapOpenApi();
