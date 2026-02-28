@@ -1,12 +1,14 @@
 ﻿using Application_Service.DTO_s.UserManagmentDto_s;
 using Application_Service.Services.UserManagmentServices.Implementation;
 using Application_Service.Services.UserManagmentServices.Interface;
+using Asp.Versioning;
 using Infrastructure_Service.Persistance.CloudinaryImplementation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {

@@ -1,11 +1,13 @@
 ﻿using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
 using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace APIGateway_Service.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
