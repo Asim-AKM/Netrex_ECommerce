@@ -3,6 +3,7 @@ using System;
 using Infrastructure_Service.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure_Service.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260226112921_AddWishListEntities")]
+    partial class AddWishListEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CartId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.CartItem", b =>
@@ -53,7 +56,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CartItemId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.Order", b =>
@@ -79,7 +82,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.CartAndOrderModule.OrderItem", b =>
@@ -105,7 +108,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("OrderItemId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.LocationModules.City", b =>
@@ -123,7 +126,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CityId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -506,7 +509,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ProvinceId");
 
-                    b.ToTable("Provinces", (string)null);
+                    b.ToTable("Provinces");
 
                     b.HasData(
                         new
@@ -563,7 +566,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("InvoiceId");
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.PaymentAndPayout.PaymentDetail", b =>
@@ -593,7 +596,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("PaymentDetailId");
 
-                    b.ToTable("PaymentDetails", (string)null);
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.Product", b =>
@@ -645,7 +648,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductAndCategoryModule.ProductCategory", b =>
@@ -660,7 +663,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("ProductCategories", (string)null);
+                    b.ToTable("ProductCategories");
 
                     b.HasData(
                         new
@@ -718,7 +721,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ImageId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.ProductReview", b =>
@@ -752,7 +755,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ReviewId");
 
-                    b.ToTable("ProductReviews", (string)null);
+                    b.ToTable("ProductReviews");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.ProductView", b =>
@@ -776,7 +779,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ProductViewId");
 
-                    b.ToTable("ProductViews", (string)null);
+                    b.ToTable("ProductViews");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.WishList", b =>
@@ -793,7 +796,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("WishListId");
 
-                    b.ToTable("WishLists", (string)null);
+                    b.ToTable("WishLists");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.ProductManagmentModule.WishListItem", b =>
@@ -813,7 +816,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("WishListItemId");
 
-                    b.ToTable("WishListItems", (string)null);
+                    b.ToTable("WishListItems");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.SellerModule.Seller", b =>
@@ -842,7 +845,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("SellerId");
 
-                    b.ToTable("Sellers", (string)null);
+                    b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.SellerModule.ShopDetail", b =>
@@ -857,7 +860,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("ShopDetailsId");
 
-                    b.ToTable("ShopDetails", (string)null);
+                    b.ToTable("ShopDetails");
 
                     b.HasData(
                         new
@@ -960,7 +963,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("SellerPayoutId");
 
-                    b.ToTable("SellerPayouts", (string)null);
+                    b.ToTable("SellerPayouts");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.Customer", b =>
@@ -996,7 +999,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.User", b =>
@@ -1040,7 +1043,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.UserCreadential", b =>
@@ -1069,7 +1072,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("CreadId");
 
-                    b.ToTable("UserCreadentials", (string)null);
+                    b.ToTable("UserCreadentials");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.UserRole", b =>
@@ -1086,7 +1089,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("UserRoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Domain_Service.Entities.UserManagmentModule.UserSession", b =>
@@ -1119,7 +1122,7 @@ namespace Infrastructure_Service.Persistance.Migrations
 
                     b.HasKey("SessionId");
 
-                    b.ToTable("UserSessions", (string)null);
+                    b.ToTable("UserSessions");
                 });
 #pragma warning restore 612, 618
         }
