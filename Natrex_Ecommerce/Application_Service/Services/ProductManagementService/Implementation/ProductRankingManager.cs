@@ -25,15 +25,20 @@ namespace Application_Service.Services.ProductManagementService.Implementation
             var dto = product.GetAllProducts(images);
             return ApiResponse<List<GetProductDto>>.Success(dto, "Best sellers retrieved successfully");
         }
-
-        public async Task<ApiResponse<List<GetProductDto>>> GetHomepageProductsAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetHomepageProductsAsync(Guid? categoryid = null,int pageNumber = 1,int pageSize = 10)
         {
-            var product= await _productRankingRepo.GetHomepageProductsAsync();
-                if (product == null || !product.Any())
-                    return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
-                var images = await _productImageRepo.GetAllProductImages();
-                var dto = product.GetAllProducts(images);
-            return ApiResponse<List<GetProductDto>>.Success(dto, "Homepage products retrieved successfully");
+            var product = await _productRankingRepo
+                .GetHomepageProductsAsync(categoryid, pageNumber, pageSize);
+
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>
+                    .Fail("No products found", ResponseType.NotFound);
+
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+
+            return ApiResponse<List<GetProductDto>>
+                .Success(dto, "Homepage products retrieved successfully");
         }
 
         public async Task<ApiResponse<List<GetProductDto>>> GetNewArrivalsAsync()

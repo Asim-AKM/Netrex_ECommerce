@@ -8,7 +8,7 @@ using Domain_Service.RepoInterfaces.Cloudinary;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
-using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application_Service.Services.ProductManagementService.Implementation
 {
@@ -172,6 +172,17 @@ namespace Application_Service.Services.ProductManagementService.Implementation
 
             var cities = await _productRepo.GetCitiesByProvinceId(Id);
             return ApiResponse<List<GetCityDto>>.Success(cities.Map(), "Cities Get Suuccesfuly");
+        }
+
+        public async Task<ApiResponse<List<ProductCategoryDto>>> GetCategoriesAsync()
+        {
+            var data = await _unitOfWork.ProductCategories.GetAll();
+
+            var categories = data
+                .Select(x => x.Map())
+                .ToList();
+            return ApiResponse<List<ProductCategoryDto>>.Success(categories, "Categories fetched successfully", ResponseType.Ok);
+
         }
     }
 }
