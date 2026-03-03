@@ -6,6 +6,7 @@ using Domain_Service.Entities.ProductManagmentModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UserManagment;
 
 namespace Domain_Service.RepoInterfaces.UnitOfWork
@@ -49,13 +50,15 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         ICustomerRepo CustomerRepository { get; }
         IRepository<Invoice> Invoices { get; }
         IRepository<Product> Products { get; }
+        IProductRepo ProductsRepository { get; }
         IRepository<Seller> Sellers { get; }
         IRepository<ProductImage> ProductImages { get; }
+        IProductImageRepo ProductImageRepository { get; }
         IRepository<Customer> Customers { get; }
         IRepository<CartItem> CartItems { get; }
         IRepository<Cart> Carts { get; }
-        IRepository<Order> Orders {  get; }
-        IRepository<OrderItem> OrderItems {  get; }
+        IRepository<Order> Orders { get; }
+        IRepository<OrderItem> OrderItems { get; }
 
         /// <summary>
         /// Gets the repository for processing and retrieving 
@@ -70,6 +73,9 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
 
         IRepository<UserSession> UserSessions { get; }
         IUserSessionRepo UserSessionRepository { get; }
+        IWishListItemRepo WishListItemRepository { get; }
+        IRepository<WishListItem> WishListItems { get; }
+        IRepository<WishList> WishLists { get; }
 
         /// <summary>
         /// Saves all pending changes made through the repositories 

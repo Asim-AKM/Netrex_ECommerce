@@ -2,8 +2,8 @@
 
 namespace Domain_Service.RepoInterfaces.UserManagment
 {
-    public interface IWishListRepo
+    public interface IWishListItemRepo
     {
-        Task<List<WishListItem>> GetAllWishListItemsByWishListId(Guid wishListId);
+        IQueryable<WishListItem> QueryWishListItems();
     }
 }

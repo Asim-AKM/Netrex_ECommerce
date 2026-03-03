@@ -6,6 +6,7 @@ namespace Domain_Service.RepoInterfaces.ProductRepo
     {
         Task <List<ProductImage>> GetByProductId(Guid productId);
         Task<List<ProductImage>> GetAllProductImages();
+        IQueryable<ProductImage> QueryProductImages();
 
     }
 }

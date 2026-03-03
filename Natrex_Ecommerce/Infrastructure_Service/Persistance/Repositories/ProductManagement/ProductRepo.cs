@@ -13,16 +13,16 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
         public ProductRepo(ApplicationDbContext applicationDbContext)
         {
             _context = applicationDbContext;
-
         }
 
         public async Task<List<City>> GetCitiesByProvinceId(Guid Id)
         {
             return await _context.Cities.Where(x => x.ProvinceId == Id).ToListAsync();
         }
-        //public async Task<List<Product>> GetAllProducts()
-        //{
-        //   return await _context.Products.ToListAsync();
-        //}
+      
+        public IQueryable<Product> QueryProducts()
+        {
+            return _context.Products.AsQueryable();
+        }
     }
 }

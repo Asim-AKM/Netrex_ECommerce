@@ -19,13 +19,21 @@ namespace APIGateway_Service.Controllers
         [HttpPost("WishListItem")]
         public async Task<IActionResult> CreateWishListItem(AddWishListItemDto request)
         {
-            var response = _wishListManager.AddWishListItem(request);
+            var response = await _wishListManager.AddWishListItem(request);
             return StatusCode((int)response.Status, response);
         }
         [HttpDelete("WishListItem")]
         public async Task<IActionResult> DeleteWishListItem(DeleteWishListItemDto request)
         {
-            var response = _wishListManager.DeleteWishListItem(request);
+            var response = await _wishListManager.DeleteWishListItem(request);
+            return StatusCode((int)response.Status, response);
+        }
+
+        [HttpGet("WishListItem")]
+        public async Task<IActionResult> DeleteWishListItem()
+        {
+            Guid userId = Guid.Parse("4818cc53-f71a-4bfe-97f0-2453268a22a0");
+            var response = await _wishListManager.GetWishListItems(userId);
             return StatusCode((int)response.Status, response);
         }
 

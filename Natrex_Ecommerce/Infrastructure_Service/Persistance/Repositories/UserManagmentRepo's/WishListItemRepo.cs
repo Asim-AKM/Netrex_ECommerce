@@ -5,16 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s
 {
-    public class WishListRepo : IWishListRepo
+    public class WishListItemRepo : IWishListItemRepo
     {
         private readonly ApplicationDbContext _context;
-        public WishListRepo(ApplicationDbContext context)
+        public WishListItemRepo(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task<List<WishListItem>> GetAllWishListItemsByWishListId(Guid wishListId)
+        
+        public IQueryable<WishListItem> QueryWishListItems()
         {
-            return await _context.WishListItems.Where(w => w.WishListId == wishListId).ToListAsync();
+            return _context.WishListItems.AsQueryable();
         }
     }
 }
