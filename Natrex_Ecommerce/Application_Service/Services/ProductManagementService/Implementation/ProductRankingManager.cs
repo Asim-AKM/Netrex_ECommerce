@@ -1,45 +1,74 @@
 ﻿using Application_Service.Common.APIResponses;
+using Application_Service.Common.Mappers.ProductMapper;
+using Application_Service.DTO_s.ProductDTOS;
 using Application_Service.Services.ProductManagementService.Interfaces;
-using Domain_Service.Entities.ProductAndCategoryModule;
+using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.ProductRepo;
 
 namespace Application_Service.Services.ProductManagementService.Implementation
 {
     public class ProductRankingManager : IProductRankingManager
     {
-        private readonly IProductRankingRepo _productRankingRepo;   
-        public ProductRankingManager(IProductRankingRepo productRankingRepo)
+        private readonly IProductRankingRepo _productRankingRepo;
+        private readonly IProductImageRepo _productImageRepo;
+        public ProductRankingManager(IProductRankingRepo productRankingRepo, IProductImageRepo productImageRepo)
         {
             _productRankingRepo = productRankingRepo;
+            _productImageRepo = productImageRepo;
         }
-        public async Task<ApiResponse<List<Product>>> GetBestSellersAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetBestSellersAsync()
         {
             var product= await _productRankingRepo.GetBestSellersAsync();
-            return ApiResponse<List<Product>>.Success(product, "Best sellers retrieved successfully");
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+            return ApiResponse<List<GetProductDto>>.Success(dto, "Best sellers retrieved successfully");
         }
-
-        public async Task<ApiResponse<List<Product>>> GetHomepageProductsAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetHomepageProductsAsync(Guid? categoryid = null,int pageNumber = 1,int pageSize = 10)
         {
-            var product= await _productRankingRepo.GetHomepageProductsAsync();
-            return ApiResponse<List<Product>>.Success(product, "Homepage products retrieved successfully");
+            var product = await _productRankingRepo
+                .GetHomepageProductsAsync(categoryid, pageNumber, pageSize);
+
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>
+                    .Fail("No products found", ResponseType.NotFound);
+
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+
+            return ApiResponse<List<GetProductDto>>
+                .Success(dto, "Homepage products retrieved successfully");
         }
 
-        public async Task<ApiResponse<List<Product>>> GetNewArrivalsAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetNewArrivalsAsync()
         {
             var product= await _productRankingRepo.GetNewArrivalsAsync();
-            return ApiResponse<List<Product>>.Success(product, "New arrivals retrieved successfully");
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+            return ApiResponse<List<GetProductDto>>.Success(dto, "New arrivals retrieved successfully");
         }
 
-        public async Task<ApiResponse<List<Product>>> GetTopRatedAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetTopRatedAsync()
         {
             var product= await _productRankingRepo.GetTopRatedAsync();
-            return ApiResponse<List<Product>>.Success(product, "Top rated products retrieved successfully");
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+            return ApiResponse<List<GetProductDto>>.Success(dto, "Top rated products retrieved successfully");
         }
 
-        public async Task<ApiResponse<List<Product>>> GetTrendingAsync()
+        public async Task<ApiResponse<List<GetProductDto>>> GetTrendingAsync()
         {
             var product= await _productRankingRepo.GetTrendingAsync();
-            return ApiResponse<List<Product>>.Success(product, "Trending products retrieved successfully");
+            if (product == null || !product.Any())
+                return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);   
+            var images = await _productImageRepo.GetAllProductImages();
+            var dto = product.GetAllProducts(images);
+            return ApiResponse<List<GetProductDto>>.Success(dto, "Trending products retrieved successfully");
         }
     }
 }

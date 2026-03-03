@@ -76,6 +76,7 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<WishListItem> WishListItems => new Repository<WishListItem>(_context);
 
         public IRepository<WishList> WishLists => new Repository<WishList>(_context);
+        public IRepository<ProductCategory> ProductCategories => new Repository<ProductCategory>(_context);
 
         public async Task<int> SaveChangesAsync()
         {
