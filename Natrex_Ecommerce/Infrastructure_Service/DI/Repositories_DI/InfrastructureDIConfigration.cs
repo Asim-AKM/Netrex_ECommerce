@@ -55,7 +55,7 @@ namespace Infrastructure_Service.DI.Repositories_DI
                     .AddScoped<ICloudinaryManager, CloudinaryManager>()
                     .AddScoped<IUserSessionRepo, UserSessionRepo>()
                     .AddScoped<IEmailManager, EmailManager>()
-                   .AddScoped<IProductRankingRepo,ProductRankingRepo>()
-                   .AddScoped<IWishListRepo, WishListRepo>();
+                   .AddScoped<IProductRankingRepo, ProductRankingRepo>()
+                   .AddScoped<IWishListItemRepo, WishListItemRepo>();
     }
 }

@@ -18,10 +18,15 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
         {
             return await _context.ProductImages.Where(pi => pi.ProductId == productId).ToListAsync();
         }
-           
+
         public async Task<List<ProductImage>> GetAllProductImages()
         {
             return await _context.ProductImages.ToListAsync();
+        }
+       
+        public IQueryable<ProductImage> QueryProductImages()
+        {
+            return _context.ProductImages.AsQueryable();
         }
     }
 }

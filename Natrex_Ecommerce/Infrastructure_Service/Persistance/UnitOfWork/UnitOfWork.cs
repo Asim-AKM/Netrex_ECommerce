@@ -6,10 +6,12 @@ using Domain_Service.Entities.ProductManagmentModule;
 using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.ProductRepo;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
 using Infrastructure_Service.Persistance.GenericRepository.Implementation;
+using Infrastructure_Service.Persistance.Repositories.ProductManagement;
 using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
 using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
 using Infrastructure_Service.Persistance.Repositories.UserRoles;
@@ -31,9 +33,11 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
         public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
 
-        public IRepository<Product> Products =>  new Repository<Product>(_context);
+        public IRepository<Product> Products => new Repository<Product>(_context);
+        public IProductRepo ProductsRepository => new ProductRepo(_context);
 
         public IRepository<ProductImage> ProductImages => new Repository<ProductImage>(_context);
+        public IProductImageRepo ProductImageRepository => new ProductImageRepo(_context);
 
         public IRepository<Seller> Sellers => new Repository<Seller>(_context);
         /// <summary>
@@ -41,9 +45,9 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
         /// </summary>
         public IRepository<PaymentDetail> PaymentDetails => new Repository<PaymentDetail>(_context);
         public IUserRepo UserRepository => new UserRepo(_context);
-        public IUserRoleRepo UserRoleRepository =>  new UserRoleRepo(_context);
+        public IUserRoleRepo UserRoleRepository => new UserRoleRepo(_context);
         public IUserCreadentialRepo UserCreadRepository => new UserCreadentialRepo(_context);
-     
+
 
         public IRepository<Customer> Customers => new Repository<Customer>(_context);
 
@@ -61,12 +65,17 @@ namespace Infrastructure_Service.Persistance.UnitOfWork
 
         public IRepository<City> Cities => new Repository<City>(_context);
 
-        public IRepository<ProductReview> ProductReview =>  new Repository<ProductReview>(_context);
+        public IRepository<ProductReview> ProductReview => new Repository<ProductReview>(_context);
 
-        public IRepository<ProductView> ProductView =>  new Repository<ProductView>(_context);
+        public IRepository<ProductView> ProductView => new Repository<ProductView>(_context);
         public IRepository<UserSession> UserSessions => new Repository<UserSession>(_context);
         public IUserSessionRepo UserSessionRepository => new UserSessionRepo(_context);
 
+        public IWishListItemRepo WishListItemRepository => new WishListItemRepo(_context);
+
+        public IRepository<WishListItem> WishListItems => new Repository<WishListItem>(_context);
+
+        public IRepository<WishList> WishLists => new Repository<WishList>(_context);
         public IRepository<ProductCategory> ProductCategories => new Repository<ProductCategory>(_context);
 
         public async Task<int> SaveChangesAsync()
