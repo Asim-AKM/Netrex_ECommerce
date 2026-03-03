@@ -14,29 +14,40 @@ namespace Infrastructure_Service.Persistance.Repositories.ProductManagement
         }
         public async Task<List<Product>> GetBestSellersAsync()
         {
-           return await _context.Products
-           .OrderByDescending(p => p.TotalSold)
-           .Take(20)
-           .ToListAsync();
+            return await _context.Products
+            .OrderByDescending(p => p.TotalSold)
+            .Take(20)
+            .ToListAsync();
         }
 
-        public async Task<List<Product>> GetHomepageProductsAsync()
+        public async Task<List<Product>> GetHomepageProductsAsync(
+    Guid? categoryid = null,
+    int pageNumber = 1,
+    int pageSize = 10)
         {
-            var products = await _context.Products
-               .Select(p => new
-                  {
+            var query = _context.Products.AsQueryable();
+
+            if (categoryid != null && categoryid != Guid.Empty)
+            {
+                query = query.Where(p => p.ProductCategoryId == categoryid);
+            }
+
+            var products = await query
+                .Select(p => new
+                {
                     Product = p,
                     Score = (p.TotalSold * 0.4m) +
-                    (p.TotalViews * 0.2m) +
-                    ((p.AverageRating * p.TotalReviews) * 0.4m)
-                    })
-                  .OrderByDescending(x => x.Score)
-                  .Take(20)
-                  .Select(x => x.Product)
-                  .ToListAsync();
-                        return products;
-        }
+                            (p.TotalViews * 0.2m) +
+                            ((p.AverageRating * p.TotalReviews) * 0.4m)
+                })
+                .OrderByDescending(x => x.Score)
+                .Skip((pageNumber - 1) * pageSize)   // 🔥 important
+                .Take(pageSize)
+                .Select(x => x.Product)
+                .ToListAsync();
 
+            return products;
+        }
         public async Task<List<Product>> GetNewArrivalsAsync()
         {
             return await _context.Products

@@ -69,6 +69,7 @@ namespace Domain_Service.RepoInterfaces.UnitOfWork
         IRepository<ProductView> ProductView { get; }
 
         IRepository<UserSession> UserSessions { get; }
+        IRepository<ProductCategory> ProductCategories { get; }
         IUserSessionRepo UserSessionRepository { get; }
 
         /// <summary>

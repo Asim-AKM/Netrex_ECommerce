@@ -1,6 +1,5 @@
 ﻿using Application_Service.Common.APIResponses;
 using Application_Service.DTO_s.ProductDTOS;
-using Domain_Service.Entities.LocationModules;
 
 namespace Application_Service.Services.ProductManagementService.Interfaces
 {
@@ -14,5 +13,6 @@ namespace Application_Service.Services.ProductManagementService.Interfaces
         Task<ApiResponse<List<GetProductDto>>> GetAllProducts();
         Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces();
         Task<ApiResponse<List<GetCityDto>>> GetCitiesByProvinceId(Guid Id);
+        Task<ApiResponse<List<ProductCategoryDto>>> GetCategoriesAsync();
     }
 }
