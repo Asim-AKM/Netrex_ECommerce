@@ -1,5 +1,5 @@
 ﻿using Application_Service.Services.ProductManagementService.Interfaces;
-using Azure;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
