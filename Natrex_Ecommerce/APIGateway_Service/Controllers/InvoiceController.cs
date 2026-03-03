@@ -1,5 +1,6 @@
 ﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.PaymentAndPayoutServices.Interface;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -13,7 +14,8 @@ namespace APIGateway_Service.Controllers
     /// It uses <see cref="IInvoiceManager"/> from the application layer
     /// to perform business logic and mapping between DTOs and entities.
     /// </remarks>
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

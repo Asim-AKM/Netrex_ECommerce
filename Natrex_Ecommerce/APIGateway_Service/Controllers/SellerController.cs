@@ -1,5 +1,6 @@
 ﻿using Application_Service.DTO_s.SellerDtos;
 using Application_Service.Services.Interface;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIGateway_Service.Controllers
@@ -7,7 +8,8 @@ namespace APIGateway_Service.Controllers
     /// <summary>
     /// Handles all Seller-related API operations such as creation, updating, deletion, and fetching seller data.
     /// </summary>
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class SellerController : ControllerBase
     {
