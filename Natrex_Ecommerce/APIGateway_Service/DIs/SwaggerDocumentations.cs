@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
 
@@ -13,15 +15,11 @@ namespace APIGateway_Service.DIs
     {
         public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
         {
+            // Register the dynamic swagger options
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "netrexeCommers API",
-                    Version = "v1",
-                    Description = "API documentation for netrexeCommers project"
-                });
-
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -39,8 +37,24 @@ namespace APIGateway_Service.DIs
                 options.IncludeXmlComments(xmlPath);
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddApiVersioningConfiguration(this IServiceCollection services)
+        {
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
             return services;
+
         }
         public static IServiceCollection AddJwtValidation(this IServiceCollection services, IConfiguration configuration)
         {

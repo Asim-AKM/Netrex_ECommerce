@@ -18,19 +18,19 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
         {
             var user = await _uOW.Users.GetById(id);
             if (user == null)
-                return ApiResponse<string>.Fail("User Not Found",ResponseType.Conflict);
+                return ApiResponse<string>.Fail("User Not Found", ResponseType.Conflict);
 
             var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
             if (cred != null)
-                await _uOW.UserCreads.Delete(cred.CreadId); 
+                await _uOW.UserCreads.Delete(cred.CreadId);
 
             var role = await _uOW.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
             if (role != null)
-                await _uOW.UserRoles.Delete(role.UserRoleId); 
+                await _uOW.UserRoles.Delete(role.UserRoleId);
 
-            await _uOW.Users.Delete(user.UserId); 
+            await _uOW.Users.Delete(user.UserId);
 
             await _uOW.SaveChangesAsync();
             return ApiResponse<string>.Success(default!, "Data Deleted Successfully");
@@ -56,7 +56,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                             Username = u.UserName,
                             Userstatus = u.Status,
                         }).ToList();
-            return ApiResponse<List<GetUsersDto>>.Success(data,"Users fetched successfully");
+            return ApiResponse<List<GetUsersDto>>.Success(data, "Users fetched successfully");
         }
 
         public async Task<ApiResponse<string>> UpdateUserAsync(UpdateUserDto updateuser)
@@ -69,6 +69,21 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
 
             }
             return ApiResponse<string>.Fail("Data Not Found ", ResponseType.NotFound);
+        }
+
+        public async Task<ApiResponse<string>> UpdateUserStatusAsync(UpdateUserStatusDto request)
+        {
+            var user = await _uOW.Users.GetById(request.Id);
+            if (user == null)
+                return ApiResponse<string>.Fail("User Not Found", ResponseType.NotFound);
+
+            user.Status = request.Status;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _uOW.Users.Update(user);
+            return await _uOW.SaveChangesAsync() > 0
+                ? ApiResponse<string>.Success(default!, "Status Updated Successfully")
+                : ApiResponse<string>.Fail("Internal Server Error", ResponseType.InternalServerError);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Application_Service.Common.Mappers.ProductMapper
                 return new GetProductDto
                 {
                     productId = product.ProductId,
-                    ImgeId = primary.ImageId,
+                    ImgeId = primary?.ImageId ?? Guid.Empty,
                     sellerId = product.SellerId,
                     productcatorgayId = product.ProductCategoryId,
                     productName = product.ProductName,

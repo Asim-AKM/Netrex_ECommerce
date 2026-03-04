@@ -11,6 +11,8 @@
 
 	<ItemGroup>
 		<!-- No versions here - versions are managed centrally -->
+		<PackageReference Include="Asp.Versioning.Mvc" />
+		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
