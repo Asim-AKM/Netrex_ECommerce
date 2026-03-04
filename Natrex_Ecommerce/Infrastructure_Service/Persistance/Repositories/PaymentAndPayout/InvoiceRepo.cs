@@ -1,5 +1,7 @@
-﻿using Domain_Service.RepoInterfaces.PaymentAndPayout;
+﻿using Domain_Service.Entities.PaymentAndPayout;
+using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 
 namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
 {
@@ -12,7 +14,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
     /// Uses <see cref="ApplicationDbContext"/> to interact with the database.
     /// All invoice-specific operations should be implemented in this class.
     /// </remarks>
-    public class InvoiceRepo : IInvoiceRepo
+    public class InvoiceRepo : Repository<Invoice>, IInvoiceRepo
     {
         /// <summary>
         /// EF Core database context for accessing invoice data.
@@ -23,7 +25,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
         /// Initializes a new instance of the <see cref="InvoiceRepo"/> class.
         /// </summary>
         /// <param name="applicationDbContext">The application's database context for Invoice entities.</param>
-        public InvoiceRepo(ApplicationDbContext applicationDbContext)
+        public InvoiceRepo(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _context = applicationDbContext;
         }

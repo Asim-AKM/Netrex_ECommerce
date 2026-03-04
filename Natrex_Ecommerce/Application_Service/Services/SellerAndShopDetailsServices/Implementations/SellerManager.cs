@@ -6,6 +6,7 @@ using Domain_Service.Entities.SellerModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.SellerAndShopDetails;
+using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.Implementation
 {
@@ -14,17 +15,16 @@ namespace Application_Service.Services.Implementation
     /// </summary>
     public class SellerManager : ISellerManager
     {
-        private readonly IRepository<Seller> _genericRepo;
-       // private readonly ISellerRepository _sellerRepository;
+        private readonly IUnitOfWork _uow;
+        // private readonly ISellerRepository _sellerRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SellerManager"/> class.
         /// </summary>
-        /// <param name="repository">Generic repository for CRUD operations on <see cref="Seller"/> entities.</param>
-        
-        public SellerManager(IRepository<Seller> repository, ISellerRepository sellerRepository)
+        /// <param name="unitOfWork">Unit of work for managing repositories and transactions.</param>
+        public SellerManager(IUnitOfWork unitOfWork)
         {
-            _genericRepo = repository;
+            _uow = unitOfWork;
            // _sellerRepository = sellerRepository;
         }
 
@@ -38,8 +38,8 @@ namespace Application_Service.Services.Implementation
             if (SellerId == Guid.Empty)
                 return ApiResponse<bool>.Fail("Invalid seller id", ResponseType.BadRequest);
 
-            await _genericRepo.Delete(SellerId);
-            await _genericRepo.SaveChangesAsync();
+            await _uow.SellerRepo.Delete(SellerId);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<bool>.Success(true, "Seller deleted successfully", ResponseType.Ok);
         }
@@ -50,7 +50,7 @@ namespace Application_Service.Services.Implementation
         /// <returns>An <see cref="ApiResponse{T}"/> containing a list of <see cref="GetSellerDto"/> entities.</returns>
         public async Task<ApiResponse<List<GetSellerDto>>> GetAllSellerList()
         {
-            var sellersList = await _genericRepo.GetAll();
+            var sellersList = await _uow.SellerRepo.GetAll();
             if (sellersList == null || !sellersList.Any())
             {
                 return ApiResponse<List<GetSellerDto>>.Fail("No Sellers found", ResponseType.NotFound);
@@ -70,7 +70,7 @@ namespace Application_Service.Services.Implementation
             if (SellerId == Guid.Empty)
                 return ApiResponse<GetSellerDto?>.Fail("Invalid seller id", ResponseType.BadRequest);
 
-            var domain = await _genericRepo.GetById(SellerId);
+            var domain = await _uow.SellerRepo.GetById(SellerId);
 
             if (domain == null)
                 return ApiResponse<GetSellerDto?>.Fail("Seller not found",ResponseType.NotFound);
@@ -94,8 +94,8 @@ namespace Application_Service.Services.Implementation
             if (domain == null)
                 return ApiResponse<CreateSellerDto>.Fail("Mapping failed", ResponseType.Conflict);
 
-            await _genericRepo.Create(domain);
-            await _genericRepo.SaveChangesAsync();
+            await _uow.SellerRepo.Create(domain);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<CreateSellerDto>.Success(createSellerDto, "Seller created successfully",ResponseType.Created);
         }
@@ -111,12 +111,12 @@ namespace Application_Service.Services.Implementation
                 return ApiResponse<UpdateSellerDto>.Fail("Invalid request data", ResponseType.BadRequest);
 
             var domain = updateSellerDto.Map();
-            var updatedDomain = await _genericRepo.Update(domain);
+            var updatedDomain = await _uow.SellerRepo.Update(domain);
 
             if (updatedDomain == null)
                 return ApiResponse<UpdateSellerDto>.Fail("Seller not found", ResponseType.NotFound);
 
-            await _genericRepo.SaveChangesAsync();
+            await _uow.SaveChangesAsync();
             var resultDto = updatedDomain.MapDomainToDto();
 
             return ApiResponse<UpdateSellerDto>.Success(resultDto, "Seller updated successfully", ResponseType.Ok);

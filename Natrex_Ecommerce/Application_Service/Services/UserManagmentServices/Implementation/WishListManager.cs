@@ -34,7 +34,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                 // if exist then add items
                 if (wishList != null)
                 {
-                    await _unitOfWork.WishListItems.Create(request.ToWishListItem(wishList.WishListId));
+                    await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(wishList.WishListId));
                     await _unitOfWork.SaveChangesAsync();
                     return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
                 }
@@ -42,7 +42,7 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                 // if wish list not exist then create new wish list for user and add item to it
                 var newWishList = request.ToWishList();
                 await _unitOfWork.WishLists.Create(newWishList);
-                await _unitOfWork.WishListItems.Create(request.ToWishListItem(newWishList.WishListId));
+                await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(newWishList.WishListId));
                 await _unitOfWork.SaveChangesAsync();
                 return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
 
@@ -63,12 +63,12 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                     return ApiResponse<string>.Fail("WishList Not Found", ResponseType.NotFound);
 
                 // remove the selected item
-                var wishListItem = await _unitOfWork.WishListItems.FirstOrDefaultAsync(w => w.ProductId == request.ProductId);
+                var wishListItem = await _unitOfWork.WishListItemRepo.FirstOrDefaultAsync(w => w.ProductId == request.ProductId);
                 if (wishListItem == null)
                     return ApiResponse<string>.Fail("WishListItem  Not Found", ResponseType.NotFound);
 
-                await _unitOfWork.WishListItems.Delete(wishListItem!.WishListItemId);
-                await _unitOfWork.WishListItems.SaveChangesAsync();
+                await _unitOfWork.WishListItemRepo.Delete(wishListItem!.WishListItemId);
+                await _unitOfWork.SaveChangesAsync();
                 return ApiResponse<string>.Success(default!, "Item Removed Succefuly");
             }
             catch (Exception ex)
@@ -87,14 +87,14 @@ namespace Application_Service.Services.UserManagmentServices.Implementation
                     .Fail("WishList Currently is Empty");
 
             var result = await (
-                from w in _unitOfWork.WishListItemRepository
+                from w in _unitOfWork.WishListItemRepo
                     .QueryWishListItems()
                     .Where(x => x.WishListId == wishList.WishListId)
 
-                join p in _unitOfWork.ProductsRepository.QueryProducts()
+                join p in _unitOfWork.ProductRepo.QueryProducts()
                     on w.ProductId equals p.ProductId
 
-                join i in _unitOfWork.ProductImageRepository
+                join i in _unitOfWork.ProductImageRepo
                         .QueryProductImages()
                         .Where(img => img.IsPrimary)
                     on p.ProductId equals i.ProductId into imgGroup

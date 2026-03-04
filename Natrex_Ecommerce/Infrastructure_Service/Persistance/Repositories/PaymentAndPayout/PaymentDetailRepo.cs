@@ -1,6 +1,7 @@
 ﻿using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 
 namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
 {
@@ -8,7 +9,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
     /// Repository for performing CRUD operations on <see cref="PaymentDetail"/> entities.
     /// Provides a clean abstraction over the database for the Payment module.
     /// </summary>
-    public class PaymentDetailRepo : IPaymentDetailRepo
+    public class PaymentDetailRepo : Repository<PaymentDetail>, IPaymentDetailRepo
     {
         /// <summary>
         /// EF Core database context for accessing <see cref="PaymentDetail"/> table.
@@ -21,7 +22,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
         /// <param name="context">
         /// The application's <see cref="ApplicationDbContext"/> used to perform CRUD operations.
         /// </param>
-        public PaymentDetailRepo(ApplicationDbContext context)
+        public PaymentDetailRepo(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

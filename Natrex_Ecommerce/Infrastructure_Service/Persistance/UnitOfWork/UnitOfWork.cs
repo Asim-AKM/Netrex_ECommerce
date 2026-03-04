@@ -1,86 +1,175 @@
-﻿using Domain_Service.Entities.CartAndOrderModule;
-using Domain_Service.Entities.LocationModules;
-using Domain_Service.Entities.PaymentAndPayout;
-using Domain_Service.Entities.ProductAndCategoryModule;
+﻿using Domain_Service.Entities.LocationModules;
 using Domain_Service.Entities.ProductManagmentModule;
-using Domain_Service.Entities.SellerModule;
 using Domain_Service.Entities.UserManagmentModule;
+using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
+using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Domain_Service.RepoInterfaces.ProductRepo;
+using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Domain_Service.RepoInterfaces.UnitOfWork;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
-using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Infrastructure_Service.Persistance.Repositories.ProductManagement;
-using Infrastructure_Service.Persistance.Repositories.UserCreadentials;
-using Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s;
-using Infrastructure_Service.Persistance.Repositories.UserRoles;
-using Infrastructure_Service.Persistance.Repositories.Users;
 
 namespace Infrastructure_Service.Persistance.UnitOfWork
 {
-
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext dbContext)
+        // User Management
+        public IUserRepo UserRepo { get; }
+        public IUserRoleRepo UserRoleRepo { get; }
+        public IUserCreadentialRepo UserCreadRepo { get; }
+        public IUserSessionRepo UserSessionRepo { get; }
+        public ICustomerRepo CustomerRepo { get; }
+
+        // Seller
+        public ISellerRepository SellerRepo { get; }
+        public IShopDetailsRepository ShopDetailsRepo { get; }
+
+        // Product
+        public IProductRepo ProductRepo { get; }
+        public IProductImageRepo ProductImageRepo { get; }
+        public IProductCategories ProductCategoryRepo { get; }
+        public IProductRankingRepo ProductRankingRepo { get; }
+
+        // Cart & Order
+        public ICartRepo CartRepo { get; }
+        public ICartItemRepo CartItemRepo { get; }
+        public IOrderRepo OrderRepo { get; }
+        public IOrderItemRepo OrderItemRepo { get; }
+
+        // Payment
+        public IInvoiceRepo InvoiceRepo { get; }
+        public IPaymentDetailRepo PaymentDetailRepo { get; }
+        public ISellerPayoutRepo SellerPayoutRepo { get; }
+
+        // Wishlist
+        public IWishListItemRepo WishListItemRepo { get; }
+        public IRepository<WishList> WishLists { get; }
+
+        // Location
+        public IRepository<Province> Provinces { get; }
+        public IRepository<City> Cities { get; }
+
+        // Product Extra
+        public IRepository<ProductReview> ProductReviews { get; }
+        public IRepository<ProductView> ProductViews { get; }
+
+        // Sessions
+        public IRepository<UserSession> UserSessions { get; }
+
+        public UnitOfWork(
+            ApplicationDbContext context,
+            // User Management
+            IUserRepo userRepo,
+            IUserRoleRepo userRoleRepo,
+            IUserCreadentialRepo userCreadRepo,
+            IUserSessionRepo userSessionRepo,
+            ICustomerRepo customerRepo,
+            // Seller
+            ISellerRepository sellerRepo,
+            IShopDetailsRepository shopDetailsRepo,
+            // Product
+            IProductRepo productRepo,
+            IProductImageRepo productImageRepo,
+            IProductCategories productCategoryRepo,
+            IProductRankingRepo productRankingRepo,
+            // Cart & Order
+            ICartRepo cartRepo,
+            ICartItemRepo cartItemRepo,
+            IOrderRepo orderRepo,
+            IOrderItemRepo orderItemRepo,
+            // Payment
+            IInvoiceRepo invoiceRepo,
+            IPaymentDetailRepo paymentDetailRepo,
+            ISellerPayoutRepo sellerPayoutRepo,
+            // Wishlist
+            IWishListItemRepo wishListItemRepo,
+            IRepository<WishList> wishLists,
+            // Location
+            IRepository<Province> provinces,
+            IRepository<City> cities,
+            // Product Extra
+            IRepository<ProductReview> productReviews,
+            IRepository<ProductView> productViews,
+            // Sessions
+            IRepository<UserSession> userSessions
+        )
         {
-            _context = dbContext;
+            _context = context;
+
+            UserRepo = userRepo;
+            UserRoleRepo = userRoleRepo;
+            UserCreadRepo = userCreadRepo;
+            UserSessionRepo = userSessionRepo;
+            CustomerRepo = customerRepo;
+
+            SellerRepo = sellerRepo;
+            ShopDetailsRepo = shopDetailsRepo;
+
+            ProductRepo = productRepo;
+            ProductImageRepo = productImageRepo;
+            ProductCategoryRepo = productCategoryRepo;
+            ProductRankingRepo = productRankingRepo;
+
+            CartRepo = cartRepo;
+            CartItemRepo = cartItemRepo;
+            OrderRepo = orderRepo;
+            OrderItemRepo = orderItemRepo;
+
+            InvoiceRepo = invoiceRepo;
+            PaymentDetailRepo = paymentDetailRepo;
+            SellerPayoutRepo = sellerPayoutRepo;
+
+            WishListItemRepo = wishListItemRepo;
+            WishLists = wishLists;
+
+            Provinces = provinces;
+            Cities = cities;
+
+            ProductReviews = productReviews;
+            ProductViews = productViews;
+
+            UserSessions = userSessions;
         }
-        public IRepository<User> Users => new Repository<User>(_context);
-        public IRepository<UserCreadential> UserCreads => new Repository<UserCreadential>(_context);
-        public IRepository<UserRole> UserRoles => new Repository<UserRole>(_context);
-        public IRepository<Invoice> Invoices => new Repository<Invoice>(_context);
 
-        public IRepository<Product> Products => new Repository<Product>(_context);
-        public IProductRepo ProductsRepository => new ProductRepo(_context);
-
-        public IRepository<ProductImage> ProductImages => new Repository<ProductImage>(_context);
-        public IProductImageRepo ProductImageRepository => new ProductImageRepo(_context);
-
-        public IRepository<Seller> Sellers => new Repository<Seller>(_context);
         /// <summary>
-        /// Gets the repository for managing <see cref="PaymentDetail"/> entities.
+        /// Commits all pending changes to the database.
         /// </summary>
-        public IRepository<PaymentDetail> PaymentDetails => new Repository<PaymentDetail>(_context);
-        public IUserRepo UserRepository => new UserRepo(_context);
-        public IUserRoleRepo UserRoleRepository => new UserRoleRepo(_context);
-        public IUserCreadentialRepo UserCreadRepository => new UserCreadentialRepo(_context);
-
-
-        public IRepository<Customer> Customers => new Repository<Customer>(_context);
-
-        public ICustomerRepo CustomerRepository => new CustomerRepo(_context);
-
-        public IRepository<CartItem> CartItems => new Repository<CartItem>(_context);
-
-        public IRepository<Cart> Carts => new Repository<Cart>(_context);
-
-        public IRepository<Order> Orders => new Repository<Order>(_context);
-
-        public IRepository<OrderItem> OrderItems => new Repository<OrderItem>(_context);
-
-        public IRepository<Province> Provinces => new Repository<Province>(_context);
-
-        public IRepository<City> Cities => new Repository<City>(_context);
-
-        public IRepository<ProductReview> ProductReview => new Repository<ProductReview>(_context);
-
-        public IRepository<ProductView> ProductView => new Repository<ProductView>(_context);
-        public IRepository<UserSession> UserSessions => new Repository<UserSession>(_context);
-        public IUserSessionRepo UserSessionRepository => new UserSessionRepo(_context);
-
-        public IWishListItemRepo WishListItemRepository => new WishListItemRepo(_context);
-
-        public IRepository<WishListItem> WishListItems => new Repository<WishListItem>(_context);
-
-        public IRepository<WishList> WishLists => new Repository<WishList>(_context);
-        public IRepository<ProductCategory> ProductCategories => new Repository<ProductCategory>(_context);
-
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Executes multiple repository operations within a single transaction.
+        /// </summary>
+        public async Task ExecuteInTransactionAsync(Func<Task> operations)
+        {
+            if (operations == null) throw new ArgumentNullException(nameof(operations));
+
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                await operations();
+                await SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disposes the DbContext and releases database connections.
+        /// </summary>
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

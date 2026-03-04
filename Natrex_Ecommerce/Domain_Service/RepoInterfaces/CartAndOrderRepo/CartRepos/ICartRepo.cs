@@ -1,6 +1,9 @@
-﻿namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
+﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.RepoInterfaces.GenericRepo;
+
+namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
 {
-    public interface ICartRepo
+    public interface ICartRepo : IRepository<Cart>
     {
         //All these methods belongs to generic repository so here is just decleration not the implementation
         //Task<Cart> Create(Cart cart);

@@ -1,8 +1,9 @@
 ﻿using Domain_Service.Entities.CartAndOrderModule;
+using Domain_Service.RepoInterfaces.GenericRepo;
 
 namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
 {
-    public interface ICartItemRepo
+    public interface ICartItemRepo : IRepository<CartItem>
     {
         /// <summary>
         /// Get a cart item by cartId and productId.

@@ -4,14 +4,15 @@ using Application_Service.DTO_s.CartAndOrderDtos.OrderItemDtos;
 using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
+using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation
 {
-    public class OrderItemManager(IOrderItemRepo repo) : IOrderItemManager
+    public class OrderItemManager(IUnitOfWork unitOfWork) : IOrderItemManager
     {
         public async Task<ApiResponse<IEnumerable<GetOrderItemDto>>> GetOrderItemsByOrderId(Guid orderId)
         {
-            var data = await repo.GetOrderItemsByOrderIdAsync(orderId);
+            var data = await unitOfWork.OrderItemRepo.GetOrderItemsByOrderIdAsync(orderId);
             if (data == null || !data.Any())
             {
                 return ApiResponse<IEnumerable<GetOrderItemDto>>

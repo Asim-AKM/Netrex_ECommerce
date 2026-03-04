@@ -1,6 +1,7 @@
 ﻿using Domain_Service.Entities.SellerModule;
 using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails
     /// <summary>
     /// Repository implementation for accessing and managing <see cref="Seller"/> entities in the database.
     /// </summary>
-    public class SellerRepository : ISellerRepository
+    public class SellerRepository : Repository<Seller>, ISellerRepository
     {
         private readonly ApplicationDbContext _applicationDb;
 
@@ -18,7 +19,7 @@ namespace Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails
         /// Initializes a new instance of the <see cref="SellerRepository"/> class.
         /// </summary>
         /// <param name="dbContext">The <see cref="ApplicationDbContext"/> instance for database access.</param>
-        public SellerRepository(ApplicationDbContext dbContext)
+        public SellerRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _applicationDb = dbContext;
         }

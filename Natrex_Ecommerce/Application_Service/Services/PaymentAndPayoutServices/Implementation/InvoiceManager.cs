@@ -5,6 +5,7 @@ using Application_Service.Services.PaymentAndPayoutServices.Interface;
 using Domain_Service.Entities.PaymentAndPayout;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
+using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 {
@@ -21,7 +22,7 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
     /// </remarks>
     public class InvoiceManager : IInvoiceManager
     {
-        private readonly IRepository<Invoice> _genericrepository;
+        private readonly IUnitOfWork _uow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InvoiceManager"/> class.
@@ -29,9 +30,9 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
         /// <param name="repository">
         /// Generic repository used for invoice persistence operations.
         /// </param>
-        public InvoiceManager(IRepository<Invoice> repository)
+        public InvoiceManager(IUnitOfWork unitOfWork)
         {
-            _genericrepository = repository;
+            _uow = unitOfWork;
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
         /// </returns>
         public async Task<ApiResponse<FetchInvoiceDto>> GetInvoiceById(Guid InvoiceId)
         {
-            var fetchinvoice = await _genericrepository.GetById(InvoiceId);
+            var fetchinvoice = await _uow.InvoiceRepo.GetById(InvoiceId);
 
             if (fetchinvoice == null)
             {
@@ -77,8 +78,8 @@ namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
         {
             var invoice = dto.Map();
 
-            await _genericrepository.Create(invoice);
-            await _genericrepository.SaveChangesAsync();
+            await _uow.InvoiceRepo.Create(invoice);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<InvoiceDto>.Success(
                 dto,

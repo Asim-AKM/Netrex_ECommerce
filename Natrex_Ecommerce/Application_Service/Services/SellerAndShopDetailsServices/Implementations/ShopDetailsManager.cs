@@ -6,6 +6,7 @@ using Domain_Service.Entities.SellerModule;
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.GenericRepo;
 using Domain_Service.RepoInterfaces.SellerAndShopDetails;
+using Domain_Service.RepoInterfaces.UnitOfWork;
 
 namespace Application_Service.Services.SellerAndShopDetailsServices.Implementations
 {
@@ -14,16 +15,16 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
     /// </summary>
     public class ShopDetailsManager : IShopDetailsManager
     {
-        private readonly IRepository<ShopDetail> _repository;
+        private readonly IUnitOfWork _uow;
         //private readonly IShopDetailsRepository _shopDetails;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShopDetailsManager"/> class.
         /// </summary>
         /// <param name="repository">Generic repository for CRUD operations on <see cref="ShopDetail"/> entities.</param>
-        public ShopDetailsManager(IRepository<ShopDetail> repository, IShopDetailsRepository shopDetailsRepository)
+        public ShopDetailsManager(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _uow = unitOfWork;
             //_shopDetails = shopDetailsRepository;
         }
 
@@ -42,8 +43,8 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             if (domain == null)
                 return ApiResponse<CreateShopDetailsDto>.Fail("Mapping failed", ResponseType.Conflict);
 
-            await _repository.Create(domain);
-            await _repository.SaveChangesAsync();
+            await _uow.ShopDetailsRepo.Create(domain);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<CreateShopDetailsDto>.Success(createShopDetailsDto, "Shop details created successfully", ResponseType.Created);
         }
@@ -58,8 +59,8 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             if (shopDetailId == Guid.Empty)
                 return ApiResponse<bool>.Fail("Invalid ShopDetail Id", ResponseType.BadRequest);
 
-            await _repository.Delete(shopDetailId);
-            await _repository.SaveChangesAsync();
+            await _uow.ShopDetailsRepo.Delete(shopDetailId);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<bool>.Success(true, "ShopDetail deleted successfully", ResponseType.Ok);
         }
@@ -70,7 +71,7 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
         /// <returns>An <see cref="ApiResponse{T}"/> containing a list of <see cref="GetShopDetailsDto"/> entities.</returns>
         public async Task<ApiResponse<List<GetShopDetailsDto>>> GetAllShopDetails()
         {
-            var shopDetails = await _repository.GetAll();
+            var shopDetails = await _uow.ShopDetailsRepo.GetAll();
 
             if (shopDetails == null || !shopDetails.Any())
             {
@@ -91,7 +92,7 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             if (shopDetailId == Guid.Empty)
                 return ApiResponse<GetShopDetailsDto>.Fail("Invalid ShopDetail Id", ResponseType.BadRequest);
 
-            var domain = await _repository.GetById(shopDetailId);
+            var domain = await _uow.ShopDetailsRepo.GetById(shopDetailId);
 
             if (domain == null)
                 return ApiResponse<GetShopDetailsDto>.Fail("ShopDetail not found", ResponseType.NotFound);
@@ -110,12 +111,12 @@ namespace Application_Service.Services.SellerAndShopDetailsServices.Implementati
             if (updateShopDetailsDto == null)
                 return ApiResponse<UpdateShopDetailsDto>.Fail("Invalid request data", ResponseType.BadRequest);
 
-            var domain = await _repository.Update(updateShopDetailsDto.MapToDomain());
+            var domain = await _uow.ShopDetailsRepo.Update(updateShopDetailsDto.MapToDomain());
 
             if (domain == null)
                 return ApiResponse<UpdateShopDetailsDto>.Fail("ShopDetail not found", ResponseType.NotFound);
 
-            await _repository.SaveChangesAsync();
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<UpdateShopDetailsDto>.Success(updateShopDetailsDto, "Shop details updated successfully", ResponseType.Ok);
         }

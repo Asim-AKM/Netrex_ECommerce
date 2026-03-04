@@ -1,5 +1,7 @@
-﻿using Domain_Service.RepoInterfaces.PaymentAndPayout;
+﻿using Domain_Service.Entities.SellerPaymentModule;
+using Domain_Service.RepoInterfaces.PaymentAndPayout;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 
 namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
 {
@@ -13,7 +15,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
     /// It is responsible for interacting with the database using
     /// <see cref="ApplicationDbContext"/> to manage seller payout data.
     /// </remarks>
-    public class SellerPayoutRepo : ISellerPayoutRepo
+    public class SellerPayoutRepo : Repository<SellerPayout>, ISellerPayoutRepo
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
@@ -23,7 +25,7 @@ namespace Infrastructure_Service.Persistance.Repositories.PaymentAndPayout
         /// <param name="applicationDbContext">
         /// Database context used for seller payout persistence operations.
         /// </param>
-        public SellerPayoutRepo(ApplicationDbContext applicationDbContext)
+        public SellerPayoutRepo(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }

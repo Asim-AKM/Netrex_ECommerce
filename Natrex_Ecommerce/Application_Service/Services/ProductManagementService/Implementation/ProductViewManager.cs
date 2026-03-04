@@ -14,30 +14,38 @@ namespace Application_Service.Services.ProductManagementService.Implementation
         }
         public async Task<string> AddViewAsync(AddProductViewDto dto)
         {
-            bool alreadyViewed = await _unitofWork.ProductView.AnyAsync(x =>
-                 x.ProductId == dto.ProductId &&
-             x.IPAddress == dto.IPAddress);
-
+            bool alreadyViewed = await _unitofWork.ProductViews.AnyAsync(x =>
+                x.ProductId == dto.ProductId &&
+                x.IPAddress == dto.IPAddress);
             if (alreadyViewed)
                 return "Already Viewed";
 
+            var product = await _unitofWork.ProductRepo.GetById(dto.ProductId);
+            if (product == null)
+                return "Product Id is Wrong";
 
-            var product = await _unitofWork.Products.GetById(dto.ProductId);
-            if (product != null)
+            try
             {
-                var data = dto.ToEntity();
-                product.TotalViews += 1;
-                await _unitofWork.ProductView.Create(data);
-                await _unitofWork.Products.Update(product);
-            await _unitofWork.SaveChangesAsync();
-                return "Viewed Successully";
+                await _unitofWork.ExecuteInTransactionAsync(async () =>
+                {
+                    var data = dto.ToEntity();
+                    product.TotalViews += 1;
+
+                    await _unitofWork.ProductViews.Create(data);
+                    await _unitofWork.ProductRepo.Update(product);
+                });
+
+                return "Viewed Successfully";
             }
-            return "Product Id is Wrong";
+            catch (Exception ex)
+            {
+                return $"Failed to add view: {ex.Message}";
+            }
         }
 
         public async Task<int> GetTotalViewsByProductIdAsync(Guid productId)
         {
-            var allViews = await _unitofWork.ProductView.GetAll();
+            var allViews = await _unitofWork.ProductViews.GetAll();
             return allViews.Count(x => x.ProductId == productId);
         }
     }
