@@ -11,7 +11,7 @@ namespace Application_Service.Common.Mappers.UserManagmentMapppers
             {
                 WishListItemId = Guid.NewGuid(),
                 WishListId = wishListId,
-                ProductId = request.ItemId,
+                ProductId = request.ProductId,
                 AddedAt = DateTime.UtcNow
             };
         }
