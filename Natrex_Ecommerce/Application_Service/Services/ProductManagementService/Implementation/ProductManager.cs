@@ -3,35 +3,28 @@
     public class ProductManager : IProductManager
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IProductImageRepo _productImageRepo;
-        private readonly IProductCategories _productCategories;
-        private readonly IRepository<Product> _genericProductRepo;
-        private readonly IProductRepo _productRepo;
         private readonly ICloudinaryManager _cloudinaryManager;
-        public ProductManager(IUnitOfWork unitOfWork, IProductCategories productCategories, IProductImageRepo productImageRepo, IRepository<Product> repository,ICloudinaryManager cloudinaryManager)
+        public ProductManager(IUnitOfWork unitOfWork,ICloudinaryManager cloudinaryManager)
         {
             _unitOfWork = unitOfWork;
-            _productCategories = productCategories;
-            _productImageRepo = productImageRepo;
-            _genericProductRepo = repository;
             _cloudinaryManager = cloudinaryManager;
         }
         public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
-            var category = await _productCategories.GetByName(productDto.CategoryName);
+            var category = await _unitOfWork.ProductCategoryRepo.GetByName(productDto.CategoryName);
             if (category == null)
                 return ApiResponse<AddProductDto>.Fail("Category not found", ResponseType.BadRequest);
 
             var product = productDto.MapProduct(category.CategoryId);
 
-            await _unitOfWork.Products.Create(product);
+            await _unitOfWork.ProductRepo.Create(product);
 
             if (productDto.Images != null && productDto.Images.Any())
             {
                 var productImages = productDto.Images.ToProductImages(product.ProductId);
                 foreach (var img in productImages)
                 {
-                    await _unitOfWork.ProductImages.Create(img);
+                    await _unitOfWork.ProductImageRepo.Create(img);
                 }
             }
 
@@ -43,12 +36,12 @@
 
         public async Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId)
         {
-            var product = await _genericProductRepo.GetById(productId);
+            var product = await _unitOfWork.ProductRepo.GetById(productId);
             if (product == null)
                 return ApiResponse<GetProductDto>.Fail("Product not found", ResponseType.NotFound);
 
             
-            var images = await _productImageRepo.GetByProductId(productId);
+            var images = await _unitOfWork.ProductImageRepo.GetByProductId(productId);
             var productDto = GetProductMap.MapToGetProductDto(product, images);
             return ApiResponse<GetProductDto>.Success(productDto, "Product fetched successfully", ResponseType.Ok);
         }
@@ -56,11 +49,11 @@
        
         public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts()
         {
-            var products = await _genericProductRepo.GetAll();
+            var products = await _unitOfWork.ProductRepo.GetAll();
             if (products == null || !products.Any())
                 return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
 
-            var images = await _productImageRepo.GetAllProductImages(); 
+            var images = await _unitOfWork.ProductImageRepo.GetAllProductImages(); 
             var dto = products.GetAllProducts(images); 
             return ApiResponse<List<GetProductDto>>.Success(dto, "Products fetched successfully", ResponseType.Ok);
         }
@@ -68,82 +61,79 @@
 
         public async Task<ApiResponse<bool>> DeleteProduct(Guid productId)
         {
-            var product = await _genericProductRepo.GetById(productId);
-
+            var product = await _unitOfWork.ProductRepo.GetById(productId);
             if (product == null)
-                return ApiResponse<bool>.Fail( Convert.ToString(false), ResponseType.NotFound);
+                return ApiResponse<bool>.Fail(Convert.ToString(false), ResponseType.NotFound);
 
-            var images = await _productImageRepo.GetByProductId(productId);
+            var images = await _unitOfWork.ProductImageRepo.GetByProductId(productId);
 
-            foreach (var img in images)
+            try
             {
-                await _unitOfWork.ProductImages.Delete(img.ImageId);
+                await _unitOfWork.ExecuteInTransactionAsync(async () =>
+                {
+                    foreach (var img in images)
+                        await _unitOfWork.ProductImageRepo.Delete(img.ImageId);
+
+                    await _unitOfWork.ProductRepo.Delete(product.ProductId);
+                });
+
+                return ApiResponse<bool>.Success(true, "Product deleted successfully", ResponseType.Ok);
             }
-
-            await _genericProductRepo.Delete(product.ProductId);
-            await _unitOfWork.SaveChangesAsync();
-
-            return ApiResponse<bool>.Success(true, "Product deleted successfully", ResponseType.Ok);
+            catch (Exception ex)
+            {
+                return ApiResponse<bool>.Fail($"Failed to delete product: {ex.Message}", ResponseType.InternalServerError);
+            }
         }
 
 
 
         public async Task<ApiResponse<string>> UpdateProduct(UpdateProductDTOS productDto)
         {
-
-            var product = await _unitOfWork.Products.GetById(productDto.ProductId);
-
+            var product = await _unitOfWork.ProductRepo.GetById(productDto.ProductId);
             if (product == null)
                 return ApiResponse<string>.Fail("Product not found", ResponseType.NotFound);
 
             productDto.Mapping(product);
 
-            if (productDto.DeletedImagePublicIds != null &&
-                productDto.DeletedImagePublicIds.Any())
+            try
             {
-                await _cloudinaryManager.DeleteMultipleImagesAsync(
-                    productDto.DeletedImagePublicIds);
-
-                var existingImages =
-                    await _productImageRepo.GetByProductId(product.ProductId);
-
-                var imagesToDelete = existingImages
-                    .Where(x => productDto.DeletedImagePublicIds.Contains(x.CloudPublicId))
-                    .ToList();
-
-                foreach (var img in imagesToDelete)
+                await _unitOfWork.ExecuteInTransactionAsync(async () =>
                 {
-                    await _unitOfWork.ProductImages.Delete(img.ImageId);
-                }
-            }
+                    if (productDto.DeletedImagePublicIds != null && productDto.DeletedImagePublicIds.Any())
+                    {
+                        await _cloudinaryManager.DeleteMultipleImagesAsync(productDto.DeletedImagePublicIds);
 
-            
-            if (productDto.Images != null && productDto.Images.Any())
+                        var existingImages = await _unitOfWork.ProductImageRepo.GetByProductId(product.ProductId);
+                        var imagesToDelete = existingImages
+                            .Where(x => productDto.DeletedImagePublicIds.Contains(x.CloudPublicId))
+                            .ToList();
+
+                        foreach (var img in imagesToDelete)
+                            await _unitOfWork.ProductImageRepo.Delete(img.ImageId);
+                    }
+
+                    if (productDto.Images != null && productDto.Images.Any())
+                    {
+                        var existingImages = await _unitOfWork.ProductImageRepo.GetByProductId(product.ProductId);
+
+                        foreach (var img in existingImages)
+                            await _unitOfWork.ProductImageRepo.Delete(img.ImageId);
+
+                        var newImages = productDto.Images.ToProductImages(product.ProductId);
+
+                        foreach (var img in newImages)
+                            await _unitOfWork.ProductImageRepo.Create(img);
+                    }
+
+                    await _unitOfWork.ProductRepo.Update(product);
+                });
+
+                return ApiResponse<string>.Success(string.Empty, "Product updated successfully", ResponseType.Ok);
+            }
+            catch (Exception ex)
             {
-                var existingImages =
-                    await _productImageRepo.GetByProductId(product.ProductId);
-
-                foreach (var img in existingImages)
-                {
-                    await _unitOfWork.ProductImages.Delete(img.ImageId);
-                }
-
-                var newImages =
-                    productDto.Images.ToProductImages(product.ProductId);
-
-                foreach (var img in newImages)
-                {
-                    await _unitOfWork.ProductImages.Create(img);
-                }
+                return ApiResponse<string>.Fail($"Failed to update product: {ex.Message}", ResponseType.InternalServerError);
             }
-
-            await _unitOfWork.Products.Update(product);
-            await _unitOfWork.SaveChangesAsync();
-
-            return ApiResponse<string>.Success(
-                string.Empty,
-                "Product updated successfully",
-                ResponseType.Ok);
         }
 
 
@@ -158,13 +148,13 @@
             if (Id == Guid.Empty)
                 return ApiResponse<List<GetCityDto>>.Fail("ProvinceId is not valid");
 
-            var cities = await _productRepo.GetCitiesByProvinceId(Id);
+            var cities = await _unitOfWork.ProductRepo.GetCitiesByProvinceId(Id);
             return ApiResponse<List<GetCityDto>>.Success(cities.Map(), "Cities Get Suuccesfuly");
         }
 
         public async Task<ApiResponse<List<ProductCategoryDto>>> GetCategoriesAsync()
         {
-            var data = await _unitOfWork.ProductCategories.GetAll();
+            var data = await _unitOfWork.ProductCategoryRepo.GetAll();
 
             var categories = data
                 .Select(x => x.Map())

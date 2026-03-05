@@ -1,14 +1,15 @@
 ﻿using Domain_Service.Entities.UserManagmentModule;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserManagmentRepo_s
 {
-    public class UserSessionRepo : IUserSessionRepo
+    public class UserSessionRepo : Repository<UserSession>, IUserSessionRepo
     {
         private readonly ApplicationDbContext _context;
-        public UserSessionRepo(ApplicationDbContext context)
+        public UserSessionRepo(ApplicationDbContext context) : base(context) 
         {
             _context = context;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
 {
-    public interface ICartItemRepo
+    public interface ICartItemRepo : IRepository<CartItem>
     {
         /// <summary>
         /// Get a cart item by cartId and productId.

@@ -13,7 +13,7 @@
     /// </remarks>
     public class PaymentDetailManager : IPaymentDetailManager
     {
-        private readonly IRepository<PaymentDetail> _genericpaymentDetailRepository;
+        private readonly IUnitOfWork _uow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentDetailManager"/> class.
@@ -21,9 +21,9 @@
         /// <param name="repository">
         /// Generic repository used for payment detail persistence operations.
         /// </param>
-        public PaymentDetailManager(IRepository<PaymentDetail> repository)
+        public PaymentDetailManager(IUnitOfWork unitOfWork)
         {
-            _genericpaymentDetailRepository = repository;
+            _uow = unitOfWork;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@
         {
             var payment = dto.Map();
 
-            await _genericpaymentDetailRepository.Create(payment);
-            await _genericpaymentDetailRepository.SaveChangesAsync();
+            await _uow.PaymentDetailRepo.Create(payment);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<ProcessPaymentDto>.Success(
                 dto,
@@ -61,7 +61,7 @@
         /// </returns>
         public async Task<ApiResponse<GetPaymentByIdDto>> GetPaymentById(Guid paymentId)
         {
-            var data = await _genericpaymentDetailRepository.GetById(paymentId);
+            var data = await _uow.PaymentDetailRepo.GetById(paymentId);
 
             if (data == null)
             {

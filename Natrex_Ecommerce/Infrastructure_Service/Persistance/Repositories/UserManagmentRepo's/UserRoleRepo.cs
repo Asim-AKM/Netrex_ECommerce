@@ -2,14 +2,15 @@
 using Domain_Service.Enums;
 using Domain_Service.RepoInterfaces.UserManagment;
 using Infrastructure_Service.Data;
+using Infrastructure_Service.Persistance.GenericRepository.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserRoles
 {
-    public class UserRoleRepo : IUserRoleRepo
+    public class UserRoleRepo : Repository<UserRole>, IUserRoleRepo
     {
         private readonly ApplicationDbContext _context;
-        public UserRoleRepo(ApplicationDbContext context)
+        public UserRoleRepo(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

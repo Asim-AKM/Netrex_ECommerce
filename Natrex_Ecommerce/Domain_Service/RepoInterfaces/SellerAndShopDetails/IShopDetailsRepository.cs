@@ -3,7 +3,7 @@
     /// <summary>
     /// Repository interface for accessing and managing <see cref="ShopDetail"/> entities in the database.
     /// </summary>
-    public interface IShopDetailsRepository
+    public interface IShopDetailsRepository : IRepository<ShopDetail>
     {
         /// <summary>
         /// Retrieves all shop details from the database asynchronously.

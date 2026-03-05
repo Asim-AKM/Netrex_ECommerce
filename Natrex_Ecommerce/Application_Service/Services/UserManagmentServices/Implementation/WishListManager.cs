@@ -2,70 +2,57 @@
 {
     public class WishListManager : IWishListManager
     {
-
         private readonly IUnitOfWork _unitOfWork;
         public WishListManager(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ApiResponse<Guid>> AddWishListItem(AddWishListItemDto request)
+        public async Task<ApiResponse<string>> AddWishListItem(AddWishListItemDto request)
         {
             try
             {
-                var wishList = await _unitOfWork.WishLists
-                    .FirstOrDefaultAsync(w => w.UserId == request.UserId);
+                var wishList = await _unitOfWork.WishLists.FirstOrDefaultAsync(w => w.UserId == request.UserId);
 
                 if (wishList != null)
                 {
-                    // Check if item already exists
-                    var existing = await _unitOfWork.WishListItemRepository
+                    // Check if item already exists — from incoming
+                    var existing = await _unitOfWork.WishListItemRepo
                         .QueryWishListItems()
-                        .Where(x => x.WishListId == wishList.WishListId
-                                 && x.ProductId == request.ProductId)
+                        .Where(x => x.WishListId == wishList.WishListId && x.ProductId == request.ProductId)
                         .FirstOrDefaultAsync();
 
                     if (existing != null)
-                        return ApiResponse<Guid>.Fail("Item Already Exists");
+                        return ApiResponse<string>.Fail("Item Already Exists");
 
-                    var newItem = request.ToWishListItem(wishList.WishListId);
-                    await _unitOfWork.WishListItems.Create(newItem);
+                    await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(wishList.WishListId));
                     await _unitOfWork.SaveChangesAsync();
-
-                    return ApiResponse<Guid>.Success(newItem.WishListItemId,
-                        "Item added to wish list successfully");
+                    return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
                 }
 
-                // Create new wish list and add item
                 var newWishList = request.ToWishList();
                 await _unitOfWork.WishLists.Create(newWishList);
-
-                var item = request.ToWishListItem(newWishList.WishListId);
-                await _unitOfWork.WishListItems.Create(item);
+                await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(newWishList.WishListId));
                 await _unitOfWork.SaveChangesAsync();
-
-                return ApiResponse<Guid>.Success(item.WishListItemId,
-                    "Item added to wish list successfully");
+                return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
             }
             catch (Exception ex)
             {
-                return ApiResponse<Guid>.Fail(ex.Message, ResponseType.InternalServerError);
+                return ApiResponse<string>.Fail(ex.Message, ResponseType.InternalServerError);
             }
         }
-        
+
+        // Updated signature from incoming — takes Guid directly
         public async Task<ApiResponse<string>> DeleteWishListItem(Guid wishListItemId)
         {
             try
             {
-                var item = await _unitOfWork.WishListItems
-                    .FirstOrDefaultAsync(x => x.WishListItemId == wishListItemId);
+                var wishListItem = await _unitOfWork.WishListItemRepo.FirstOrDefaultAsync(x => x.WishListItemId == wishListItemId);
+                if (wishListItem == null)
+                    return ApiResponse<string>.Fail("WishListItem Not Found", ResponseType.NotFound);
 
-                if (item == null)
-                    return ApiResponse<string>.Fail("Item Not Found", ResponseType.NotFound);
-
-                await _unitOfWork.WishListItems.Delete(item.WishListItemId);
-                await _unitOfWork.WishListItems.SaveChangesAsync();
-
+                await _unitOfWork.WishListItemRepo.Delete(wishListItem.WishListItemId);
+                await _unitOfWork.SaveChangesAsync();
                 return ApiResponse<string>.Success(default!, "Item Removed Successfully");
             }
             catch (Exception ex)
@@ -76,22 +63,20 @@
 
         public async Task<ApiResponse<List<GetWishListItem>>> GetWishListItems(Guid userId)
         {
-            var wishList = await _unitOfWork.WishLists
-                .FirstOrDefaultAsync(w => w.UserId == userId);
+            var wishList = await _unitOfWork.WishLists.FirstOrDefaultAsync(w => w.UserId == userId);
 
             if (wishList == null)
-                return ApiResponse<List<GetWishListItem>>
-                    .Fail("WishList Currently is Empty");
+                return ApiResponse<List<GetWishListItem>>.Fail("WishList Currently is Empty");
 
             var result = await (
-                from w in _unitOfWork.WishListItemRepository
+                from w in _unitOfWork.WishListItemRepo
                     .QueryWishListItems()
                     .Where(x => x.WishListId == wishList.WishListId)
 
-                join p in _unitOfWork.ProductsRepository.QueryProducts()
+                join p in _unitOfWork.ProductRepo.QueryProducts()
                     on w.ProductId equals p.ProductId
 
-                join i in _unitOfWork.ProductImageRepository
+                join i in _unitOfWork.ProductImageRepo
                         .QueryProductImages()
                         .Where(img => img.IsPrimary)
                     on p.ProductId equals i.ProductId into imgGroup
@@ -111,21 +96,20 @@
                 )
             ).ToListAsync();
 
-            return ApiResponse<List<GetWishListItem>>
-                .Success(result, "Items Retrieved Successfully");
+            return ApiResponse<List<GetWishListItem>>.Success(result, "Items Retrieved Successfully");
         }
 
+        // New method from incoming ✅
         public async Task<ApiResponse<int>> GetWishListCount(Guid userId)
         {
             try
             {
-                var wishList = await _unitOfWork.WishLists
-                    .FirstOrDefaultAsync(w => w.UserId == userId);
+                var wishList = await _unitOfWork.WishLists.FirstOrDefaultAsync(w => w.UserId == userId);
 
                 if (wishList == null)
                     return ApiResponse<int>.Success(0, "No wishlist found");
 
-                var count = await _unitOfWork.WishListItemRepository.QueryWishListItems()
+                var count = await _unitOfWork.WishListItemRepo.QueryWishListItems()
                     .CountAsync(w => w.WishListId == wishList.WishListId);
 
                 return ApiResponse<int>.Success(count, "Count retrieved");

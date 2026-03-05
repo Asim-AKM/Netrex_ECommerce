@@ -1,6 +1,6 @@
 ﻿namespace Domain_Service.RepoInterfaces.UserManagment
 {
-    public interface IWishListItemRepo
+    public interface IWishListItemRepo : IRepository<WishListItem>
     {
         IQueryable<WishListItem> QueryWishListItems();
     }

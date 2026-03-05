@@ -17,7 +17,7 @@
     /// public interface IPaymentDetailRepo : IGenericRepo&lt;PaymentDetail&gt;
     /// </code>
     /// </remarks>
-    public interface IPaymentDetailRepo
+    public interface IPaymentDetailRepo : IRepository<PaymentDetail>
     {
         // Add payment-specific custom operations here when needed.
         // Example:

@@ -9,31 +9,37 @@
         }
         public async Task<ApiResponse<string>> DeleteUserAsync(Guid id)
         {
-            var user = await _uOW.Users.GetById(id);
+            var user = await _uOW.UserRepo.GetById(id);
             if (user == null)
                 return ApiResponse<string>.Fail("User Not Found", ResponseType.Conflict);
 
-            var cred = await _uOW.UserCreads.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+            try
+            {
+                await _uOW.ExecuteInTransactionAsync(async () =>
+                {
+                    var cred = await _uOW.UserCreadRepo.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+                    if (cred != null)
+                        await _uOW.UserCreadRepo.Delete(cred.CreadId);
 
-            if (cred != null)
-                await _uOW.UserCreads.Delete(cred.CreadId);
+                    var role = await _uOW.UserRoleRepo.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+                    if (role != null)
+                        await _uOW.UserRoleRepo.Delete(role.UserRoleId);
 
-            var role = await _uOW.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+                    await _uOW.UserRepo.Delete(user.UserId);
+                });
 
-            if (role != null)
-                await _uOW.UserRoles.Delete(role.UserRoleId);
-
-            await _uOW.Users.Delete(user.UserId);
-
-            await _uOW.SaveChangesAsync();
-            return ApiResponse<string>.Success(default!, "Data Deleted Successfully");
-
+                return ApiResponse<string>.Success(default!, "Data Deleted Successfully");
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<string>.Fail($"Failed to Delete User: {ex.Message}", ResponseType.InternalServerError);
+            }
         }
 
         public async Task<ApiResponse<List<GetUsersDto>>> GetAllUserAsync()
         {
-            var user = await _uOW.Users.GetAll();
-            var role = await _uOW.UserRoles.GetAll();
+            var user = await _uOW.UserRepo.GetAll();
+            var role = await _uOW.UserRoleRepo.GetAll();
             var data = (from u in user
                         join r in role
                         on u.UserId equals r.UserId
@@ -54,10 +60,10 @@
 
         public async Task<ApiResponse<string>> UpdateUserAsync(UpdateUserDto updateuser)
         {
-            var domain = await _uOW.Users.GetById(updateuser.Id);
+            var domain = await _uOW.UserRepo.GetById(updateuser.Id);
             if (domain != null)
             {
-                await _uOW.Users.Update(updateuser.MapToDomain());
+                await _uOW.UserRepo.Update(updateuser.MapToDomain());
                 return await _uOW.SaveChangesAsync() > 0 ? ApiResponse<string>.Success(default!, "Update Succesfully") : ApiResponse<string>.Fail("Internal Server Error", ResponseType.InternalServerError);
 
             }
@@ -66,14 +72,14 @@
 
         public async Task<ApiResponse<string>> UpdateUserStatusAsync(UpdateUserStatusDto request)
         {
-            var user = await _uOW.Users.GetById(request.Id);
+            var user = await _uOW.UserRepo.GetById(request.Id);
             if (user == null)
                 return ApiResponse<string>.Fail("User Not Found", ResponseType.NotFound);
 
             user.Status = request.Status;
             user.UpdatedAt = DateTime.UtcNow;
 
-            await _uOW.Users.Update(user);
+            await _uOW.UserRepo.Update(user);
             return await _uOW.SaveChangesAsync() > 0
                 ? ApiResponse<string>.Success(default!, "Status Updated Successfully")
                 : ApiResponse<string>.Fail("Internal Server Error", ResponseType.InternalServerError);

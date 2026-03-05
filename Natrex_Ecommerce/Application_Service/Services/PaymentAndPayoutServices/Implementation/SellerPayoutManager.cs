@@ -13,17 +13,17 @@
     /// </remarks>
     public class SellerPayoutManager : ISellerPayoutManager
     {
-        private readonly IRepository<SellerPayout> _sellerPayoutRepository;
+        private readonly IUnitOfWork _uow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SellerPayoutManager"/> class.
         /// </summary>
-        /// <param name="sellerpayoutrepo">
+        /// <param name="unitOfWork">
         /// Generic repository used for seller payout persistence operations.
         /// </param>
-        public SellerPayoutManager(IRepository<SellerPayout> sellerpayoutrepo)
+        public SellerPayoutManager(IUnitOfWork unitOfWork)
         {
-            _sellerPayoutRepository = sellerpayoutrepo;
+            _uow = unitOfWork;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@
         {
             var sellerPayout = dto.Map();
 
-            await _sellerPayoutRepository.Create(sellerPayout);
-            await _sellerPayoutRepository.SaveChangesAsync();
+            await _uow.SellerPayoutRepo.Create(sellerPayout);
+            await _uow.SaveChangesAsync();
 
             return ApiResponse<AddSellerPayoutDto>.Success(
                 dto,
@@ -61,7 +61,7 @@
         /// </returns>
         public async Task<ApiResponse<GetSellerPayoutByIdDto>> GetSellerPayoutById(Guid sellerPayoutId)
         {
-            var payout = await _sellerPayoutRepository.GetById(sellerPayoutId);
+            var payout = await _uow.SellerPayoutRepo.GetById(sellerPayoutId);
 
             if (payout == null)
             {
@@ -90,7 +90,7 @@
         /// </returns>
         public async Task<ApiResponse<GetSellerPayoutByIdDto>> UpdateSellerPayoutAsPaid(Guid sellerPayoutId)
         {
-            var payout = await _sellerPayoutRepository.GetById(sellerPayoutId);
+            var payout = await _uow.SellerPayoutRepo.GetById(sellerPayoutId);
 
             if (payout == null)
             {
@@ -114,8 +114,8 @@
             payout.PaymentStatus = PaymentStatus.success;
             payout.PayOutDate = DateTime.UtcNow;
 
-            await _sellerPayoutRepository.SaveChangesAsync();
-
+            await _uow.SellerPayoutRepo.Update(payout);
+            await _uow.SaveChangesAsync();
             return ApiResponse<GetSellerPayoutByIdDto>.Success(
                 payout.Map(),
                 "Seller Payout Updated As Paid Successfully",

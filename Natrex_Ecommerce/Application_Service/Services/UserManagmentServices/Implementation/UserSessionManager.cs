@@ -19,15 +19,15 @@
             try
             {
                 // Validate the refresh token
-                var userSession = await _unitOfWork.UserSessionRepository.GetSessionByRefreshToken(refreshToken);
+                var userSession = await _unitOfWork.UserSessionRepo.GetSessionByRefreshToken(refreshToken);
                 if (userSession == null)
                     return ApiResponse<string>.Fail("Invalid refresh token", ResponseType.BadRequest);
                 if (userSession.ExpireAt < DateTime.UtcNow)
                     return ApiResponse<string>.Fail("Refresh token has expired", ResponseType.BadRequest);
 
                 // Generate new JWT token
-                var user = await _unitOfWork.Users.GetById(userSession.UserId);
-                var userRoles = await _unitOfWork.UserRoleRepository.GetUserRoles(userSession.UserId);
+                var user = await _unitOfWork.UserRepo.GetById(userSession.UserId);
+                var userRoles = await _unitOfWork.UserRoleRepo.GetUserRoles(userSession.UserId);
                 var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles);
 
                 return ApiResponse<string>.Success(jwtToken, "Jwt token refreshed successfully", ResponseType.Ok);

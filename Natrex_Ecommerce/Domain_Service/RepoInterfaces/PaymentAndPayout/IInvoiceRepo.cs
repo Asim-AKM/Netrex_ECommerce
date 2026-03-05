@@ -1,5 +1,4 @@
-﻿
-namespace Domain_Service.RepoInterfaces.PaymentAndPayout
+﻿namespace Domain_Service.RepoInterfaces.PaymentAndPayout
 {
     /// <summary>
     /// Repository interface for performing data operations on <see cref="Invoice"/> entities.
@@ -10,7 +9,7 @@ namespace Domain_Service.RepoInterfaces.PaymentAndPayout
     /// Implementations should handle persistence, retrieval, and querying of invoices
     /// without exposing the underlying data access logic to the application layer.
     /// </remarks>
-    public interface IInvoiceRepo
+    public interface IInvoiceRepo : IRepository<Invoice>
     {
         /// <summary>
         /// (Optional) Add custom methods for invoice-specific queries here.

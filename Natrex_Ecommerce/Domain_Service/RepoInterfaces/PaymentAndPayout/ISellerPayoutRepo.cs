@@ -1,4 +1,7 @@
-﻿namespace Domain_Service.RepoInterfaces.PaymentAndPayout
+﻿using Domain_Service.Entities.SellerPaymentModule;
+using Domain_Service.RepoInterfaces.GenericRepo;
+
+namespace Domain_Service.RepoInterfaces.PaymentAndPayout
 {
     /// <summary>
     /// Defines contract for seller payout related data operations.
@@ -10,7 +13,7 @@
     /// It follows the Repository Pattern and ensures that the Domain layer
     /// remains independent of data access implementation details.
     /// </remarks>
-    public interface ISellerPayoutRepo
+    public interface ISellerPayoutRepo : IRepository<SellerPayout>
     {
         // Future payout-specific methods will be declared here
         // Example:

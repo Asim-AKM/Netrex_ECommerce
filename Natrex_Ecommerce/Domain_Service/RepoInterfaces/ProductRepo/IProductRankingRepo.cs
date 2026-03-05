@@ -1,6 +1,6 @@
 ﻿namespace Domain_Service.RepoInterfaces.ProductRepo
 {
-    public interface IProductRankingRepo
+    public interface IProductRankingRepo : IRepository<Product>
     {
         Task<List<Product>> GetBestSellersAsync();
         Task<List<Product>> GetTrendingAsync();
