@@ -22,18 +22,24 @@ namespace APIGateway_Service.Controllers
             var response = await _wishListManager.AddWishListItem(request);
             return StatusCode((int)response.Status, response);
         }
-        [HttpDelete("WishListItem")]
-        public async Task<IActionResult> DeleteWishListItem(DeleteWishListItemDto request)
+        [HttpDelete("WishListItem/{wishListItemId}")]
+        public async Task<IActionResult> DeleteWishListItem(Guid wishListItemId)
         {
-            var response = await _wishListManager.DeleteWishListItem(request);
+            var response = await _wishListManager.DeleteWishListItem(wishListItemId);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpGet("WishListItem")]
-        public async Task<IActionResult> DeleteWishListItem()
+        [HttpGet("WishListItem/{userId}")]
+        public async Task<IActionResult> GetWishListItems(Guid userId)
         {
-            Guid userId = Guid.Parse("4818cc53-f71a-4bfe-97f0-2453268a22a0");
             var response = await _wishListManager.GetWishListItems(userId);
+            return StatusCode((int)response.Status, response);
+        }
+
+        [HttpGet("WishListCount/{userId}")]
+        public async Task<IActionResult> GetWishListCount(Guid userId)
+        {
+            var response = await _wishListManager.GetWishListCount(userId);
             return StatusCode((int)response.Status, response);
         }
 

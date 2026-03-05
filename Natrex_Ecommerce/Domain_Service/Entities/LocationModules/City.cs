@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.LocationModules
+﻿namespace Domain_Service.Entities.LocationModules
 {
     public class City
     {

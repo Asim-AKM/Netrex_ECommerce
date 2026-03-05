@@ -1,12 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application_Service.DTO_s.Validators.UserMangement
+﻿namespace Application_Service.DTO_s.Validators.UserMangement
 {
     public class VerifyRegistrationOtpDtoValidator : AbstractValidator<VerifyRegistrationOtpDto>
     {

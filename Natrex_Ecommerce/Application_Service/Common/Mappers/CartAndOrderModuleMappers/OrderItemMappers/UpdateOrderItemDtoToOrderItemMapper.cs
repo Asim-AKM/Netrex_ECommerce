@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.CartAndOrderDtos.OrderItemDtos;
-using Domain_Service.Entities.CartAndOrderModule;
-
-namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItemMappers
+﻿namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItemMappers
 {
     public static class UpdateOrderItemDtoToOrderItemMapper
     {

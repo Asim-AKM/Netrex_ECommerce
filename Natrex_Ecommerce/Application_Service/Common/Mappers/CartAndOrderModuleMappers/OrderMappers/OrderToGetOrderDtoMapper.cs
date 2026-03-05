@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
-using Domain_Service.Entities.CartAndOrderModule;
-
-namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers
+﻿namespace Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers
 {
     public static class OrderToGetOrderDtoMapper
     {

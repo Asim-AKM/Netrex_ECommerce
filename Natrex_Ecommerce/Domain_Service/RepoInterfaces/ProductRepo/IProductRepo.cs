@@ -1,8 +1,4 @@
-﻿using Domain_Service.Entities.LocationModules;
-using Domain_Service.Entities.ProductAndCategoryModule;
-using Domain_Service.RepoInterfaces.GenericRepo;
-
-namespace Domain_Service.RepoInterfaces.ProductRepo
+﻿namespace Domain_Service.RepoInterfaces.ProductRepo
 {
     public interface IProductRepo : IRepository<Product>
     {

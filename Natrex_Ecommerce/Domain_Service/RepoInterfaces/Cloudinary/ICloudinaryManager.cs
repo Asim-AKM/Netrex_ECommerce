@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Domain_Service.RepoInterfaces.Cloudinary
+﻿namespace Domain_Service.RepoInterfaces.Cloudinary
 {
     public interface ICloudinaryManager
     {

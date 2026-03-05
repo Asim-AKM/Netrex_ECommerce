@@ -1,15 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartItemMappers;
-using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
-using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
-using Domain_Service.Entities.CartAndOrderModule;
-using Domain_Service.Entities.ProductAndCategoryModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-
-namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Implementation
+﻿namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Implementation
 {
     public class CartItemManager(IUnitOfWork unitOfWork):ICartItemManager
     {

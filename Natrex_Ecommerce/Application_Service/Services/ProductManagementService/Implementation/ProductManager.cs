@@ -1,16 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.ProductMapper;
-using Application_Service.DTO_s.ProductDTOS;
-using Application_Service.Services.ProductManagementService.Interfaces;
-using Domain_Service.Entities.ProductAndCategoryModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.Cloudinary;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.ProductRepo;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Application_Service.Services.ProductManagementService.Implementation
+﻿namespace Application_Service.Services.ProductManagementService.Implementation
 {
     public class ProductManager : IProductManager
     {

@@ -1,7 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.DTO_s.SellerDtos;
-
-namespace Application_Service.Services.Interface
+﻿namespace Application_Service.Services.Interface
 {
     /// <summary>
     /// Defines contract methods for managing Seller operations including creation, updating, deletion, and fetching seller information.

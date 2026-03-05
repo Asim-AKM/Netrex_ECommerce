@@ -1,8 +1,4 @@
-﻿using Domain_Service.Enums;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.PaymentAndPayout
+﻿namespace Domain_Service.Entities.PaymentAndPayout
 {
     /// <summary>
     /// Represents a payment transaction made for a specific order.

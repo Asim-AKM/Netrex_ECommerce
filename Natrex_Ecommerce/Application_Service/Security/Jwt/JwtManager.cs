@@ -1,13 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
-using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.Enums;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
-namespace Application_Service.Security.Jwt
+﻿namespace Application_Service.Security.Jwt
 {
     internal class JwtManager : IJwtManager
     {

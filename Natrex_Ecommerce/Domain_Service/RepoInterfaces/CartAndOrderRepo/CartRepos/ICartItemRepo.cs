@@ -1,7 +1,4 @@
-﻿using Domain_Service.Entities.CartAndOrderModule;
-using Domain_Service.RepoInterfaces.GenericRepo;
-
-namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
+﻿namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
 {
     public interface ICartItemRepo : IRepository<CartItem>
     {

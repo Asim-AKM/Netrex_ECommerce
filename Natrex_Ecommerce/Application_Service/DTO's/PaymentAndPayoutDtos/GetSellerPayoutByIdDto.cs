@@ -1,6 +1,4 @@
-﻿using Domain_Service.Enums;
-
-namespace Application_Service.DTO_s.PaymentAndPayoutDtos
+﻿namespace Application_Service.DTO_s.PaymentAndPayoutDtos
 {
     public record GetSellerPayoutByIdDto(
                           Guid SellerPayoutId,

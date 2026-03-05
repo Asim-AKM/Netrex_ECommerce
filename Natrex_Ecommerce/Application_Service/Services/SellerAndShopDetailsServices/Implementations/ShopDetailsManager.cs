@@ -1,14 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.ShopDetailsDto;
-using Application_Service.DTO_s.ShopDetailsDtos;
-using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
-using Domain_Service.Entities.SellerModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.SellerAndShopDetails;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-
-namespace Application_Service.Services.SellerAndShopDetailsServices.Implementations
+﻿namespace Application_Service.Services.SellerAndShopDetailsServices.Implementations
 {
     /// <summary>
     /// Handles business logic for Shop Details operations such as creation, updating, deletion, and retrieval.

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.SellerModule
+﻿namespace Domain_Service.Entities.SellerModule
 {
     public class Seller
     {

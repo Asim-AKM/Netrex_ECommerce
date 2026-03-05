@@ -1,11 +1,4 @@
-﻿using Domain_Service.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application_Service.Common.APIResponses
+﻿namespace Application_Service.Common.APIResponses
 {
     public class ApiResponse<T>
     {

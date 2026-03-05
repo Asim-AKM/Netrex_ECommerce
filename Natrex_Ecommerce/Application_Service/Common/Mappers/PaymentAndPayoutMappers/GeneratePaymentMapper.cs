@@ -1,8 +1,4 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Domain_Service.Entities.PaymentAndPayout;
-using Domain_Service.Enums;
-
-namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
+﻿namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
 {
     /// <summary>
     /// Static mapper class for converting between Payment-related DTOs and Entities.

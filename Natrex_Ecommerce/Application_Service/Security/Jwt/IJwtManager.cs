@@ -1,7 +1,4 @@
-﻿using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.Enums;
-
-namespace Application_Service.Security.Jwt
+﻿namespace Application_Service.Security.Jwt
 {
     public interface IJwtManager
     {

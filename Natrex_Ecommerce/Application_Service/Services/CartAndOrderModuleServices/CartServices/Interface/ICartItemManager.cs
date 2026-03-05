@@ -1,7 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
-
-namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface
+﻿namespace Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface
 {
     public interface ICartItemManager
     {

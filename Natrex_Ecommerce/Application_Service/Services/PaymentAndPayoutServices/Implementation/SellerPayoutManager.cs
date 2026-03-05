@@ -1,13 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
-using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Application_Service.Services.PaymentAndPayoutServices.Interface;
-using Domain_Service.Entities.SellerPaymentModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-
-namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
+﻿namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 {
     /// <summary>
     /// Handles seller payout related business operations such as
