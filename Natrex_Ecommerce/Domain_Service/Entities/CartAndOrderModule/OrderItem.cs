@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.CartAndOrderModule
+﻿namespace Domain_Service.Entities.CartAndOrderModule
 {
     /// <summary>
     /// Represents an individual item within an order.

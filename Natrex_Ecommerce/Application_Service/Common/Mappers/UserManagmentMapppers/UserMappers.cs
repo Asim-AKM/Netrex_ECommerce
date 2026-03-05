@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
-using Application_Service.DTO_s.UsersDto.Accounts;
-using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.Enums;
-
-namespace Application_Service.Common.Mappers.UserManagmentMapppers
+﻿namespace Application_Service.Common.Mappers.UserManagmentMapppers
 {
     public static class UserMappers
     {

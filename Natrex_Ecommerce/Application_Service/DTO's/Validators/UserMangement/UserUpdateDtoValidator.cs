@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
-using FluentValidation;
-
-namespace Application_Service.DTO_s.Validators.UserMangement
+﻿namespace Application_Service.DTO_s.Validators.UserMangement
 {
     public class UserUpdateDtoValidator : AbstractValidator<UpdateUserDto>
     {

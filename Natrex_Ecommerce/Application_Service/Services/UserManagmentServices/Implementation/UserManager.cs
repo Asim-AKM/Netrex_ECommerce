@@ -1,11 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.UserManagmentMapppers;
-using Application_Service.DTO_s.UserManagmentDto_s;
-using Application_Service.Services.UserManagmentServices.Interface;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-
-namespace Application_Service.Services.UserManagmentServices.Implementation
+﻿namespace Application_Service.Services.UserManagmentServices.Implementation
 {
     public class UserManager : IUserManager
     {

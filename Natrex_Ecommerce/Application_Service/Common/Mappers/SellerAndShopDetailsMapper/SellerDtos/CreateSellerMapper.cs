@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.SellerDtos;
-using Domain_Service.Entities.SellerModule;
-
-namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos
+﻿namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos
 {
     /// <summary>
     /// Provides mapping extension methods for converting <see cref="CreateSellerDto"/> objects to <see cref="Seller"/> entities.

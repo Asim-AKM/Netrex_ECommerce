@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s;
-using Domain_Service.Entities.UserManagmentModule;
-
-namespace Application_Service.Common.Mappers.UserManagmentMapppers
+﻿namespace Application_Service.Common.Mappers.UserManagmentMapppers
 {
     internal static class CustomerMappers
     {

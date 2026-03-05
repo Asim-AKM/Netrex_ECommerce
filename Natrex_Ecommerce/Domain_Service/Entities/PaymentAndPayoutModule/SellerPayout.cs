@@ -1,8 +1,4 @@
-﻿using Domain_Service.Enums;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.SellerPaymentModule
+﻿namespace Domain_Service.Entities.SellerPaymentModule
 {
     /// <summary>
     /// Represents a payout transaction made to a seller for a completed order.

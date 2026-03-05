@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.ProductAndCategoryModule
+﻿namespace Domain_Service.Entities.ProductAndCategoryModule
 {
     /// <summary>
     /// Represents an image associated with a product.

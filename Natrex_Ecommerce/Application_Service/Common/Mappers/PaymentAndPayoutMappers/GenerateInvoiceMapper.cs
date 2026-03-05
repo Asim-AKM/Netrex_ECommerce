@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Domain_Service.Entities.PaymentAndPayout;
-
-namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
+﻿namespace Application_Service.Common.Mappers.PaymentAndPayoutMappers
 {
     /// <summary>
     /// Static mapper class for converting <see cref="InvoiceDto"/> objects

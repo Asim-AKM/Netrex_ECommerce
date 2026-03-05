@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.UsersDto.Accounts;
-using FluentValidation;
-
-namespace Application_Service.DTO_s.Validators.UserMangement
+﻿namespace Application_Service.DTO_s.Validators.UserMangement
 {
     public class UserRegisterDtoValidator : AbstractValidator<CreateUserDto>
     {

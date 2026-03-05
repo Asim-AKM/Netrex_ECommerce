@@ -1,11 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.DTO_s.UsersDto.Accounts;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Application_Service.DI.DIServices
+﻿namespace Application_Service.DI.DIServices
 {
     public static class ModelValidator
     {

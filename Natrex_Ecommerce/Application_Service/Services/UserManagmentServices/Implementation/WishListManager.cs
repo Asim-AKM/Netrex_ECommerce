@@ -1,19 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.UserManagmentMapppers;
-using Application_Service.DTO_s.UserManagmentDto_s.UserSessionDto_s;
-using Application_Service.DTO_s.UserManagmentDto_s.WishList;
-using Application_Service.Services.ProductManagementService.Implementation;
-using Application_Service.Services.ProductManagementService.Interfaces;
-using Application_Service.Services.UserManagmentServices.Interface;
-using Domain_Service.Entities.ProductAndCategoryModule;
-using Domain_Service.Entities.ProductManagmentModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-using Domain_Service.RepoInterfaces.UserManagment;
-using Microsoft.EntityFrameworkCore;
-
-namespace Application_Service.Services.UserManagmentServices.Implementation
+﻿namespace Application_Service.Services.UserManagmentServices.Implementation
 {
     public class WishListManager : IWishListManager
     {

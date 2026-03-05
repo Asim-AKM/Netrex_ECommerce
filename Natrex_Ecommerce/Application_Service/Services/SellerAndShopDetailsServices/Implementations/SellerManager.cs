@@ -1,13 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.SellerAndShopDetailsMapper.SellerDtos;
-using Application_Service.DTO_s.SellerDtos;
-using Application_Service.Services.Interface;
-using Domain_Service.Entities.SellerModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.SellerAndShopDetails;
-
-namespace Application_Service.Services.Implementation
+﻿namespace Application_Service.Services.Implementation
 {
     /// <summary>
     /// Handles business logic for Seller operations such as creation, updating, deletion, and retrieval.

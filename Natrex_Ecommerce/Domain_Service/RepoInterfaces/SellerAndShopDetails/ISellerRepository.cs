@@ -1,8 +1,4 @@
-﻿using Domain_Service.Entities.SellerModule;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Domain_Service.RepoInterfaces.SellerAndShopDetails
+﻿namespace Domain_Service.RepoInterfaces.SellerAndShopDetails
 {
     /// <summary>
     /// Repository interface for accessing and managing <see cref="Seller"/> entities in the database.

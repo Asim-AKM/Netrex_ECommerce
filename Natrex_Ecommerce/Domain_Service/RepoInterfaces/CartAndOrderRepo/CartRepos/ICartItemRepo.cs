@@ -1,6 +1,4 @@
-﻿using Domain_Service.Entities.CartAndOrderModule;
-
-namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
+﻿namespace Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos
 {
     public interface ICartItemRepo
     {

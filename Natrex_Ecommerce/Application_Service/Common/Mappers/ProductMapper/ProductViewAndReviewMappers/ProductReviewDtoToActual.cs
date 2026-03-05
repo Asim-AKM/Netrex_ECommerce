@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.ProductDTOS;
-using Domain_Service.Entities.ProductManagmentModule;
-
-namespace Application_Service.Common.Mappers.ProductMapper.ProductViewAndReviewMappers
+﻿namespace Application_Service.Common.Mappers.ProductMapper.ProductViewAndReviewMappers
 {
     public static class ProductReviewDtoToActual
     {

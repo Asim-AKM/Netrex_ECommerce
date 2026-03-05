@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s.WishList;
-using Domain_Service.Entities.ProductManagmentModule;
-
-namespace Application_Service.Common.Mappers.UserManagmentMapppers
+﻿namespace Application_Service.Common.Mappers.UserManagmentMapppers
 {
     public static class WishListMappers
     {

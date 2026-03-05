@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.ProductAndCategoryModule
+﻿namespace Domain_Service.Entities.ProductAndCategoryModule
 {
     /// <summary>
     /// Represents a product entity in the system.

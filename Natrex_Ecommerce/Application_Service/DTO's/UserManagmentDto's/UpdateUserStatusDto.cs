@@ -1,6 +1,4 @@
-﻿using Domain_Service.Enums;
-
-namespace Application_Service.DTO_s.UserManagmentDto_s
+﻿namespace Application_Service.DTO_s.UserManagmentDto_s
 {
     public record UpdateUserStatusDto(Guid Id, UserStatus Status);
 }
