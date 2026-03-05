@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.ProductManagmentModule
+﻿namespace Domain_Service.Entities.ProductManagmentModule
 {
     public class WishList
     {

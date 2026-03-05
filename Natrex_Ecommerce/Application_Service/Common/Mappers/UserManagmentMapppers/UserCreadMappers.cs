@@ -1,7 +1,4 @@
-﻿using Application_Service.Services.UserManagmentServices.Implementation;
-using Domain_Service.Entities.UserManagmentModule;
-
-namespace Application_Service.Common.Mappers.UserManagmentMapppers
+﻿namespace Application_Service.Common.Mappers.UserManagmentMapppers
 {
     public static class UserCreadMappers
     {

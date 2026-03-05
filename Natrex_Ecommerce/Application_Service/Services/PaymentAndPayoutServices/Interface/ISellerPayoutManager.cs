@@ -1,7 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.DTO_s.PaymentAndPayoutDtos;
-
-namespace Application_Service.Services.PaymentAndPayoutServices.Interface
+﻿namespace Application_Service.Services.PaymentAndPayoutServices.Interface
 {
     /// <summary>
     /// Defines contract for managing seller payout related operations

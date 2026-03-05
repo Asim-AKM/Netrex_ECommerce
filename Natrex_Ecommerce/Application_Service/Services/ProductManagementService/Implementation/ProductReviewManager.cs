@@ -1,9 +1,4 @@
-﻿using Application_Service.Common.Mappers.ProductMapper.ProductViewAndReviewMappers;
-using Application_Service.DTO_s.ProductDTOS;
-using Application_Service.Services.ProductManagementService.Interfaces;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-
-namespace Application_Service.Services.ProductManagementService.Implementation
+﻿namespace Application_Service.Services.ProductManagementService.Implementation
 {
     public class ProductReviewManager : IProductReviewManager
     {

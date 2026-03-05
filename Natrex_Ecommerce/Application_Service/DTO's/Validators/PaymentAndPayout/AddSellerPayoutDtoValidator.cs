@@ -1,8 +1,4 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using FluentValidation;
-using System;
-
-namespace Application_Service.DTO_s.Validators.PaymentAndPayout
+﻿namespace Application_Service.DTO_s.Validators.PaymentAndPayout
 {
     public class AddSellerPayoutDtoValidator : AbstractValidator<AddSellerPayoutDto>
     {

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain_Service.Entities.UserManagmentModule
+﻿namespace Domain_Service.Entities.UserManagmentModule
 {
     /// <summary>
     /// Represents the authentication credentials associated with a user.

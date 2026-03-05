@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.ShopDetailsDtos;
-using Domain_Service.Entities.SellerModule;
-
-namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.ShopDetailsDto
+﻿namespace Application_Service.Common.Mappers.SellerAndShopDetailsMapper.ShopDetailsDto
 {
     public static class CreateShopDetailsMapper
     {

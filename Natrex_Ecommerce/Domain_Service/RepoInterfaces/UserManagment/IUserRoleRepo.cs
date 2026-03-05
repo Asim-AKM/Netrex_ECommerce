@@ -1,7 +1,4 @@
-﻿using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.Enums;
-
-namespace Domain_Service.RepoInterfaces.UserManagment
+﻿namespace Domain_Service.RepoInterfaces.UserManagment
 {
     public  interface IUserRoleRepo
     {

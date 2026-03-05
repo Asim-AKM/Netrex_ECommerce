@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain_Service.Entities.CartAndOrderModule
+﻿namespace Domain_Service.Entities.CartAndOrderModule
 {
     /// <summary>
     /// Represents a shopping cart for a customer.

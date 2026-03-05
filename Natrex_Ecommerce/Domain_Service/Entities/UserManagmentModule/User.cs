@@ -1,6 +1,4 @@
-﻿using Domain_Service.Enums;
-using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Domain_Service.Entities.UserManagmentModule
 {
     /// <summary>

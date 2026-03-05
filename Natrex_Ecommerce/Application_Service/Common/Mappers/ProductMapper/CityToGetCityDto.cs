@@ -1,12 +1,4 @@
-﻿using Application_Service.DTO_s.ProductDTOS;
-using Domain_Service.Entities.LocationModules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application_Service.Common.Mappers.ProductMapper
+﻿namespace Application_Service.Common.Mappers.ProductMapper
 {
     public static class CityToGetCityDto
     {

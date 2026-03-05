@@ -1,12 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.Common.Mappers.PaymentAndPayoutMappers;
-using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Application_Service.Services.PaymentAndPayoutServices.Interface;
-using Domain_Service.Entities.PaymentAndPayout;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.GenericRepo;
-
-namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
+﻿namespace Application_Service.Services.PaymentAndPayoutServices.Implementation
 {
     /// <summary>
     /// Handles payment-related business operations such as

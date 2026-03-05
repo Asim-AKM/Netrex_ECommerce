@@ -1,8 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Application_Service.DTO_s.ShopDetailsDtos;
-
-
-namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
+﻿namespace Application_Service.Services.SellerAndShopDetailsServices.Interfaces
 {
     public interface IShopDetailsManager
     {

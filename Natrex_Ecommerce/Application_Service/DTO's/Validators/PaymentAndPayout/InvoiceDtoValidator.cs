@@ -1,7 +1,4 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using FluentValidation;
-
-namespace Application_Service.DTO_s.Validators.PaymentAndPayout
+﻿namespace Application_Service.DTO_s.Validators.PaymentAndPayout
 {
    internal class InvoiceDtoValidator : AbstractValidator<InvoiceDto>
     {
