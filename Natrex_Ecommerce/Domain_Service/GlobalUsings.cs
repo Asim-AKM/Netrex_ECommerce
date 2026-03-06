@@ -12,4 +12,8 @@ global using Domain_Service.Entities.UserManagmentModule;
 global using Domain_Service.RepoInterfaces.GenericRepo;
 global using Domain_Service.RepoInterfaces.ProductRepo;
 global using Domain_Service.RepoInterfaces.UserManagment;
+global using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
+global using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
+global using Domain_Service.RepoInterfaces.PaymentAndPayout;
+global using Domain_Service.RepoInterfaces.SellerAndShopDetails;
 
