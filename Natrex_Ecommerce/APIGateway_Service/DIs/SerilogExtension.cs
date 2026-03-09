@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace APIGateway_Service.DIs
+﻿namespace APIGateway_Service.DIs
 {
     public static class SerilogExtension
     {

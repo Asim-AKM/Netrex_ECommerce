@@ -1,10 +1,4 @@
-﻿using Domain_Service.Entities.CartAndOrderModule;
-using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
-using Infrastructure_Service.Data;
-using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo
+﻿namespace Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.CartRepo
 {
     public class CartItemRepo: Repository<CartItem>, ICartItemRepo
     {

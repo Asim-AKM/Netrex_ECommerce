@@ -1,12 +1,4 @@
-﻿using Domain_Service.Entities.SellerModule;
-using Domain_Service.RepoInterfaces.SellerAndShopDetails;
-using Infrastructure_Service.Data;
-using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails
+﻿namespace Infrastructure_Service.Persistance.Repositories.SellerAndShopDetails
 {
     /// <summary>
     /// Repository implementation for accessing and managing <see cref="ShopDetail"/> entities in the database.

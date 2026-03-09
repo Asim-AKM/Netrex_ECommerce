@@ -1,10 +1,4 @@
-﻿using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.RepoInterfaces.UserManagment;
-using Infrastructure_Service.Data;
-using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
+﻿namespace Infrastructure_Service.Persistance.Repositories.UserCreadentials
 {
     public class UserCreadentialRepo : Repository<UserCreadential>, IUserCreadentialRepo
     {

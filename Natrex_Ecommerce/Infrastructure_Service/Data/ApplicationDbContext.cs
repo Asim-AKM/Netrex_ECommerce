@@ -1,14 +1,4 @@
-﻿using Domain_Service.Entities.CartAndOrderModule;
-using Domain_Service.Entities.LocationModules;
-using Domain_Service.Entities.PaymentAndPayout;
-using Domain_Service.Entities.ProductAndCategoryModule;
-using Domain_Service.Entities.ProductManagmentModule;
-using Domain_Service.Entities.SellerModule;
-using Domain_Service.Entities.SellerPaymentModule;
-using Domain_Service.Entities.UserManagmentModule;
-using Microsoft.EntityFrameworkCore;
-
-namespace Infrastructure_Service.Data
+﻿namespace Infrastructure_Service.Data
 {
     public class ApplicationDbContext : DbContext
     {

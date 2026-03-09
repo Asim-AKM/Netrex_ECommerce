@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIGateway_Service.Middlewares
+﻿namespace APIGateway_Service.Middlewares
 {
     public class GlobalExceptionHandleMiddleware(RequestDelegate next)
     {

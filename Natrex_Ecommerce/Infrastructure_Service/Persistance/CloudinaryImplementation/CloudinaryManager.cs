@@ -1,11 +1,4 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Domain_Service.RepoInterfaces.Cloudinary;
-using Infrastructure_Service.Persistance.CloudinaryImplementation.Configuration;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-
-namespace Infrastructure_Service.Persistance.CloudinaryImplementation
+﻿namespace Infrastructure_Service.Persistance.CloudinaryImplementation
 {
     public class CloudinaryManager : ICloudinaryManager
     {

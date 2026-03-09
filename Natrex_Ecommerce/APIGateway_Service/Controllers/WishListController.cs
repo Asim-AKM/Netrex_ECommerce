@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s.UserSessionDto_s;
-using Application_Service.DTO_s.UserManagmentDto_s.WishList;
-using Application_Service.Services.UserManagmentServices.Interface;
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,13 +1,4 @@
-﻿using APIGateway_Service.Middlewares;
-using Asp.Versioning.ApiExplorer;
-using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace  APIGateway_Service.DIs
+﻿namespace  APIGateway_Service.DIs
 {
     public static class MiddlewareExtention
     {

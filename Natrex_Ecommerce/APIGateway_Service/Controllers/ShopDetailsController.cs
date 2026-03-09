@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.ShopDetailsDtos;
-using Application_Service.Services.SellerAndShopDetailsServices.Interfaces;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     /// <summary>
     /// Handles all ShopDetails-related API operations such as creation, updating, deletion, and fetching shop detail records.

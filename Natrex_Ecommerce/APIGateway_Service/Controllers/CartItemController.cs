@@ -1,10 +1,4 @@
-﻿using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
-using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]

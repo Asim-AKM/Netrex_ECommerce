@@ -1,10 +1,4 @@
-﻿using Application_Service.Common.APIResponses;
-using Asp.Versioning;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.Cloudinary;
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]

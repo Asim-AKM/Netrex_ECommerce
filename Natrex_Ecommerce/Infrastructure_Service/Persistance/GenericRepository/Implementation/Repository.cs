@@ -1,9 +1,4 @@
-﻿using Domain_Service.RepoInterfaces.GenericRepo;
-using Infrastructure_Service.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-
-namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
+﻿namespace Infrastructure_Service.Persistance.GenericRepository.Implementation
 {
     public class Repository<T> : IRepository<T> where T : class
     {
