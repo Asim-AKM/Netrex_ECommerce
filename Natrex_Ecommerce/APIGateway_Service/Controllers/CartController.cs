@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.CartAndOrderDtos.CartDtos;
-using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-
-[ApiVersion("1.0")]
+﻿[ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]

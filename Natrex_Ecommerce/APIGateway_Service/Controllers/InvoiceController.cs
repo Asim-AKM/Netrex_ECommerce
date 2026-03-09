@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Application_Service.Services.PaymentAndPayoutServices.Interface;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     /// <summary>
     /// API Controller for managing invoice-related endpoints.

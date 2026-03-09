@@ -1,9 +1,4 @@
-﻿using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.Enums;
-using Domain_Service.RepoInterfaces.UserManagment;
-using Infrastructure_Service.Data;
-using Infrastructure_Service.Persistance.GenericRepository.Implementation;
-using Microsoft.EntityFrameworkCore;
+﻿using Domain_Service.Enums;
 
 namespace Infrastructure_Service.Persistance.Repositories.UserRoles
 {

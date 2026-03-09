@@ -1,17 +1,4 @@
-﻿using Domain_Service.Entities.LocationModules;
-using Domain_Service.Entities.ProductManagmentModule;
-using Domain_Service.Entities.UserManagmentModule;
-using Domain_Service.RepoInterfaces.CartAndOrderRepo.CartRepos;
-using Domain_Service.RepoInterfaces.CartAndOrderRepo.OrderRepos;
-using Domain_Service.RepoInterfaces.GenericRepo;
-using Domain_Service.RepoInterfaces.PaymentAndPayout;
-using Domain_Service.RepoInterfaces.ProductRepo;
-using Domain_Service.RepoInterfaces.SellerAndShopDetails;
-using Domain_Service.RepoInterfaces.UnitOfWork;
-using Domain_Service.RepoInterfaces.UserManagment;
-using Infrastructure_Service.Data;
-
-namespace Infrastructure_Service.Persistance.UnitOfWork
+﻿namespace Infrastructure_Service.Persistance.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

@@ -1,10 +1,4 @@
-﻿using Application_Service.DTO_s.ProductDTOS;
-using Application_Service.Services.ProductManagementService.Interfaces;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     /// <summary>
     /// Handles all product-related API endpoints such as 

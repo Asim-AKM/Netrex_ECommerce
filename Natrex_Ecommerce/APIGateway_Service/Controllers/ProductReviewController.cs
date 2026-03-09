@@ -1,9 +1,4 @@
-﻿using Application_Service.DTO_s.ProductDTOS;
-using Application_Service.Services.ProductManagementService.Interfaces;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIGateway_Service.Controllers
+﻿namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
