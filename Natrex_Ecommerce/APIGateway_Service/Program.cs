@@ -1,8 +1,8 @@
 using APIGateway_Service.DIs;
+using APIGateway_Service.Middlewares;
 using Application_Service.DI.DIServices;
 using Infrastructure_Service.DI.Repositories_DI;
 using Serilog;
-using System.Reflection;
 
 namespace APIGateway_Service
 {
@@ -10,44 +10,52 @@ namespace APIGateway_Service
     {
         public static void Main(string[] args)
         {
-
-            // Application Service DI Configurations
-
-
             var builder = WebApplication.CreateBuilder(args);
 
+      
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowNetrexUI", policy =>
                 {
-                    policy
-                        .WithOrigins("https://localhost:7169")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    policy.WithOrigins("https://localhost:7169")  
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                 });
             });
 
-
-            // Add services to the container.
             builder.Services.AddAppModelValidations();
             builder.Services.AddControllers();
 
-            // Application Service DI Configurations
-            builder.Services.ApplicationServiceDIConfigrations(builder.Configuration);
-
-            // Infrastructure Service DI Configurations 
+          
+            builder.Services.ApplicationServiceDIConfigrations(builder.Configuration);           
             builder.Services.InfrastructureDIConfig(builder.Configuration);
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddJwtValidation(builder.Configuration);
+           
             builder.Services.AddApiVersioningConfiguration();
             builder.Services.AddSwaggerConfiguration();
+
+            builder.Services.AddRateLimiter(RateLimitingMiddleware.GetGlobalRateLimiter());
             builder.Host.AddSerilog(builder.Configuration);
+
             var app = builder.Build();
+            app.UseRateLimiter();
+            app.UseCors("AllowNetrexUI");
+
+           
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
 
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.MyMiddleware();
+            app.MapControllers();
 
             try
             {

@@ -2,7 +2,7 @@
 {
         public interface IOrderManager
         {
-            Task<ApiResponse<GetOrderDto>> CreateOrderAsync(AddOrderDto orderDto);
+            Task<ApiResponse<GetOrderDto>> CreateOrderAsync(Guid customerId, PaymentDetailDto paymentDetail);
             Task<ApiResponse<IEnumerable<GetOrderDto>>> GetOrdersByCustomerIdAsync(Guid customerId);
             Task<ApiResponse<GetOrderDto>> GetOrderByIdAsync(Guid orderId);
             Task<ApiResponse<bool>> CancelOrderAsync(Guid orderId);
