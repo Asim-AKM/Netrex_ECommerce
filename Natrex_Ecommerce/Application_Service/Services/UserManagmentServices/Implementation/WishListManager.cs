@@ -8,7 +8,7 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ApiResponse<string>> AddWishListItem(AddWishListItemDto request)
+        public async Task<ApiResponse<Guid>> AddWishListItem(AddWishListItemDto request)
         {
             try
             {
@@ -23,22 +23,23 @@
                         .FirstOrDefaultAsync();
 
                     if (existing != null)
-                        return ApiResponse<string>.Fail("Item Already Exists");
-
-                    await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(wishList.WishListId));
+                        return ApiResponse<Guid>.Fail("Item Already Exists");
+                    var wishlistItem = request.ToWishListItem(wishList.WishListId);
+                    await _unitOfWork.WishListItemRepo.Create(wishlistItem);
                     await _unitOfWork.SaveChangesAsync();
-                    return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
+                    return ApiResponse<Guid>.Success(wishlistItem.WishListItemId, "Item added to wish list successfully");
                 }
 
                 var newWishList = request.ToWishList();
                 await _unitOfWork.WishLists.Create(newWishList);
-                await _unitOfWork.WishListItemRepo.Create(request.ToWishListItem(newWishList.WishListId));
+                var newWishListItem = request.ToWishListItem(newWishList.WishListId);
+                await _unitOfWork.WishListItemRepo.Create(newWishListItem);
                 await _unitOfWork.SaveChangesAsync();
-                return ApiResponse<string>.Success(default!, "Item added to wish list successfully");
+                return ApiResponse<Guid>.Success(newWishListItem.WishListItemId, "Item added to wish list successfully");
             }
             catch (Exception ex)
             {
-                return ApiResponse<string>.Fail(ex.Message, ResponseType.InternalServerError);
+                return ApiResponse<Guid>.Fail(ex.Message, ResponseType.InternalServerError);
             }
         }
 
