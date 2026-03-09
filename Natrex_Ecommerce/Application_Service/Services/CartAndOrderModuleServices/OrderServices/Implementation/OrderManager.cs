@@ -2,33 +2,39 @@
 
 namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.Implementation
 {
-    public class OrderManager(IUnitOfWork _unitOfWork) : IOrderManager
+    public class OrderManager(IUnitOfWork _unitOfWork,IPaymentManager _paymentManager) : IOrderManager
     {
-        public async Task<ApiResponse<GetOrderDto>> CreateOrderAsync(AddOrderDto orderDto)
+        public async Task<ApiResponse<GetOrderDto>> CreateOrderAsync(Guid customerId,PaymentDetailDto paymentDetail)
         {
-            var cart = await _unitOfWork.CartRepo.FirstOrDefaultAsync(c => c.CustomerId == orderDto.CustomerId);
+            var cart = await _unitOfWork.CartRepo.FirstOrDefaultAsync(c => c.CustomerId == customerId);
             if (cart == null)
                 return ApiResponse<GetOrderDto>.Fail("Cart Cannot Found", ResponseType.NotFound);
 
             var cartItems = await _unitOfWork.CartItemRepo.GetCartItemsByCartId(cart.CartId);
             if (!cartItems.Any())
                 return ApiResponse<GetOrderDto>.Fail("Cart is Empty", ResponseType.NotFound);
-
-            var order = orderDto.Map();
             var productList = new List<(Product product, int quantity)>();
-
-            foreach (var items in cartItems)
+            double totalAmount = 0;
+            foreach (var item in cartItems)
             {
-                var product = await _unitOfWork.ProductRepo.GetById(items.ProductId);
-                if (product == null)
-                    return ApiResponse<GetOrderDto>.Fail("Product not found", ResponseType.NotFound);
-                if (product.StockQuantity < items.Quantity)
-                    return ApiResponse<GetOrderDto>.Fail($"Product {product.ProductName} is out of stock", ResponseType.BadRequest);
+                var product = await _unitOfWork.ProductRepo.GetById(item.ProductId);
+                if (product.StockQuantity < item.Quantity)
+                    return ApiResponse<GetOrderDto>.Fail($"Product {product.ProductName} out of stock", ResponseType.BadRequest);
+                totalAmount += item.Quantity * product.Price;
+                productList.Add((product, item.Quantity));
 
-                order.TotalAmount += items.Quantity * product.Price;
-                productList.Add((product, items.Quantity));
+            }
+            string paymentId;
+            try
+            {
+                paymentId = await _paymentManager.AuthorizePaymentAsync(paymentDetail);
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<GetOrderDto>.Fail($"Payment authorization failed: {ex.Message}", ResponseType.BadRequest);
             }
 
+            var order = customerId.Map(totalAmount);
             try
             {
                 await _unitOfWork.ExecuteInTransactionAsync(async () =>
@@ -37,6 +43,7 @@ namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.
 
                     foreach (var items in productList)
                     {
+                        items.product.StockQuantity -= items.quantity;
                         var orderItem = new OrderItem
                         {
                             OrderItemId = Guid.NewGuid(),
@@ -48,17 +55,42 @@ namespace Application_Service.Services.CartAndOrderModuleServices.OrderServices.
                         };
                         await _unitOfWork.OrderItemRepo.Create(orderItem);
                     }
-
-                    foreach (var items in cartItems)
-                        await _unitOfWork.CartItemRepo.Delete(items.CartItemId);
                 });
-
-                return ApiResponse<GetOrderDto>.Success(order.Map(), "Order created successfully", ResponseType.Ok);
             }
             catch (Exception ex)
-            {
-                return ApiResponse<GetOrderDto>.Fail($"Failed to create order: {ex.Message}", ResponseType.InternalServerError);
+            {            // If transaction fails, void payment
+                await _paymentManager.VoidPaymentAsync(paymentId);
+                return ApiResponse<GetOrderDto>.Fail($"Order creation failed: {ex.Message}", ResponseType.InternalServerError);
             }
+            bool captureSuccess;
+            try
+            {
+                captureSuccess = await _paymentManager.CapturePaymentAsync(paymentId);
+            }
+            catch 
+            {
+                captureSuccess = false;
+            }
+            if (!captureSuccess)
+            {
+                await _paymentManager.VoidPaymentAsync(paymentId);
+
+                await _unitOfWork.ExecuteInTransactionAsync(async () =>
+                {
+                    foreach (var (product, qty) in productList)
+                      product.StockQuantity += qty;
+                    await _unitOfWork.OrderItemRepo.DeleteByOrderId(order.OrderId);
+                    await _unitOfWork.OrderRepo.Delete(order.OrderId);
+                });
+                return ApiResponse<GetOrderDto>.Fail("Payment capture failed. Order cancelled.", ResponseType.BadRequest);
+            }
+            foreach (var item in cartItems)
+                await _unitOfWork.CartItemRepo.Delete(item.CartItemId);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return ApiResponse<GetOrderDto>.Success(order.Map(), "Order processed and payment captured successfully", ResponseType.Ok);
+        
         }
         public async Task<ApiResponse<bool>> CancelOrderAsync(Guid orderId)
         {
