@@ -16,11 +16,18 @@ namespace APIGateway_Service.Controllers
         {
             _userSessionManager = userSessionManager;
         }
-       
+
         [HttpGet("GetRefreshJwtToken")]
         public async Task<IActionResult> RefreshToken(string refreshToken)
         {
             var response = _userSessionManager.RefreshJwtToken(refreshToken);
+            return StatusCode((int)response.Status, response);
+        }
+
+        [HttpGet("GetRefreshJwt")]
+        public async Task<IActionResult> RefreshJwt(Guid userId)
+        {
+            var response = await _userSessionManager.RefreshJwt(userId);
             return StatusCode((int)response.Status, response);
         }
 
