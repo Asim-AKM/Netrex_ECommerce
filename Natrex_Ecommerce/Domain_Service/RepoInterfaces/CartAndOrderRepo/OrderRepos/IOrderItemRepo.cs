@@ -3,5 +3,6 @@
     public interface IOrderItemRepo : IRepository<OrderItem>
     {
         Task<IEnumerable<OrderItem>> GetOrderItemsByOrderIdAsync(Guid orderId);
+        Task DeleteByOrderId(Guid orderId);
     }
 }

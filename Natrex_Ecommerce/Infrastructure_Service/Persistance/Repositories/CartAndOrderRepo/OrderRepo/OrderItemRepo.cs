@@ -14,7 +14,15 @@ namespace Infrastructure_Service.Persistance.Repositories.CartAndOrderRepo.Order
         {
             _context = context;
         }
-    
+
+        public async Task DeleteByOrderId(Guid orderId)
+        {
+            var items = await _context.OrderItems
+                              .Where(oi => oi.OrderId == orderId)
+                              .ToListAsync();
+            _context.OrderItems.RemoveRange(items);
+        }
+
         public async Task<IEnumerable<OrderItem>> GetOrderItemsByOrderIdAsync(Guid orderId)
         {
             return await _context.OrderItems.Where(oi=> oi.OrderId == orderId).ToListAsync();

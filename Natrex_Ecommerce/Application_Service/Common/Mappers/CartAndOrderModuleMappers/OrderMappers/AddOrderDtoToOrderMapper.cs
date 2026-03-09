@@ -2,15 +2,15 @@
 {
     public static class AddOrderDtoToOrderMapper
     {
-        public static Order Map(this AddOrderDto addOrderDto)
+        public static Order Map(this Guid customerId,double totalAmount)
         {
             return new Order
             {
                 OrderId = Guid.NewGuid(),
-                CustomerId = addOrderDto.CustomerId,
+                CustomerId = customerId,
                 OrderStatus = false,
                 PaymentStatus = false,
-                TotalAmount= 0,
+                TotalAmount= totalAmount,
                 CreatedAt = DateTime.UtcNow
             };
         }

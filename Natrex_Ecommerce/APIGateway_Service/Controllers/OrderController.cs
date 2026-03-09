@@ -1,7 +1,9 @@
 ﻿using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
+using Application_Service.DTO_s.PaymentAndPayoutDtos;
 using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace APIGateway_Service.Controllers
 {
@@ -17,9 +19,14 @@ namespace APIGateway_Service.Controllers
     {
         [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)] // special case
-        public async Task<IActionResult> Create([FromBody] AddOrderDto request)
+        public async Task<IActionResult> Create([FromBody] PaymentDetailDto paymentDetailDto)
         {
-            var response = await orderService.CreateOrderAsync(request);
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(UserId))
+            {
+                return Unauthorized();
+            }
+            var response = await orderService.CreateOrderAsync(Guid.Parse(UserId),paymentDetailDto);
             return StatusCode((int)response.Status, response);
         }
 
