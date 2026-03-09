@@ -19,7 +19,7 @@ namespace APIGateway_Service.Controllers
     {
         [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)] // special case
-        public async Task<IActionResult> Create([FromBody] AddOrderDto request,PaymentDetailDto paymentDetailDto)
+        public async Task<IActionResult> Create([FromBody] PaymentDetailDto paymentDetailDto)
         {
             var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(UserId))
