@@ -24,6 +24,7 @@
                             .AddScoped<IProductRankingManager, ProductRankingManager>()
                             .AddScoped<IProductViewManager, ProductViewManager>()
                             .AddScoped<IProductRankingManager, ProductRankingManager>()
-                            .AddScoped<IWishListManager, WishListManager>();
-    }                       
+                            .AddScoped<IWishListManager, WishListManager>()
+                            .AddScoped<IPaymentManager, PaymentManager>();                          
+    }
 }
