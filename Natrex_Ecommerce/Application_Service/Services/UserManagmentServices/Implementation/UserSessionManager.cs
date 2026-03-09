@@ -12,7 +12,21 @@
             _jwtManager = jwtManager;
             _unitOfWork = unitOfWork;
         }
+
         #endregion
+
+        public async Task<ApiResponse<string>> RefreshJwt(Guid userId)
+        {
+            var user = await _unitOfWork.UserRepo.GetById(userId);
+            if (user == null)
+                return ApiResponse<string>.Fail("User not found", ResponseType.NotFound);
+
+            // Generate new JWT token
+            var userRoles = await _unitOfWork.UserRoleRepo.GetUserRoles(userId);
+            var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles);
+
+            return ApiResponse<string>.Success(jwtToken, "Jwt token refreshed successfully", ResponseType.Ok);
+        }
 
         public async Task<ApiResponse<string>> RefreshJwtToken(string refreshToken)
         {
@@ -37,5 +51,6 @@
                 return ApiResponse<string>.Fail("An error occurred during refreshing the JwtToken", ResponseType.InternalServerError);
             }
         }
+
     }
 }
