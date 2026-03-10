@@ -1,5 +1,4 @@
-﻿using Application_Service.DTO_s.UserManagmentDto_s.UserSessionDto_s;
-using Application_Service.DTO_s.UserManagmentDto_s.WishList;
+﻿using Application_Service.DTO_s.UserManagmentDto_s.WishList;
 using Application_Service.Services.UserManagmentServices.Interface;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;

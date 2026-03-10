@@ -28,6 +28,22 @@
             };
         }
 
+        public static Customer MapToCustomer(this CreateUserDto dto, Guid userId)
+        {
+            return new Customer
+            {
+                CustomerId = new Guid(),
+                UserId = userId,
+                City = string.Empty,
+                Province = string.Empty,
+                Country = string.Empty,
+                Address = string.Empty,
+                CloudPublicId = string.Empty,
+                ImageUrl = string.Empty,
+            };
+
+        }
+
 
     }
 }

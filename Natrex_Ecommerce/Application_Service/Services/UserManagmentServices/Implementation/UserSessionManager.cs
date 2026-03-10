@@ -23,7 +23,8 @@
 
             // Generate new JWT token
             var userRoles = await _unitOfWork.UserRoleRepo.GetUserRoles(userId);
-            var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles);
+            var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == user.UserId);
+            var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles, customer!.ImageUrl ?? string.Empty);
 
             return ApiResponse<string>.Success(jwtToken, "Jwt token refreshed successfully", ResponseType.Ok);
         }
@@ -42,7 +43,8 @@
                 // Generate new JWT token
                 var user = await _unitOfWork.UserRepo.GetById(userSession.UserId);
                 var userRoles = await _unitOfWork.UserRoleRepo.GetUserRoles(userSession.UserId);
-                var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles);
+                var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == user.UserId);
+                var jwtToken = await _jwtManager.GenerateJwtToken(user, userRoles, customer!.ImageUrl ?? string.Empty);
 
                 return ApiResponse<string>.Success(jwtToken, "Jwt token refreshed successfully", ResponseType.Ok);
             }
