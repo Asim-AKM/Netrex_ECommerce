@@ -7,6 +7,7 @@
         string  ProductName,
         string Description,
         double Price,
+        string ImageUrl,
         int Quantity
     );
 }

@@ -3,7 +3,6 @@ global using Application_Service.DTO_s.UsersDto.Accounts;
 global using Application_Service.Services.UserManagmentServices.Interface;
 global using Asp.Versioning;
 global using Microsoft.AspNetCore.Mvc;
-global using Application_Service.DTO_s.CartAndOrderDtos.CartDtos;
 global using Application_Service.Services.CartAndOrderModuleServices.CartServices.Interface;
 global using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
 global using System.Security.Claims;

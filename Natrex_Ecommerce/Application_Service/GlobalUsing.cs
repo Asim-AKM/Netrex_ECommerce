@@ -2,7 +2,6 @@
 global using Application_Service.DTO_s.CartAndOrderDtos.CartItemDtos;
 global using Domain_Service.Entities.CartAndOrderModule;
 global using Domain_Service.Entities.ProductAndCategoryModule;
-global using Application_Service.DTO_s.CartAndOrderDtos.CartDtos;
 global using Application_Service.DTO_s.CartAndOrderDtos.OrderItemDtos;
 global using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
 global using Application_Service.DTO_s.UserManagmentDto_s;
@@ -46,7 +45,6 @@ global using System.Security.Claims;
 global using System.Text;
 global using Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartItemMappers;
 global using Domain_Service.RepoInterfaces.UnitOfWork;
-global using Application_Service.Common.Mappers.CartAndOrderModuleMappers.CartMappers;
 global using Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderItemMappers;
 global using Application_Service.Common.Mappers.CartAndOrderModuleMappers.OrderMappers;
 global using Application_Service.Common.Mappers.PaymentAndPayoutMappers;

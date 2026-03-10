@@ -4,7 +4,7 @@
     {
         public static GetCartItemDto Map(this CartItem cartItem,Product product,string image)
         {
-            return new GetCartItemDto(cartItem.CartItemId,product.ProductName,product.ProductDescription,product.Price,cartItem.Quantity);
+            return new GetCartItemDto(cartItem.CartItemId,product.ProductName,product.ProductDescription,product.Price,image,cartItem.Quantity);
         }
     }
 }
