@@ -19,24 +19,24 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCartItem([FromBody] AddCartItemDto dto)
         {
-            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(UserId))
-            {
-                return Unauthorized();
-            }
-            var response = await _manager.CreateAsync(dto,Guid.Parse(UserId));
+            //var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //if (string.IsNullOrEmpty(UserId))
+            //{
+            //    return Unauthorized();
+            //}
+            var response = await _manager.CreateAsync(dto,Guid.Parse("da5cf415-5301-441f-ab18-e14a81734e73"));
             return StatusCode((int)response.Status, response);
         }
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllCartItems()
         {
-            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(UserId))
-            {
-                return Unauthorized();
-            }
-            var response = await _manager.GetAllAsync(Guid.Parse(UserId));
+            //var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //if (string.IsNullOrEmpty(UserId))
+            //{
+            //    return Unauthorized();
+            //}
+            var response = await _manager.GetAllAsync(Guid.Parse("da5cf415-5301-441f-ab18-e14a81734e73"));
             return StatusCode((int)response.Status, response);
         }
         [HttpPut("IncreaseQuantity/{cartItemId}")]

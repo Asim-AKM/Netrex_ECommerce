@@ -15,7 +15,11 @@
                 };
                 await unitOfWork.CartRepo.Create(cart);
             }
-
+            var proudct= await unitOfWork.ProductRepo.GetById(cartItemDto.ProductId);
+            if(proudct == null)
+                return ApiResponse<bool>.Fail("Product not found", ResponseType.NotFound);
+            if (proudct.StockQuantity <= 0)
+                return ApiResponse<bool>.Fail("Product is out of stock", ResponseType.BadRequest);
             var cartItem = await  unitOfWork.CartItemRepo.GetCartItem(cart.CartId, cartItemDto.ProductId);
             if(cartItem != null)
             {
