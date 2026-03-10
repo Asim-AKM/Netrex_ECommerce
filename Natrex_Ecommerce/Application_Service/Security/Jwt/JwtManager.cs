@@ -1,4 +1,6 @@
-﻿namespace Application_Service.Security.Jwt
+﻿using Application_Service.Common.CommonClasses;
+
+namespace Application_Service.Security.Jwt
 {
     internal class JwtManager : IJwtManager
     {
@@ -7,13 +9,14 @@
         {
             _jwtSettings = jwtSettings.Value;
         }
-        public async Task<string> GenerateJwtToken(User user, List<RoleType> roles)
+        public async Task<string> GenerateJwtToken(User user, List<RoleType> roles, string userProfileImageUrl)
         {
             var claimsList = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimKey.ProfileImageUrl,userProfileImageUrl)
             };
             foreach (var role in roles)
             {

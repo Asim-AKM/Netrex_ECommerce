@@ -54,7 +54,7 @@
 
         public async Task<ApiResponse<string>> UpdateCustomer(UpdateCustomerDto updateCustomer)
         {
-            var domain = await _unitOfWork.CustomerRepo.GetById(updateCustomer.UserId);
+            var domain = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == updateCustomer.UserId);
             if (domain == null)
                 return ApiResponse<string>.Fail("Customer Not Found ", ResponseType.NotFound);
 

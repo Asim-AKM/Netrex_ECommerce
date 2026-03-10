@@ -2,6 +2,6 @@
 {
     public interface IJwtManager
     {
-        Task<string> GenerateJwtToken(User user, List<RoleType> role);
+        Task<string> GenerateJwtToken(User user, List<RoleType> role, string userProfileImageUrl);
     }
 }

@@ -83,6 +83,7 @@
                     await _unitOfWork.UserRepo.Create(user);
                     await _unitOfWork.UserCreadRepo.Create(cread);
                     await _unitOfWork.UserRoleRepo.Create(user.AssingRole());
+                    await _unitOfWork.CustomerRepo.Create(request.MapToCustomer(user.UserId));
                 });
             }
             catch (Exception ex)
@@ -245,7 +246,8 @@
             }
 
             var userRole = await _unitOfWork.UserRoleRepo.GetUserRoles(userExistance.UserId);
-            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole);
+            var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == userExistance.UserId);
+            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, customer!.ImageUrl ?? string.Empty);
 
             // Generate a secure random refresh token
             var randomBytes = RandomNumberGenerator.GetBytes(64);
@@ -436,11 +438,12 @@
             }
 
             var userRole = await _unitOfWork.UserRoleRepo.GetUserRoles(userExistance.UserId);
-            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole);
+            var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == userExistance.UserId);
+            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, customer!.ImageUrl ?? string.Empty);
 
-                _logger.LogInformation("SignIn successful for UserId: {UserId}", userExistance.FullName);
+            _logger.LogInformation("SignIn successful for UserId: {UserId}", userExistance.FullName);
             return ApiResponse<string>.Success(jwtToken, "SignIn successful");
-            }
+        }
 
         #endregion 
     }
