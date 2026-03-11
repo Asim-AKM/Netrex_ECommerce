@@ -1,13 +1,17 @@
-﻿namespace Application_Service.Services.ProductManagementService.Implementation
+﻿using Domain_Service.RepoInterfaces.ProductRepo;
+
+namespace Application_Service.Services.ProductManagementService.Implementation
 {
     public class ProductManager : IProductManager
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloudinaryManager _cloudinaryManager;
-        public ProductManager(IUnitOfWork unitOfWork,ICloudinaryManager cloudinaryManager)
+        private readonly IProductRepo _productRepo;
+        public ProductManager(IUnitOfWork unitOfWork,ICloudinaryManager cloudinaryManager, IProductRepo productRepo)
         {
             _unitOfWork = unitOfWork;
             _cloudinaryManager = cloudinaryManager;
+            _productRepo = productRepo;
         }
         public async Task<ApiResponse<AddProductDto>> AddProduct(AddProductDto productDto)
         {
@@ -47,9 +51,9 @@
         }
 
        
-        public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts()
+        public async Task<ApiResponse<List<GetProductDto>>> GetAllProducts(Guid SellerId)
         {
-            var products = await _unitOfWork.ProductRepo.GetAll();
+            var products = await _productRepo.GetAllProducts(SellerId);
             if (products == null || !products.Any())
                 return ApiResponse<List<GetProductDto>>.Fail("No products found", ResponseType.NotFound);
 

@@ -1,4 +1,6 @@
-﻿namespace APIGateway_Service.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace APIGateway_Service.Controllers
 {
     /// <summary>
     /// Handles all product-related API endpoints such as 
@@ -14,17 +16,20 @@
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    //[Authorize(Roles = "Admin,Seller")]
     public class ProductController : ControllerBase
     {
         private readonly IProductManager _productManager;
+        private readonly ILogger<ProductController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductController"/> class.
         /// </summary>
         /// <param name="productmanager">The service responsible for product operations.</param>
-        public ProductController(IProductManager productmanager)
+        public ProductController(IProductManager productmanager, ILogger<ProductController> logger)
         {
             _productManager = productmanager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -92,13 +97,47 @@
             var response = await _productManager.GetByProductId(GetByproductId);
             return StatusCode((int)response.Status, response);
         }
-        [HttpGet("GetAllProducts")]
+        [HttpGet("GetAllProducts/{SellerId:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromRoute] Guid SellerId)
         {
-           var response= await _productManager.GetAllProducts();
+            var response = await _productManager.GetAllProducts(SellerId);
             return StatusCode((int)response.Status, response);
+
+            //var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //if (!Guid.TryParse(userIdClaim, out var currentUserId))
+            //{
+            //    return StatusCode(StatusCodes.Status401Unauthorized, new ApiResponse<List<GetProductDto>>()
+            //    {
+            //        IsSuccess = false,
+            //        Message = "Invalid user token",
+            //        Status = ResponseType.Unauthorized
+            //    });
+            //}
+
+            //if (User.IsInRole("Admin"))
+            //{
+            //    var response = await _productManager.GetAllProducts(SellerId);
+            //    return StatusCode((int)response.Status, response);
+            //}
+
+            //if (currentUserId == SellerId)
+            //{
+            //    var response = await _productManager.GetAllProducts(SellerId);
+            //    return StatusCode((int)response.Status, response);
+            //}
+
+            //_logger.LogWarning("User {UserId} tried to access products of seller {TargetSellerId}",
+            //    currentUserId, SellerId);
+
+            //return StatusCode(StatusCodes.Status403Forbidden, new ApiResponse<List<GetProductDto>>()
+            //{
+            //    IsSuccess = false,
+            //    Message = "You are not authorized to access this resource.",
+            //    Status = ResponseType.Forbidden
+            //});
         }
         [HttpGet("GetAllProvinces")]
         [ProducesResponseType(StatusCodes.Status200OK)]

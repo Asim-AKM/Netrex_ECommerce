@@ -7,7 +7,7 @@
         
         Task<ApiResponse<bool>> DeleteProduct(Guid productId);
         Task<ApiResponse<GetProductDto>> GetByProductId(Guid productId);
-        Task<ApiResponse<List<GetProductDto>>> GetAllProducts();
+        Task<ApiResponse<List<GetProductDto>>> GetAllProducts(Guid SellerId);
         Task<ApiResponse<List<GetProvinceDto>>> GetAllProvinces();
         Task<ApiResponse<List<GetCityDto>>> GetCitiesByProvinceId(Guid Id);
         Task<ApiResponse<List<ProductCategoryDto>>> GetCategoriesAsync();

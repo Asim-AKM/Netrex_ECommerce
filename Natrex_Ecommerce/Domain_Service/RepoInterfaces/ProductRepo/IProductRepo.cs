@@ -5,6 +5,7 @@
         Task<List<City>> GetCitiesByProvinceId(Guid Id);
 
         IQueryable<Product> QueryProducts();
+        Task <List<Product>> GetAllProducts(Guid SellerId);
 
     }
 }
