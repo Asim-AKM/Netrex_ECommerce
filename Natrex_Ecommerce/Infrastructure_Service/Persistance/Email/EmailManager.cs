@@ -4,8 +4,8 @@
     {
         private static readonly string _smtpServer = "smtp.gmail.com";
         private static readonly int _port = 587;
-        private static readonly string _fromEmail = "mfayaz21703@gmail.com";
-        private static readonly string _password = "ewhx lykc wycz mdmr"; 
+        private static readonly string _fromEmail = "netrexecommerce@gmail.com";
+        private static readonly string _password = "uyrh nuap pnwh gjpd"; 
         private static readonly string _fromName = "Netrex Ecommerce";
 
         public async Task<bool> SendRegistrationOtpEmail(string toEmail, string userName, string otp)
