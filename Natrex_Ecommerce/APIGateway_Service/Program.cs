@@ -40,9 +40,9 @@ namespace APIGateway_Service
             builder.Host.AddSerilog(builder.Configuration);
 
             var app = builder.Build();
+            app.ApplyMigrations();
             app.UseRateLimiter();
             app.UseCors("AllowNetrexUI");
-
            
             if (app.Environment.IsDevelopment())
             {
