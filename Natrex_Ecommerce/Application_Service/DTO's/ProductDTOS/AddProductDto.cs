@@ -2,6 +2,7 @@
 {
     public class AddProductDto
     {
+        public Guid SellerId { get; set; }
         public string ProductName { get; set; } = string.Empty;
         public string ProductDescription { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;

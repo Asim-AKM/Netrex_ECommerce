@@ -9,7 +9,7 @@
             return new Product
             {
                 ProductId = Guid.NewGuid(),
-                SellerId = Guid.NewGuid(),
+                SellerId = productDto.SellerId,
                 ProductCategoryId = categoryId,
                 ProductName = productDto.ProductName,
                 ProductDescription = productDto.ProductDescription,
