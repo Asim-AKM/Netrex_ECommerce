@@ -25,7 +25,10 @@
                 seller.ShopId,
                 seller.StoreName,
                 seller.StoreDescription,
-                seller.Address
+                seller.Address,
+                seller.Status,
+                seller.CreatedAt,   
+                seller.UpdatedAt
             );
         }
     }

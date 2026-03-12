@@ -26,6 +26,8 @@
                 StoreName = updateSellerDto.StoreName,
                 StoreDescription = updateSellerDto.StoreDescription,
                 Address = updateSellerDto.Address,
+                Status= updateSellerDto.Status,
+                UpdatedAt = DateTime.UtcNow
             };
         }
 
@@ -49,7 +51,9 @@
                 seller.ShopId,
                 seller.StoreName,
                 seller.StoreDescription,
-                seller.Address
+                seller.Address,
+                seller.Status,
+                seller.UpdatedAt ?? DateTime.UtcNow
             );
         }
     }

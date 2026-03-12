@@ -16,6 +16,9 @@
         Guid ShopId,
         string StoreName,
         string StoreDescription,
-        string Address
+        string Address,
+        SellerStatus Status,
+        DateTime CreatedAt,
+        DateTime? UpdatedAt 
     );
 }

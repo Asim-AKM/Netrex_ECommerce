@@ -27,6 +27,8 @@
                 StoreName = createSellerDto.StoreName,
                 StoreDescription = createSellerDto.StoreDescription,
                 Address = createSellerDto.Address,
+                Status = SellerStatus.Pending,
+                CreatedAt= DateTime.UtcNow
             };
         }
     }
