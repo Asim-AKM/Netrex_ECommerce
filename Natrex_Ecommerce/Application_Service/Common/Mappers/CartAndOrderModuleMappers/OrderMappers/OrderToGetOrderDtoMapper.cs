@@ -6,9 +6,9 @@
         {
             return new GetOrderDto(
                 order.OrderId,
-                order.CustomerId,
+ 
                 order.OrderStatus,
-                order.PaymentStatus,
+ 
                 order.TotalAmount,
                 order.CreatedAt
             );

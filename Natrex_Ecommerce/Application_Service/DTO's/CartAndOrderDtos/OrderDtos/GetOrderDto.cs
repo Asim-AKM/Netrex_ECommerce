@@ -7,24 +7,13 @@
         /// System-generated and used to uniquely identify the order in the system.
         /// </summary>
         Guid OrderId,
-
-        /// <summary>
-        /// The unique identifier of the Customer who placed the order.
-        /// </summary>
-        Guid CustomerId,
-
+ 
         /// <summary>
         /// The current status of the order.
         /// True if the order has been processed/completed; otherwise, false.
         /// </summary>
         bool OrderStatus,
-
-        /// <summary>
-        /// The payment status of the order.
-        /// True if payment has been completed; otherwise, false.
-        /// </summary>
-        bool PaymentStatus,
-
+ 
         /// <summary>
         /// The total amount of the order.
         /// </summary>

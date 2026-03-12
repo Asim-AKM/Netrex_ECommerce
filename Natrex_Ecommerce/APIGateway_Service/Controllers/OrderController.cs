@@ -1,10 +1,3 @@
-using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
-using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
 namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
@@ -17,7 +10,7 @@ namespace APIGateway_Service.Controllers
 
     public class OrderController(IOrderManager orderService) : ControllerBase
     {
-        [HttpPost("Create")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)] // special case
         public async Task<IActionResult> Create([FromBody] PaymentDetailDto paymentDetailDto)
         {
@@ -30,28 +23,33 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpDelete("Cancel/{orderId}")]
+        [HttpDelete("{orderId}")]
         public async Task<IActionResult> Cancel(Guid orderId)
         {
             var response = await orderService.CancelOrderAsync(orderId);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpGet("GetById/{orderId}")]
+        [HttpGet("{orderId}")]
         public async Task<IActionResult> GetById(Guid orderId)
         {
             var response = await orderService.GetOrderByIdAsync(orderId);
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpGet("GetByCustomer/{customerId}")]
-        public async Task<IActionResult> GetByCustomer(Guid customerId)
+        [HttpGet()]
+        public async Task<IActionResult> GetByCustomer()
         {
-            var response = await orderService.GetOrdersByCustomerIdAsync(customerId);
+            var UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(UserId))
+            {
+                return Unauthorized();
+            }
+            var response = await orderService.GetOrdersByCustomerIdAsync(Guid.Parse(UserId));
             return StatusCode((int)response.Status, response);
         }
 
-        [HttpPut("UpdateStatus")]
+        [HttpPut()]
         public async Task<IActionResult> UpdateStatus([FromBody] UpdateOrderDto request)
         {
             var response = await orderService.UpdateOrderStatusAsync(request);
