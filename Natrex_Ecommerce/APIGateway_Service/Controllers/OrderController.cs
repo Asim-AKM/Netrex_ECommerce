@@ -1,10 +1,3 @@
-using Application_Service.DTO_s.CartAndOrderDtos.OrderDtos;
-using Application_Service.DTO_s.PaymentAndPayoutDtos;
-using Application_Service.Services.CartAndOrderModuleServices.OrderServices.Interface;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
 namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
