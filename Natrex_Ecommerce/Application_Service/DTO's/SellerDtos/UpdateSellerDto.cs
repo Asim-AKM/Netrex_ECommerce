@@ -33,6 +33,8 @@
         /// <summary>
         /// The physical address of the store.
         /// </summary>
-        string Address
+        string Address,
+        SellerStatus Status,
+        DateTime? UpdatedAtsss
     );
 }

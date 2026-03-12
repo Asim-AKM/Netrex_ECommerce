@@ -25,6 +25,7 @@
                             .AddScoped<IProductViewManager, ProductViewManager>()
                             .AddScoped<IProductRankingManager, ProductRankingManager>()
                             .AddScoped<IWishListManager, WishListManager>()
-                            .AddScoped<IPaymentManager, PaymentManager>();                          
+                            .AddScoped<IPaymentManager, PaymentManager>()
+            .AddScoped<IAdminSellerService, AdminSellerService>();
     }
 }

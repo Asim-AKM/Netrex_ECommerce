@@ -6,6 +6,10 @@
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class SellerController : ControllerBase
     {
         private readonly ISellerManager _sellerManager;
@@ -28,9 +32,6 @@
         /// <response code="400">Invalid request data.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPost("CreateSeller")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSeller([FromBody] CreateSellerDto dto)
         {
             var response = await _sellerManager.CreateSeller(dto);
@@ -46,9 +47,6 @@
         /// <response code="400">Invalid seller data.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPut("UpdateSeller/{sellerId:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateSeller([FromBody] UpdateSellerDto dto)
         {
             var response = await _sellerManager.UpdateSeller(dto);
@@ -64,9 +62,6 @@
         /// <response code="400">Invalid seller ID.</response>
         /// <response code="500">Internal server error.</response>
         [HttpDelete("DeleteSeller/{sellerId:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSeller(Guid sellerId)
         {
             var response = await _sellerManager.DeleteSeller(sellerId);
@@ -83,10 +78,6 @@
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet("GetSellerById/{sellerId:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSellerById(Guid sellerId)
         {
             var response = await _sellerManager.GetSellerById(sellerId);
@@ -101,9 +92,6 @@
         /// <response code="400">Invalid request.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet("GetAllSellers")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllSellers()
         {
             var response = await _sellerManager.GetAllSellerList();
