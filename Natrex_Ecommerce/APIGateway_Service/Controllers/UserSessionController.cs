@@ -21,8 +21,9 @@
         }
 
         [HttpGet("GetRefreshJwt")]
-        public async Task<IActionResult> RefreshJwt(Guid userId)
+        public async Task<IActionResult> RefreshJwt()
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var response = await _userSessionManager.RefreshJwt(userId);
             return StatusCode((int)response.Status, response);
         }
