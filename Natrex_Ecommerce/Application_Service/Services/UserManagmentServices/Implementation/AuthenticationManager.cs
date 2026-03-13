@@ -247,7 +247,7 @@
 
             var userRole = await _unitOfWork.UserRoleRepo.GetUserRoles(userExistance.UserId);
             var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == userExistance.UserId);
-            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, customer!.ImageUrl ?? string.Empty);
+            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, string.Empty);
 
             // Generate a secure random refresh token
             var randomBytes = RandomNumberGenerator.GetBytes(64);
@@ -439,7 +439,7 @@
 
             var userRole = await _unitOfWork.UserRoleRepo.GetUserRoles(userExistance.UserId);
             var customer = await _unitOfWork.CustomerRepo.FirstOrDefaultAsync(c => c.UserId == userExistance.UserId);
-            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, customer!.ImageUrl ?? string.Empty);
+            var jwtToken = await _jwtManager.GenerateJwtToken(userExistance, userRole, string.Empty);
 
             _logger.LogInformation("SignIn successful for UserId: {UserId}", userExistance.FullName);
             return ApiResponse<string>.Success(jwtToken, "SignIn successful");
