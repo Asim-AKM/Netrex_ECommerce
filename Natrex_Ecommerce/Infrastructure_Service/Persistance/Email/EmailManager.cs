@@ -2,12 +2,12 @@
 {
     public class EmailManager : IEmailManager
     {
-        private static readonly string _smtpServer = "smtp.gmail.com";
-        private static readonly int _port = 587;
-        private static readonly string _fromEmail = "netrexecommerce@gmail.com";
-        private static readonly string _password = "uyrh nuap pnwh gjpd"; 
-        private static readonly string _fromName = "Netrex Ecommerce";
-
+        private readonly EmailSettings _emailSettings;
+        public EmailManager(IOptions<EmailSettings> emailSettings)
+        {
+            _emailSettings = emailSettings.Value;
+        }
+       
         public async Task<bool> SendRegistrationOtpEmail(string toEmail, string userName, string otp)
         {
             var subject = "Email Verification - Netrex Ecommerce";
@@ -156,22 +156,22 @@
             try
             {
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress(_fromName, _fromEmail));
+                message.From.Add(new MailboxAddress(_emailSettings.FromName, _emailSettings.FromEmail));
                 message.To.Add(new MailboxAddress("", toEmail));
                 message.Subject = subject;
                 message.Body = new TextPart("html") { Text = body };
 
                 using var client = new SmtpClient();
-                await client.ConnectAsync(_smtpServer, _port, SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(_fromEmail, _password);
+                await client.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.Port, SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(_emailSettings.FromEmail, _emailSettings.Password);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
 
-                return true; // SUCCESS
+                return true;
             }
             catch (Exception)
             {
-                return false; // FAILURE
+                return false;
             }
         }
     }

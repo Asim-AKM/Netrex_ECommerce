@@ -1,5 +1,8 @@
-﻿namespace APIGateway_Service.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace APIGateway_Service.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

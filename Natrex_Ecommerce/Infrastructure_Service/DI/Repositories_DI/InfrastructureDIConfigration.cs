@@ -25,6 +25,7 @@
                     .Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"))
                     .AddScoped<ICloudinaryManager, CloudinaryManager>()
                     .AddScoped<IUserSessionRepo, UserSessionRepo>()
+                    .Configure<EmailSettings>(configuration.GetSection("EmailSettings"))
                     .AddScoped<IEmailManager, EmailManager>()
                    .AddScoped<IProductRankingRepo, ProductRankingRepo>()
                    .AddScoped<IWishListItemRepo, WishListItemRepo>();
