@@ -2,7 +2,7 @@
 
 namespace APIGateway_Service.Controllers
 {
-    [Authorize(Roles = "Customer")]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -14,6 +14,7 @@ namespace APIGateway_Service.Controllers
             _customermanager = customermanager;
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut("updateCustomer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -23,6 +24,8 @@ namespace APIGateway_Service.Controllers
             var response = await _customermanager.UpdateCustomer(request);
             return StatusCode((int)response.Status, response);
         }
+
+        [Authorize(Roles ="Customer")]
         [HttpDelete("deleteCustomer/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,6 +36,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)respone.Status, respone);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAllCustomers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,7 +47,7 @@ namespace APIGateway_Service.Controllers
             return StatusCode((int)response.Status, response);
         }
 
-
+        [Authorize(Roles ="Customer")]
         [HttpPost("updateProfileImage")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

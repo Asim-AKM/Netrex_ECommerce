@@ -2,12 +2,14 @@
 using Application_Service.Services.UserManagmentServices.Interface;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIGateway_Service.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class WishListController : ControllerBase
@@ -36,7 +38,6 @@ namespace APIGateway_Service.Controllers
             var response = await _wishListManager.GetWishListItems(userId);
             return StatusCode((int)response.Status, response);
         }
-
         [HttpGet("WishListCount/{userId}")]
         public async Task<IActionResult> GetWishListCount(Guid userId)
         {
