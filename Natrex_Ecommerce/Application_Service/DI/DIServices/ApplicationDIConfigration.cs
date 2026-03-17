@@ -1,4 +1,7 @@
-﻿namespace Application_Service.DI.DIServices
+﻿using Application_Service.Services.ChatBotService.Implementations;
+using Application_Service.Services.ChatBotService.Interfaces;
+
+namespace Application_Service.DI.DIServices
 {
     public static class ApplicationDIConfigration
     {
@@ -26,6 +29,8 @@
                             .AddScoped<IProductRankingManager, ProductRankingManager>()
                             .AddScoped<IWishListManager, WishListManager>()
                             .AddScoped<IPaymentManager, PaymentManager>()
-            .AddScoped<IAdminSellerService, AdminSellerService>();
+                            .AddScoped<IAdminSellerService, AdminSellerService>()
+                            .AddScoped<IChatManager, ChatManager>();
+                            
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace Infrastructure_Service.DI.Repositories_DI
+﻿using Application_Service.Services.ChatBotService.Interfaces;
+using Domain_Service.RepoInterfaces.ChatBot;
+using ECommerce.Infrastructure.Services;
+using Infrastructure_Service.Persistance.Repositories.ChatBot;
+
+namespace Infrastructure_Service.DI.Repositories_DI
 {
     public static class InfrastructureDIConfigration
     {
@@ -26,7 +31,9 @@
                     .AddScoped<ICloudinaryManager, CloudinaryManager>()
                     .AddScoped<IUserSessionRepo, UserSessionRepo>()
                     .AddScoped<IEmailManager, EmailManager>()
-                   .AddScoped<IProductRankingRepo, ProductRankingRepo>()
-                   .AddScoped<IWishListItemRepo, WishListItemRepo>();
+                    .AddScoped<IProductRankingRepo, ProductRankingRepo>()
+                    .AddScoped<IWishListItemRepo, WishListItemRepo>()
+                    .AddScoped<IChatRepository, ChatRepository>()
+                    .AddScoped<IAIService, GroqAIService>();
     }
 }
