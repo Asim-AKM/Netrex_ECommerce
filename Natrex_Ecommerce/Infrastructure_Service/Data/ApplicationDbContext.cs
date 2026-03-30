@@ -1,4 +1,6 @@
-﻿namespace Infrastructure_Service.Data
+﻿using Domain_Service.Entities.ChatBotModule;
+
+namespace Infrastructure_Service.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -32,6 +34,8 @@
         public DbSet<UserSession> UserSessions { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<WishListItem> WishListItems { get; set; }
+        public DbSet<ChatSession> ChatSessions { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
