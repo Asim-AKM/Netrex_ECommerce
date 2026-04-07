@@ -46,14 +46,14 @@ namespace ECommerce.Infrastructure.Services
                     }
                 }
 
-                // Add current message
+               
                 messages.Add(new { role = "user", content = userMessage });
 
-                // 👇 ACTIVE MODEL (March 2026)
+               
                 var requestBody = new
                 {
-                    model = "llama-3.3-70b-versatile",  // Production ready
-                    // Alternative: "llama-3.1-8b-instant" (faster)
+                    model = "llama-3.3-70b-versatile", 
+                   
                     messages = messages,
                     temperature = 0.7,
                     max_tokens = 1024
