@@ -6,7 +6,7 @@ Netrex is a modern, enterprise-level E-Commerce management system built using th
 
 ## 🏗️ Architecture & Design Principles
 
-The project is structured around **Clean Architecture** (Onion Architecture), where dependencies flow inwards. The core business logic is completely isolated from external frameworks, databases, and UI components.
+The project is structured around **Clean Architecture** , where dependencies flow inwards. The core business logic is completely isolated from external frameworks, databases, and UI components.
 
 * **Domain Layer (Core):** The center of the onion. Contains enterprise business rules, entities, enums, and exceptions. It has zero dependencies on other projects.
 * **Application Layer:** Contains application-specific business rules, Use Cases (Services/Queries/Commands), DTOs, and interface definitions (like `IRepository`).
