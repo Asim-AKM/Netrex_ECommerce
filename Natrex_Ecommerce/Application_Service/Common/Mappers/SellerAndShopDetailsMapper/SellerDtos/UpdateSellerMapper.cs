@@ -21,8 +21,6 @@
             return new Seller
             {
                 SellerId = updateSellerDto.SellerId,
-                UserId = updateSellerDto.UserId,
-                ShopId = updateSellerDto.ShopId,
                 StoreName = updateSellerDto.StoreName,
                 StoreDescription = updateSellerDto.StoreDescription,
                 Address = updateSellerDto.Address,
@@ -47,8 +45,6 @@
             return new UpdateSellerDto
             (
                 seller.SellerId,
-                seller.UserId,
-                seller.ShopId,
                 seller.StoreName,
                 seller.StoreDescription,
                 seller.Address,

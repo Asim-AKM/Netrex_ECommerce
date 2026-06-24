@@ -5,20 +5,12 @@
     /// </summary>
     public record UpdateSellerDto
     (
+
         /// <summary>
         /// The unique identifier of the seller.
         /// </summary>
         Guid SellerId,
 
-        /// <summary>
-        /// The unique identifier of the user associated with the seller.
-        /// </summary>
-        Guid UserId,
-
-        /// <summary>
-        /// The unique identifier of the shop associated with the seller.
-        /// </summary>
-        Guid ShopId,
 
         /// <summary>
         /// The name of the store.
